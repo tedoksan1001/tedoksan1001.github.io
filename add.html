@@ -40,8 +40,8 @@
     const status = document.getElementById("status");
     status.innerText = "Ekleniyor...";
 
-    for (let isim of isimler) {
-      await setDoc(doc(collection(db, "kisiler"), isim), { ad: isim });
+    for (let isim1 of isimler) {
+      await setDoc(doc(collection(db, "kisiler"), isim1), { isim: isim1 });
     }
 
     status.innerText = "Bitti! Firestore doldu.";
