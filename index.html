@@ -8,42 +8,43 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    background-color: #121212;
+    background-color: #0d0d0d;
     color: #e0e0e0;
     margin: 0;
     padding: 50px;
 }
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 40px;
-    color: #fff;
+    font-size: 2.8em;
+    margin-bottom: 50px;
+    color: #00ffae;
+    text-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
 }
 button {
-    padding: 15px 30px;
-    font-size: 20px;
+    padding: 18px 35px;
+    font-size: 22px;
     cursor: pointer;
     border: none;
-    border-radius: 10px;
-    background-color: #1f1f1f;
+    border-radius: 12px;
+    background-color: #1a1a1a;
     color: #00ffae;
     font-weight: bold;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    transition: 0.3s;
+    box-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
+    transition: all 0.3s ease;
 }
 button:hover {
     background-color: #00ffae;
-    color: #121212;
-    transform: translateY(-3px);
+    color: #0d0d0d;
+    transform: translateY(-4px);
+    box-shadow: 0 0 15px #00ffae, 0 0 30px #00ffae;
 }
 #sonuc {
-    margin-top: 50px;
-    font-size: 28px;
+    margin-top: 60px;
+    font-size: 32px;
     font-weight: bold;
     color: #00ffae;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    text-shadow: 0 0 8px #00ffae, 0 0 15px #00ffae;
 }
 </style>
-<!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
@@ -82,14 +83,15 @@ btn.addEventListener("click", function(){
 
         if(kisiler.length === 0){
             sonuc.textContent = "Tüm isimler çekildi!";
-            btn.disabled = false;
-            btn.innerText = "Çekilişi Yap";
+            btn.style.display = "none";
             return;
         }
 
         // Rastgele isim seç
         var secilen = kisiler[Math.floor(Math.random() * kisiler.length)];
-        sonuc.textContent = "🎉 " + secilen.isim + " 🎉";
+
+        // Glow animasyonlu çıktı
+        sonuc.innerHTML = `<span style="animation: glow 1s ease-in-out infinite alternate;">🎉 ${secilen.isim} 🎉</span>`;
 
         // Firestore’dan sil
         kisilerRef.doc(secilen.id).delete();
@@ -104,8 +106,8 @@ btn.addEventListener("click", function(){
         a.click();
         URL.revokeObjectURL(url);
 
-        btn.disabled = false;
-        btn.innerText = "Çekilişi Yap";
+        // Tek çekiliş, buton kaybolsun
+        btn.style.display = "none";
     }).catch(function(err){
         console.error(err);
         sonuc.textContent = "Hata oluştu, konsolu kontrol et.";
@@ -114,5 +116,13 @@ btn.addEventListener("click", function(){
     });
 });
 </script>
+
+<style>
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
+    50% { text-shadow: 0 0 15px #00ffae, 0 0 30px #00ffae; }
+    100% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
+}
+</style>
 </body>
 </html>
