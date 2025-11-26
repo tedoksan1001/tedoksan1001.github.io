@@ -1,38 +1,51 @@
-// Firebase App ve Firestore import edilmeden önce script.js’deki config’i kullan
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js";
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>İsim Ekleme</title>
+</head>
+<body>
+<h2>İsimleri Firestore'a Yükle</h2>
+<button id="addBtn">İsimleri Yükle</button>
+<p id="status"></p>
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDXZ8Tu6o-thj0QnhSwlPCEfXYlIMPP1rY",
-  authDomain: "yilbasicekilis-cfd51.firebaseapp.com",
-  projectId: "yilbasicekilis-cfd51",
-  storageBucket: "yilbasicekilis-cfd51.firebasestorage.app",
-  messagingSenderId: "747733053754",
-  appId: "1:747733053754:web:c28d081f0dd90b1da5a003"
-};
+<script type="module">
+  // Firebase importları
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Firebase başlat
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const kisilerRef = collection(db, "kisiler");
+  // Firebase config (seninki)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXZ8Tu6o-thj0QnhSwlPCEfXYlIMPP1rY",
+    authDomain: "yilbasicekilis-cfd51.firebaseapp.com",
+    projectId: "yilbasicekilis-cfd51",
+    storageBucket: "yilbasicekilis-cfd51.firebasestorage.app",
+    messagingSenderId: "747733053754",
+    appId: "1:747733053754:web:c28d081f0dd90b1da5a003",
+    measurementId: "G-LSP9NH9GGL"
+  };
 
-// 30 öğrenci
-const isimler = [
-  "Ali","Ayşe","Ahmet","Fatma","Mehmet",
-  "Zeynep","Murat","Elif","Can","Derya",
-  "Selin","Emre","Hakan","Leyla","Burak",
-  "Gamze","Cem","Deniz","Seda","Okan",
-  "Ece","Barış","Melis","Onur","Gizem",
-  "Merve","Kerem","Yasemin","Tolga","Furkan"
-];
+  // Firebase başlat
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-// Firestore'a ekleme
-async function ekle() {
-  for (const isim of isimler) {
-    await addDoc(kisilerRef, {isim});
-  }
-  console.log("Tüm öğrenciler eklendi!");
-}
+  const isimler = [
+    "Ali","Ahmet","Ayşe","Fatma","Zeynep","Mehmet","Hasan","Hüseyin",
+    "Buse","Emir","Eda","Kaan","Mira","Mert","Selin","Kerem","Eylül",
+    "Burak","Gamze","Melisa","Ece","Arda","Sena","Berke","Yaren","Umut",
+    "Deniz","Cem","Duru","Bora"
+  ];
 
-ekle();
+  document.getElementById("addBtn").onclick = async () => {
+    const status = document.getElementById("status");
+    status.innerText = "Ekleniyor...";
+
+    for (let isim of isimler) {
+      await setDoc(doc(collection(db, "kisiler"), isim), { ad: isim });
+    }
+
+    status.innerText = "Bitti! Firestore doldu.";
+  };
+</script>
+</body>
+</html>
