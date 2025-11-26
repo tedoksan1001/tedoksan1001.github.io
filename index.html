@@ -15,20 +15,27 @@ body {
 }
 h1 {
     font-size: 2.8em;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: #00ffae;
     text-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
 }
-button {
-    padding: 18px 35px;
-    font-size: 22px;
-    cursor: pointer;
+input, button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 10px;
     border: none;
-    border-radius: 12px;
+    margin: 10px 0;
+}
+input {
+    width: 250px;
+    text-align: center;
+}
+button {
     background-color: #1a1a1a;
     color: #00ffae;
     font-weight: bold;
     box-shadow: 0 0 10px #00ffae, 0 0 20px #00ffae;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 button:hover {
@@ -38,7 +45,7 @@ button:hover {
     box-shadow: 0 0 15px #00ffae, 0 0 30px #00ffae;
 }
 #sonuc {
-    margin-top: 60px;
+    margin-top: 40px;
     font-size: 32px;
     font-weight: bold;
     color: #00ffae;
@@ -50,7 +57,10 @@ button:hover {
 </head>
 <body>
 <h1>🎉 Sınıf Çekilişi 🎉</h1>
-<button id="cekilisBtn">Çekilişi Yap</button>
+
+<input type="text" id="kendiIsim" placeholder="Kendi ismini yaz">
+<br>
+<button id="cekilisBtn" disabled>Çekilişi Yap</button>
 <p id="sonuc">Bekle...</p>
 
 <script>
@@ -63,15 +73,24 @@ var firebaseConfig = {
   messagingSenderId: "747733053754",
   appId: "1:747733053754:web:c28d081f0dd90b1da5a003"
 };
-// Firebase başlat
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var kisilerRef = db.collection("kisiler");
 
 var btn = document.getElementById("cekilisBtn");
 var sonuc = document.getElementById("sonuc");
+var kendiIsimInput = document.getElementById("kendiIsim");
 
+// Kendi ismini yazınca buton aktif olsun
+kendiIsimInput.addEventListener("input", function() {
+    btn.disabled = kendiIsimInput.value.trim() === "";
+});
+
+// Çekiliş
 btn.addEventListener("click", function(){
+    var kendiIsim = kendiIsimInput.value.trim();
+    if(!kendiIsim) return;
+
     btn.disabled = true;
     btn.innerText = "Çekiliyor...";
 
@@ -87,10 +106,19 @@ btn.addEventListener("click", function(){
             return;
         }
 
+        // Kendi ismini listeden çıkar
+        kisiler = kisiler.filter(k => k.isim !== kendiIsim);
+
+        if(kisiler.length === 0){
+            sonuc.textContent = "Sadece kendi isminiz kaldı, başka çekiliş yok!";
+            btn.style.display = "none";
+            return;
+        }
+
         // Rastgele isim seç
         var secilen = kisiler[Math.floor(Math.random() * kisiler.length)];
 
-        // Glow animasyonlu çıktı
+        // Sonucu göster
         sonuc.innerHTML = `<span style="animation: glow 1s ease-in-out infinite alternate;">🎉 ${secilen.isim} 🎉</span>`;
 
         // Firestore’dan sil
