@@ -5,9 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sınıf Çekilişi</title>
 <style>
-body { font-family: sans-serif; text-align: center; padding: 50px; background: #f0f0f0; }
-button { padding: 10px 20px; font-size: 18px; cursor: pointer; margin-top: 20px; }
-#sonuc { margin-top: 30px; font-size: 24px; font-weight: bold; }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    color: #333;
+    margin: 0;
+    padding: 50px;
+}
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background: #fff;
+    color: #ee9ca7;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+button:hover {
+    background: #ffdde1;
+    color: #fff;
+    transform: translateY(-3px);
+}
+#sonuc {
+    margin-top: 50px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
 </style>
 <!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -37,7 +72,9 @@ var btn = document.getElementById("cekilisBtn");
 var sonuc = document.getElementById("sonuc");
 
 btn.addEventListener("click", function(){
-    sonuc.textContent = "Çekiliyor...";
+    btn.disabled = true;
+    btn.innerText = "Çekiliyor...";
+
     kisilerRef.get().then(function(snapshot){
         var kisiler = [];
         snapshot.forEach(function(doc){
@@ -46,6 +83,8 @@ btn.addEventListener("click", function(){
 
         if(kisiler.length === 0){
             sonuc.textContent = "Tüm isimler çekildi!";
+            btn.disabled = false;
+            btn.innerText = "Çekilişi Yap";
             return;
         }
 
@@ -65,9 +104,14 @@ btn.addEventListener("click", function(){
         a.download = secilen.isim + "_hash.txt";
         a.click();
         URL.revokeObjectURL(url);
+
+        btn.disabled = false;
+        btn.innerText = "Çekilişi Yap";
     }).catch(function(err){
         console.error(err);
         sonuc.textContent = "Hata oluştu, konsolu kontrol et.";
+        btn.disabled = false;
+        btn.innerText = "Çekilişi Yap";
     });
 });
 </script>
