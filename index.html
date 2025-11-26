@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sınıf Çekilişi</title>
+    <title>Yılbaşı Çekilişi</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Yılbaşı Çekilişi</h1>
-    <button id="cekilisBtn">Çekilişi Yap</button>
-    <p id="sonuc"></p>
-    <script src="script.js"></script>
+
+<div class="container">
+    <h1 class="title">🎄 Yılbaşı Çekilişi 🎁</h1>
+
+    <button id="cekButton" class="btn">Kime Çıktı?</button>
+
+    <div id="sonucCard" class="card hidden">
+        <p id="sonucText"></p>
+        <a id="downloadLink" download="cekilis.txt" class="download">İndir (TXT)</a>
+    </div>
+
+    <p class="info">Her kullanıcı yalnızca 1 kişiyi çekebilir. Aynı kişi bir daha çıkmaz.</p>
+</div>
+
+<script type="module" src="script.js"></script>
 </body>
-</html>
+</
