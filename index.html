@@ -51,6 +51,11 @@ button:hover {
     color: #00ffae;
     text-shadow: 0 0 8px #00ffae, 0 0 15px #00ffae;
 }
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
+    50% { text-shadow: 0 0 15px #00ffae, 0 0 30px #00ffae; }
+    100% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
+}
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -106,8 +111,9 @@ btn.addEventListener("click", function(){
             return;
         }
 
-        // Kendi ismini listeden çıkar
-        kisiler = kisiler.filter(k => k.isim !== kendiIsim);
+        // Kendi ismini listeden çıkar (capslock duyarsız)
+        const kendiLower = kendiIsim.toLowerCase();
+        kisiler = kisiler.filter(k => k.isim.toLowerCase() !== kendiLower);
 
         if(kisiler.length === 0){
             sonuc.textContent = "Sadece kendi isminiz kaldı, başka çekiliş yok!";
@@ -144,13 +150,5 @@ btn.addEventListener("click", function(){
     });
 });
 </script>
-
-<style>
-@keyframes glow {
-    0% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
-    50% { text-shadow: 0 0 15px #00ffae, 0 0 30px #00ffae; }
-    100% { text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae; }
-}
-</style>
 </body>
 </html>
