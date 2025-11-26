@@ -1,45 +1,38 @@
-// -----------------------------
-// Firebase Setup
-// -----------------------------
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// Firebase App ve Firestore import edilmeden önce script.js’deki config’i kullan
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js";
 
-// SENİN GERÇEK FIREBASE CONFIG'İN
+// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDRFm9ynt07QM54h6FquGOPVuq5nmZnqCQ",
-  authDomain: "webelegans.firebaseapp.com",
-  projectId: "webelegans",
-  storageBucket: "webelegans.appspot.com",
-  messagingSenderId: "20930142499",
-  appId: "1:20930142499:web:44e6abd6b30d78f5348919"
+  apiKey: "AIzaSyDXZ8Tu6o-thj0QnhSwlPCEfXYlIMPP1rY",
+  authDomain: "yilbasicekilis-cfd51.firebaseapp.com",
+  projectId: "yilbasicekilis-cfd51",
+  storageBucket: "yilbasicekilis-cfd51.firebasestorage.app",
+  messagingSenderId: "747733053754",
+  appId: "1:747733053754:web:c28d081f0dd90b1da5a003"
 };
 
-// Init  
+// Firebase başlat
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const kisilerRef = collection(db, "kisiler");
 
-// -----------------------------
-// Veri ekleme fonksiyonu
-// -----------------------------
-async function addName() {
-  try {
-    console.log("Ekleniyor...");
+// 30 öğrenci
+const isimler = [
+  "Ali","Ayşe","Ahmet","Fatma","Mehmet",
+  "Zeynep","Murat","Elif","Can","Derya",
+  "Selin","Emre","Hakan","Leyla","Burak",
+  "Gamze","Cem","Deniz","Seda","Okan",
+  "Ece","Barış","Melis","Onur","Gizem",
+  "Merve","Kerem","Yasemin","Tolga","Furkan"
+];
 
-    const docRef = await addDoc(collection(db, "kisiler"), {
-      ad: "Umut",
-      createdAt: serverTimestamp()
-    });
-
-    console.log("Eklendi:", docRef.id);
-
-  } catch (e) {
-    console.error("HATA:", e);
+// Firestore'a ekleme
+async function ekle() {
+  for (const isim of isimler) {
+    await addDoc(kisilerRef, {isim});
   }
+  console.log("Tüm öğrenciler eklendi!");
 }
 
-addName();
+ekle();
