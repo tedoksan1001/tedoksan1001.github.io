@@ -86,68 +86,66 @@ var btn = document.getElementById("cekilisBtn");
 var sonuc = document.getElementById("sonuc");
 var kendiIsimInput = document.getElementById("kendiIsim");
 
-// Kendi ismini yazınca buton aktif olsun
+// Buton aktif/passive
 kendiIsimInput.addEventListener("input", function() {
     btn.disabled = kendiIsimInput.value.trim() === "";
 });
 
-// Çekiliş
-btn.addEventListener("click", function(){
+btn.addEventListener("click", async function(){
     var kendiIsim = kendiIsimInput.value.trim();
     if(!kendiIsim) return;
 
     btn.disabled = true;
     btn.innerText = "Çekiliyor...";
 
-    kisilerRef.get().then(function(snapshot){
-        var kisiler = [];
-        snapshot.forEach(function(doc){
-            kisiler.push({id: doc.id, isim: doc.data().isim});
+    try {
+        await db.runTransaction(async (transaction) => {
+            const snapshot = await transaction.get(kisilerRef);
+            let kisiler = [];
+            snapshot.forEach(doc => {
+                kisiler.push({id: doc.id, isim: doc.data().isim});
+            });
+
+            // Kendi ismini çıkart (capslock duyarsız)
+            const kendiLower = kendiIsim.toLowerCase();
+            kisiler = kisiler.filter(k => k.isim.toLowerCase() !== kendiLower);
+
+            if(kisiler.length === 0){
+                sonuc.textContent = "Başka çekiliş yok veya sadece kendi isminiz kaldı!";
+                btn.style.display = "none";
+                return;
+            }
+
+            // Rastgele isim seç
+            const secilen = kisiler[Math.floor(Math.random() * kisiler.length)];
+
+            // Firestore’dan sil (transaction içinde)
+            const secilenRef = kisilerRef.doc(secilen.id);
+            transaction.delete(secilenRef);
+
+            // Sonucu göster
+            sonuc.innerHTML = `<span style="animation: glow 1s ease-in-out infinite alternate;">🎉 ${secilen.isim} 🎉</span>`;
+
+            // Hash ve txt indir
+            const hash = btoa(secilen.isim);
+            const blob = new Blob([hash], {type: "text/plain"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = secilen.isim + "_hash.txt";
+            a.click();
+            URL.revokeObjectURL(url);
         });
-
-        if(kisiler.length === 0){
-            sonuc.textContent = "Tüm isimler çekildi!";
-            btn.style.display = "none";
-            return;
-        }
-
-        // Kendi ismini listeden çıkar (capslock duyarsız)
-        const kendiLower = kendiIsim.toLowerCase();
-        kisiler = kisiler.filter(k => k.isim.toLowerCase() !== kendiLower);
-
-        if(kisiler.length === 0){
-            sonuc.textContent = "Sadece kendi isminiz kaldı, başka çekiliş yok!";
-            btn.style.display = "none";
-            return;
-        }
-
-        // Rastgele isim seç
-        var secilen = kisiler[Math.floor(Math.random() * kisiler.length)];
-
-        // Sonucu göster
-        sonuc.innerHTML = `<span style="animation: glow 1s ease-in-out infinite alternate;">🎉 ${secilen.isim} 🎉</span>`;
-
-        // Firestore’dan sil
-        kisilerRef.doc(secilen.id).delete();
-
-        // Hash ve txt indir
-        var hash = btoa(secilen.isim);
-        var blob = new Blob([hash], {type: "text/plain"});
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = secilen.isim + "_hash.txt";
-        a.click();
-        URL.revokeObjectURL(url);
 
         // Tek çekiliş, buton kaybolsun
         btn.style.display = "none";
-    }).catch(function(err){
+
+    } catch(err) {
         console.error(err);
         sonuc.textContent = "Hata oluştu, konsolu kontrol et.";
         btn.disabled = false;
         btn.innerText = "Çekilişi Yap";
-    });
+    }
 });
 </script>
 </body>
