@@ -1,26 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yılbaşı Çekilişi</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sınıf Çekilişi</title>
+<style>
+  body { font-family: sans-serif; text-align: center; padding: 50px; background: #f0f0f0; }
+  button { padding: 10px 20px; font-size: 18px; cursor: pointer; margin-top: 20px; }
+  #sonuc { margin-top: 30px; font-size: 24px; font-weight: bold; }
+</style>
 </head>
 <body>
+<h1>🎉 Sınıf Çekilişi 🎉</h1>
+<button id="cekilisBtn">Çekilişi Yap</button>
+<p id="sonuc">Bekle...</p>
 
-<div class="container">
-    <h1 class="title">🎄 Yılbaşı Çekilişi 🎁</h1>
+<script type="module">
+// Firebase import
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js";
 
-    <button id="cekButton" class="btn">Kime Çıktı?</button>
+// Firebase config (kendi projenin bilgileri ile değiştir)
+const firebaseConfig = {
+  apiKey: "AIzaSyDXZ8Tu6o-thj0QnhSwlPCEfXYlIMPP1rY",
+  authDomain: "yilbasicekilis-cfd51.firebaseapp.com",
+  projectId: "yilbasicekilis-cfd51",
+  storageBucket: "yilbasicekilis-cfd51.firebasestorage.app",
+  messagingSenderId: "747733053754",
+  appId: "1:747733053754:web:c28d081f0dd90b1da5a003"
+};
 
-    <div id="sonucCard" class="card hidden">
-        <p id="sonucText"></p>
-        <a id="downloadLink" download="cekilis.txt" class="download">İndir (TXT)</a>
-    </div>
+// Firebase başlat
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const kisilerRef = collection(db, "kisiler");
 
-    <p class="info">Her kullanıcı yalnızca 1 kişiyi çekebilir. Aynı kişi bir daha çıkmaz.</p>
-</div>
+const btn = document.getElementById("cekilisBtn");
+const sonuc = document.getElementById("sonuc");
 
-<script type="module" src="script.js"></script>
+btn.addEventListener("click", async () => {
+    sonuc.textContent = "Çekiliyor...";
+    // Firestore’dan tüm isimleri çek
+    const snapshot = await getDocs(kisilerRef);
+    const kisiler = snapshot.docs.map(d => ({id: d.id, isim: d.data().isim}));
+
+    if(kisiler.length === 0){
+        sonuc.textContent = "Tüm isimler çekildi!";
+        return;
+    }
+
+    // Rastgele isim seç
+    const secilen = kisiler[Math.floor(Math.random() * kisiler.length)];
+    sonuc.textContent = `🎉 ${secilen.isim} 🎉`;
+
+    // Firestore’dan sil
+    await deleteDoc(doc(db, "kisiler", secilen.id));
+
+    // Hash ve txt dosya indir
+    const hash = btoa(secilen.isim);
+    const blob = new Blob([hash], {type: "text/plain"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${secilen.isim}_hash.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+});
+</script>
 </body>
-</
+</html>
