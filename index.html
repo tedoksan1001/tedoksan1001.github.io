@@ -25,43 +25,94 @@
             padding: 0 20px;
             line-height: 1.6;
         }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2em;
+        h1 { margin-bottom: 20px; font-size: 2em; }
+        p { margin-bottom: 20px; }
+
+        /* Gizli buton */
+        #secretBtn {
+            display: block;
+            margin: 40px auto 60px;
+            padding: 12px 25px;
+            background: #4a90e2;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        p {
-            margin-bottom: 20px;
+        #secretBtn:hover {
+            transform: scale(1.08);
+            background: #3b7ac2;
         }
-        footer {
-            background-color: #e8e8f0;
+
+        /* Patlama mesajı */
+        #bigMessage {
+            display: none;
             text-align: center;
-            padding: 15px 0;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #d11;
             margin-top: 40px;
-            font-size: 0.9em;
-            color: #555;
+            animation: pop 0.8s ease-out forwards;
         }
-        @media (max-width: 600px) {
-            main {
-                padding: 0 10px;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
+
+        @keyframes pop {
+            0% { transform: scale(0.1); opacity: 0; }
+            70% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Ağ Günlüğü: İnternetin Hayatıma Etkisi</h1>
     </header>
+
     <main>
         <p>İnternet, günlük hayatımın merkezine yerleşmiş durumda. Sabah uyanır uyanmaz haberleri kontrol etmekten, ders çalışırken kaynak bulmaya kadar çoğu işi onunla yapıyorum. Özellikle araştırma yaparken internetin hızından ve çeşitliliğinden faydalanıyorum. Kütüphanelerde saatler sürecek bir bilgiyi birkaç dakikada bulmak büyük kolaylık sağlıyor.</p>
+
         <p>İletişim konusunda da internet belirleyici oldu. Arkadaşlarımla mesajlaşmak, öğretmenlerin duyurularını takip etmek ve okul ödevlerimi göndermek için sürekli çevrim içiyim. Bu durum zaman kazandırsa da bazen gereğinden fazla ekran süresi harcamama neden oluyor. Bu yüzden interneti kullanırken süre kontrolü yapmaya çalışıyorum.</p>
+
         <p>Eğitim alanında ise internet, benim için en büyük destek. Çözemediğim sorular için videolara bakıyor, anlamadığım konularla ilgili farklı kaynakları karşılaştırıyorum. Bu sayede hem daha hızlı öğreniyorum hem de tek bir kaynağa bağlı kalmamış oluyorum. İnternetteki içerik çeşitliliği öğrenme sürecimi daha verimli hâle getiriyor.</p>
+
         <p>Sonuç olarak internet, doğru kullanıldığında bana zaman kazandıran, bilgiye hızlı ulaşmamı sağlayan ve iletişimi kolaylaştıran bir araç. Ancak fazla kullanımın getirdiği dikkat dağınıklığı ve zaman kaybı gibi etkiler de var. Bu yüzden interneti bilinçli, kontrollü ve amaç odaklı kullanmanın önemli olduğunu düşünüyorum.</p>
+
+        <!-- Gizli buton -->
+        <button id="secretBtn">© 2025 Ağ Günlüğü</button>
+
+        <!-- Kocaman mesaj -->
+        <div id="bigMessage">AYŞE HOCAM SİZİ ÇOK SEVİYORUZ</div>
+
     </main>
-    <footer>
-        &copy; 2025 Ağ Günlüğü
-    </footer>
+
+    <!-- Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const btn = document.getElementById("secretBtn");
+        const msg = document.getElementById("bigMessage");
+
+        btn.addEventListener("click", () => {
+            msg.style.display = "block";
+
+            // Konfeti manyağı
+            const duration = 2000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 10,
+                    spread: 70,
+                    startVelocity: 35,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
+
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+        });
+    </script>
+
 </body>
 </html>
