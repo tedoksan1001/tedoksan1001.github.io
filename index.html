@@ -3,35 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ağ Günlüğü: İnternetin Hayatıma Etkisi</title>
+    <title>Ağ Günlüğü</title>
+
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f4f4f9;
             margin: 0;
-            padding: 0;
             color: #333;
         }
         header {
-            background-color: #4a90e2;
-            color: white;
-            padding: 20px 10%;
+            background: #4a90e2;
+            color: #fff;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         main {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 20px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        h1 { margin-bottom: 20px; font-size: 2em; }
-        p { margin-bottom: 20px; }
-
-        /* Gizli buton */
         #secretBtn {
             display: block;
-            margin: 40px auto 60px;
+            margin: 40px auto 70px;
             padding: 12px 25px;
             background: #4a90e2;
             border: none;
@@ -42,28 +38,26 @@
             transition: 0.3s;
         }
         #secretBtn:hover {
-            transform: scale(1.08);
+            transform: scale(1.1);
             background: #3b7ac2;
         }
-
-        /* Patlama mesajı */
         #bigMessage {
             display: none;
             text-align: center;
-            font-size: 3rem;
-            font-weight: 900;
-            color: #d11;
+            font-size: 3.3rem;
+            font-weight: bold;
+            color: #d00;
             margin-top: 40px;
             animation: pop 0.8s ease-out forwards;
         }
-
         @keyframes pop {
             0% { transform: scale(0.1); opacity: 0; }
-            70% { transform: scale(1.15); opacity: 1; }
+            70% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -71,45 +65,80 @@
     </header>
 
     <main>
+
         <p>İnternet, günlük hayatımın merkezine yerleşmiş durumda. Sabah uyanır uyanmaz haberleri kontrol etmekten, ders çalışırken kaynak bulmaya kadar çoğu işi onunla yapıyorum. Özellikle araştırma yaparken internetin hızından ve çeşitliliğinden faydalanıyorum. Kütüphanelerde saatler sürecek bir bilgiyi birkaç dakikada bulmak büyük kolaylık sağlıyor.</p>
 
         <p>İletişim konusunda da internet belirleyici oldu. Arkadaşlarımla mesajlaşmak, öğretmenlerin duyurularını takip etmek ve okul ödevlerimi göndermek için sürekli çevrim içiyim. Bu durum zaman kazandırsa da bazen gereğinden fazla ekran süresi harcamama neden oluyor. Bu yüzden interneti kullanırken süre kontrolü yapmaya çalışıyorum.</p>
 
-        <p>Eğitim alanında ise internet, benim için en büyük destek. Çözemediğim sorular için videolara bakıyor, anlamadığım konularla ilgili farklı kaynakları karşılaştırıyorum. Bu sayede hem daha hızlı öğreniyorum hem de tek bir kaynağa bağlı kalmamış oluyorum. İnternetteki içerik çeşitliliği öğrenme sürecimi daha verimli hâle getiriyor.</p>
+        <p>Eğitim alanında ise internet benim için en büyük destek. Çözemediğim sorular için videolara bakıyor, anlamadığım konularla ilgili farklı kaynakları karşılaştırıyorum. Bu sayede hem daha hızlı öğreniyorum hem de tek bir kaynağa bağlı kalmamış oluyorum. İnternetteki içerik çeşitliliği öğrenme sürecimi daha verimli hâle getiriyor.</p>
 
         <p>Sonuç olarak internet, doğru kullanıldığında bana zaman kazandıran, bilgiye hızlı ulaşmamı sağlayan ve iletişimi kolaylaştıran bir araç. Ancak fazla kullanımın getirdiği dikkat dağınıklığı ve zaman kaybı gibi etkiler de var. Bu yüzden interneti bilinçli, kontrollü ve amaç odaklı kullanmanın önemli olduğunu düşünüyorum.</p>
 
-        <!-- Gizli buton -->
         <button id="secretBtn">© 2025 Ağ Günlüğü</button>
 
-        <!-- Kocaman mesaj -->
         <div id="bigMessage">AYŞE HOCAM SİZİ ÇOK SEVİYORUZ</div>
+
+        <!-- Gizli ses oynatıcı -->
+        <div id="player" style="width:0; height:0; overflow:hidden;"></div>
 
     </main>
 
-    <!-- Confetti JS -->
+    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <!-- YouTube API -->
     <script>
+        let player;
+        let currentIndex = 0;
+
+        const videoList = [
+            "4fyaHBolJG4", 
+            "DCxvbgx-U9c"
+        ];
+
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player("player", {
+                height: "0",
+                width: "0",
+                videoId: videoList[0],
+                playerVars: { autoplay: 0, controls: 0, modestbranding: 1 },
+                events: {
+                    onStateChange: event => {
+                        if (event.data === YT.PlayerState.ENDED) {
+                            currentIndex++;
+                            if (currentIndex < videoList.length) {
+                                player.loadVideoById(videoList[currentIndex]);
+                                player.playVideo();
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         const btn = document.getElementById("secretBtn");
         const msg = document.getElementById("bigMessage");
 
         btn.addEventListener("click", () => {
             msg.style.display = "block";
 
-            // Konfeti manyağı
-            const duration = 2000;
-            const end = Date.now() + duration;
+            currentIndex = 0;
+            player.loadVideoById(videoList[0]);
+            player.playVideo();
 
-            (function frame() {
+            const end = Date.now() + 2000;
+            (function boom() {
                 confetti({
-                    particleCount: 10,
-                    spread: 70,
-                    startVelocity: 35,
-                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                    particleCount: 15,
+                    spread: 80,
+                    startVelocity: 40,
+                    origin: { x: Math.random(), y: Math.random() - 0.1 }
                 });
-
-                if (Date.now() < end) requestAnimationFrame(frame);
+                if (Date.now() < end) requestAnimationFrame(boom);
             })();
         });
     </script>
