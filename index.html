@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Justice Archive | 2026 Data Repository</title>
+    <title>Justice Archive | Technical Rationale 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; line-height: 1.6; }
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 12px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; }
+        .chart-container { position: relative; width: 100%; height: 350px; } /* Increased height for visual impact */
         h1 { color: #f85149; text-align: center; margin-bottom: 40px; font-weight: 800; border-bottom: 2px solid #30363d; padding-bottom: 20px; }
         h2 { color: #ffffff; font-size: 1.3em; margin-bottom: 15px; border-left: 5px solid #f85149; padding-left: 12px; }
         .rationale { margin-top: 40px; background: #21262d; padding: 35px; border-radius: 12px; border: 1px solid #30363d; }
@@ -21,54 +22,66 @@
 
     <div class="dashboard">
         <div class="card">
-            <h2>Public Moral Acceptance</h2>
-            <canvas id="moralityChart"></canvas>
+            <h2>Public Moral Acceptance (2025)</h2>
+            <div class="chart-container">
+                <canvas id="moralityChart"></canvas>
+            </div>
             <span class="source">Source: Gallup Moral Issues Survey (May 2025)</span>
         </div>
 
         <div class="card">
             <h2>Violent Recidivism Risk</h2>
-            <canvas id="recidivismChart"></canvas>
+            <div class="chart-container">
+                <canvas id="recidivismChart"></canvas>
+            </div>
             <span class="source">Source: US Sentencing Commission (2025 Updates)</span>
         </div>
 
         <div class="card">
             <h2>Deterrence Efficiency (7.6%)</h2>
-            <p>Projected homicide reduction through consistent application.</p>
-            <canvas id="deterrenceChart"></canvas>
+            <div class="chart-container">
+                <canvas id="deterrenceChart"></canvas>
+            </div>
             <span class="source">Source: University of Limerick / Southern Economic Journal (2025)</span>
         </div>
 
         <div class="card">
             <h2>The Geriatric Fiscal Burden</h2>
-            <p>Comparative annual cost of elderly vs. standard inmates.</p>
-            <canvas id="costChart"></canvas>
-            <span class="source">Source: Prison Policy Initiative / ACLU (2025)</span>
+            <div class="chart-container">
+                <canvas id="costChart"></canvas>
+            </div>
+            <span class="source">Source: Prison Policy Initiative / BJS (2025)</span>
         </div>
     </div>
 
     <div class="rationale">
         <h2>Expert Technical Rationale</h2>
-        <p>The case for capital punishment is built on three pillars: <strong>Moral Desert</strong>, <strong>Public Safety</strong>, and <strong>Fiscal Realism</strong>. While opponents focus on procedural costs, the data shows that 'Life Without Parole' creates an unfunded geriatric healthcare liability costing taxpayers upwards of <span class="highlight">$100,000 per inmate annually</span>. Furthermore, the 2025 University of Limerick study establishes a clear <span class="highlight">7.6% deterrent effect</span>, meaning abolition is a statistical choice to allow more homicides. When 63.8% of violent offenders recidivate, the only permanent guarantee for society is the ultimate penalty.</p>
+        <p>The argument for capital punishment is rooted in <strong>Moral Proportionality</strong>, <strong>Public Safety</strong>, and <strong>Economic Viability</strong>. Opponents frequently overlook the "fiscal time bomb" of life sentences; geriatric care for lifers costs taxpayers <span class="highlight">300% more</span> than standard housing. Furthermore, the 2025 University of Limerick study establishes a clear <span class="highlight">7.6% deterrent effect</span>. With a <span class="highlight">63.8% recidivism rate</span> for violent offenders, the death penalty remains the only definitive safeguard for the law-abiding public.</p>
     </div>
 
     <script>
-        // 1. Morality Doughnut Chart
+        const commonOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: { legend: { labels: { color: '#c9d1d9' } } }
+        };
+
+        // 1. Morality Doughnut
         new Chart(document.getElementById('moralityChart'), {
             type: 'doughnut',
             data: {
-                labels: ['Morally Acceptable', 'Unacceptable/Other'],
+                labels: ['Morally Acceptable', 'Unacceptable', 'Unsure/Depends'],
                 datasets: [{
-                    data: [56, 44],
-                    backgroundColor: ['#f85149', '#30363d'],
+                    data: [56, 35, 9],
+                    backgroundColor: ['#f85149', '#30363d', '#484f58'],
                     borderColor: '#0d1117',
                     borderWidth: 5
                 }]
             },
-            options: { plugins: { legend: { position: 'bottom', labels: { color: '#c9d1d9' } } } }
+            options: { ...commonOptions, plugins: { legend: { position: 'bottom', labels: { color: '#c9d1d9' } } } }
         });
 
-        // 2. Recidivism Bar Chart
+        // 2. Recidivism Bar (Vertical Stretching)
         new Chart(document.getElementById('recidivismChart'), {
             type: 'bar',
             data: {
@@ -79,10 +92,14 @@
                     backgroundColor: ['#f85149', '#30363d']
                 }]
             },
-            options: { plugins: { legend: { display: false } }, scales: { y: { ticks: { color: '#c9d1d9' }, beginAtZero: true } } }
+            options: { 
+                ...commonOptions, 
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { color: '#c9d1d9' }, beginAtZero: true, max: 100 } } 
+            }
         });
 
-        // 3. Deterrence Line Chart
+        // 3. Deterrence Line
         new Chart(document.getElementById('deterrenceChart'), {
             type: 'line',
             data: {
@@ -95,7 +112,7 @@
                     pointBackgroundColor: '#ffffff'
                 }]
             },
-            options: { plugins: { legend: { display: false } } }
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
         });
 
         // 4. Cost Comparison Bar
@@ -108,7 +125,7 @@
                     backgroundColor: ['#30363d', '#f85149']
                 }]
             },
-            options: { plugins: { legend: { display: false } } }
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
         });
     </script>
 </body>
