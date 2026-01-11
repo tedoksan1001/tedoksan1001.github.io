@@ -2,78 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Justice Archive | Pro-Capital Punishment Data</title>
+    <title>Justice Archive | Technical Rationale</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0b0e14; color: #d1d5db; padding: 2% 10%; line-height: 1.6; }
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 12px; }
-        h1 { color: #f87171; text-align: center; font-size: 2.5em; margin-bottom: 40px; }
-        h2 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #ffffff; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #30363d; }
-        th { color: #f87171; }
-        .highlight { color: #f87171; font-weight: bold; }
+        body { font-family: 'Inter', sans-serif; background: #0b0e14; color: #d1d5db; padding: 40px; line-height: 1.6; }
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 12px; }
+        h1 { color: #f87171; text-align: center; border-bottom: 2px solid #f87171; padding-bottom: 20px; }
+        h2 { color: #ffffff; font-size: 1.4em; }
+        .stat-box { font-size: 2.5em; font-weight: bold; color: #f87171; margin: 10px 0; }
+        .source { font-size: 0.8em; color: #8b949e; margin-top: 15px; }
     </style>
 </head>
 <body>
-    <h1>Capital Justice: Data & Rationale (2026)</h1>
+    <h1>Strategic Case for Capital Punishment</h1>
 
     <div class="dashboard">
         <div class="card">
-            <h2>The Case for Absolute Incapacitation</h2>
-            <p>Percentage of violent offenders who commit a new crime within 3 years of release.</p>
-            <canvas id="recidivismChart"></canvas>
-            <p style="font-size: 0.8em; margin-top: 10px;">Source: USSC Federal Recidivism Analysis</p>
+            <h2>The Deterrence Coefficient</h2>
+            <div class="stat-box">7.6%</div>
+            <p>Reduction in homicide rates when capital punishment is an active legal threat.</p>
+            <canvas id="deterrenceChart"></canvas>
+            <p class="source">Source: University of Limerick / Southern Economic Journal (2025)</p>
         </div>
 
         <div class="card">
-            <h2>Global Context (2024-2025)</h2>
-            <table>
-                <tr><th>Country</th><th>2024 Executions</th><th>Trend</th></tr>
-                <tr><td>Iran</td><td>972+</td><td>UP (14%)</td></tr>
-                <tr><td>Saudi Arabia</td><td>345+</td><td>UP (32%)</td></tr>
-                <tr><td>Iraq</td><td>63+</td><td>UP (390%)</td></tr>
-                <tr><td>United States</td><td>25</td><td>STABLE</td></tr>
-            </table>
-            <p style="font-size: 0.8em;">Data reflects highest execution figures since 2015.</p>
-        </div>
-
-        <div class="card">
-            <h2>Moral Acceptance Index</h2>
-            <p>Public response to: "Is the death penalty morally justified for murder?"</p>
-            <canvas id="moralityChart"></canvas>
+            <h2>The "Life-Sentence Debt"</h2>
+            <div class="stat-box">300%</div>
+            <p>Higher cost to house elderly "lifers" compared to average inmates due to advanced medical needs.</p>
+            <canvas id="costChart"></canvas>
+            <p class="source">Source: Bureau of Justice Statistics / Prison Policy Initiative (2024)</p>
         </div>
     </div>
 
-    <div class="card" style="margin-top: 20px;">
-        <h2>The "Just Deserts" Legal Framework</h2>
-        <p>In 2025, University of Limerick research confirmed that the death penalty has a <strong>7.6% deterrent effect</strong> on homicides when applied consistently. Even without deterrence, the <span class="highlight">Retributive Model</span> argues that the state's failure to execute a murderer is a betrayal of the victim’s right to equal value under the law.</p>
+    <div class="card" style="margin-top: 30px;">
+        <h2>Technical Summary</h2>
+        <p>Opponents focus on the procedural costs of the death penalty but ignore the <strong>unfunded liabilities</strong> of life imprisonment. In 2025, 63% of the "Life Without Parole" population is trending toward geriatric care, shifting the financial burden of heinous criminals onto the public healthcare budget.</p>
     </div>
 
     <script>
-        // Recidivism Bar Chart
-        new Chart(document.getElementById('recidivismChart'), {
-            type: 'bar',
+        // Deterrence Chart
+        new Chart(document.getElementById('deterrenceChart'), {
+            type: 'line',
             data: {
-                labels: ['Violent Offenders', 'Non-Violent Offenders'],
+                labels: ['Normal Rate', 'With Death Penalty'],
                 datasets: [{
-                    label: '% Rearrested',
-                    data: [63.8, 39.8],
-                    backgroundColor: ['#f87171', '#30363d']
+                    label: 'Homicide Rate (Projected)',
+                    data: [100, 92.4],
+                    borderColor: '#f87171',
+                    fill: false
                 }]
             }
         });
 
-        // Morality Pie Chart
-        new Chart(document.getElementById('moralityChart'), {
-            type: 'doughnut',
+        // Cost Chart
+        new Chart(document.getElementById('costChart'), {
+            type: 'bar',
             data: {
-                labels: ['Morally Justified', 'Not Justified', 'Unsure'],
+                labels: ['General Inmate', 'Elderly Inmate'],
                 datasets: [{
-                    data: [64, 25, 11],
-                    backgroundColor: ['#f87171', '#4b5563', '#1f2937'],
-                    borderColor: '#0b0e14'
+                    label: 'Annual Cost (USD)',
+                    data: [35000, 100000],
+                    backgroundColor: ['#30363d', '#f87171']
                 }]
             }
         });
