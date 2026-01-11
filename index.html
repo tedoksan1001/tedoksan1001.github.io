@@ -2,27 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Justice Repository | Technical Authority 2026</title>
+    <title>Justice Archive | Unified Technical Data 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Inter', -system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; line-height: 1.6; }
-        .container { max-width: 1200px; margin: auto; }
-        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
-        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; }
+        body { font-family: 'Inter', sans-serif; background: #0d1117; color: #c9d1d9; padding: 30px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: auto; }
         
-        /* İstediğin gibi Residivizm grafiğini uzatmak için yükseklik ayarı */
-        .chart-container-tall { position: relative; width: 100%; height: 500px; } 
-        .chart-container { position: relative; width: 100%; height: 300px; }
-
-        h1 { color: #f85149; text-align: center; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
-        .subtitle { text-align: center; color: #8b949e; margin-bottom: 40px; font-size: 1.1em; }
-        h2 { color: #ffffff; font-size: 1.2em; margin-bottom: 15px; border-left: 5px solid #f85149; padding-left: 12px; }
+        /* Strict Uniform Grid */
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 10px; height: 350px; display: flex; flex-direction: column; box-sizing: border-box; }
+        .chart-container { position: relative; flex-grow: 1; min-height: 0; width: 100%; }
         
-        .expert-section { background: #21262d; padding: 30px; border-radius: 12px; border: 1px solid #30363d; margin-top: 20px; }
-        .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .quote-card { background: #0d1117; padding: 15px; border-left: 3px solid #f85149; font-style: italic; font-size: 0.9em; }
+        h1 { color: #f85149; text-align: center; margin-bottom: 5px; font-weight: 800; font-size: 1.8em; }
+        .subtitle { text-align: center; color: #8b949e; margin-bottom: 25px; font-size: 0.9em; }
+        h2 { color: #ffffff; font-size: 1em; margin-bottom: 12px; border-left: 3px solid #f85149; padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .source { font-size: 0.75em; color: #8b949e; margin-top: 15px; display: block; font-style: italic; }
+        .expert-section { background: #21262d; padding: 20px; border-radius: 10px; border: 1px solid #30363d; margin-top: 20px; }
+        .quote-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+        .quote-card { background: #0d1117; padding: 10px; border-top: 2px solid #f85149; font-style: italic; font-size: 0.75em; color: #acbac7; }
+        
+        .source { font-size: 0.65em; color: #8b949e; margin-top: 8px; display: block; }
         .highlight { color: #f85149; font-weight: bold; }
     </style>
 </head>
@@ -34,114 +33,101 @@
 
     <div class="dashboard">
         <div class="card">
-            <h2>Public Moral Acceptance (2025)</h2>
+            <h2>Public Moral Acceptance</h2>
             <div class="chart-container">
                 <canvas id="moralityChart"></canvas>
             </div>
-            <span class="source">Source: Gallup Ethics & Morality Index</span>
+            <span class="source">Source: Gallup Ethics & Morality Index (2025)</span>
         </div>
 
         <div class="card">
-            <h2>Ehrlich Deterrence Model</h2>
-            <p>Projected lives saved per execution (7-8 lives).</p>
+            <h2>Deterrence Coefficient</h2>
             <div class="chart-container">
                 <canvas id="deterrenceChart"></canvas>
             </div>
-            <span class="source">Source: Isaac Ehrlich (1975) & Limerick Update (2025)</span>
+            <span class="source">Source: Isaac Ehrlich (7-8 Lives Saved/Execution)</span>
         </div>
 
-        <div class="card" style="grid-column: span 2;">
-            <h2>Absolute Incapacitation: Violent Recidivism Risk</h2>
-            <p>Violent offenders rearrested for serious crimes vs. Non-violent base.</p>
-            <div class="chart-container-tall">
+        <div class="card">
+            <h2>Violent Recidivism Risk</h2>
+            <div class="chart-container">
                 <canvas id="recidivismChart"></canvas>
             </div>
-            <span class="source">Source: U.S. Bureau of Justice Statistics (BJS) & USSC Report 2025</span>
+            <span class="source">Source: BJS Federal Recidivism Analysis 2025</span>
         </div>
 
-        <div class="card" style="grid-column: span 2;">
-            <h2>The "Geriatric Debt" Comparison</h2>
+        <div class="card">
+            <h2>Geriatric Fiscal Burden</h2>
             <div class="chart-container">
                 <canvas id="costChart"></canvas>
             </div>
-            <span class="source">Source: Prison Policy Initiative (2025 Fiscal Analysis)</span>
+            <span class="source">Source: Prison Policy Initiative / BJS (2025)</span>
         </div>
     </div>
 
     <div class="expert-section">
-        <h2>Philosophical Foundations (Retributivism)</h2>
+        <h2 style="border:none; padding:0; font-size: 0.9em;">Philosophical Foundations & Technical Summary</h2>
         <div class="quote-grid">
-            <div class="quote-card">"If he has committed murder, he must die. Justice requires it." <br><strong>— Immanuel Kant</strong></div>
-            <div class="quote-card">"Punishment is the criminal's right as a rational being." <br><strong>— G.W.F. Hegel</strong></div>
-            <div class="quote-card">"Capital punishment is more humane than life-long confinement." <br><strong>— John Stuart Mill</strong></div>
-            <div class="quote-card">"Removing a diseased limb protects the whole body." <br><strong>— Thomas Aquinas</strong></div>
+            <div class="quote-card">"If he committed murder, he must die." <br><strong>— Kant</strong></div>
+            <div class="quote-card">"Punishment is the criminal's right." <br><strong>— Hegel</strong></div>
+            <div class="quote-card">"Death is more humane than life-long jail." <br><strong>— Mill</strong></div>
+            <div class="quote-card">"Removing a diseased limb protects the body." <br><strong>— Aquinas</strong></div>
         </div>
-        <p style="margin-top:25px;">
-            Technical Summary: Current data proves that <span class="highlight">63.8% of violent offenders</span> fail rehabilitation. 
-            The state’s refusal to apply the ultimate penalty for <span class="highlight">heinous crimes</span> creates a moral imbalance and 
-            an unsustainable fiscal burden of <span class="highlight">$100k+ annually</span> per geriatric inmate.
+        <p style="margin-top:15px; font-size: 0.85em; color: #8b949e;">
+            <strong>Data Synthesis:</strong> 63.8% of violent offenders recidivate. Abolition constitutes a statistical acceptance of higher homicide rates (7.6% delta) and an unsustainable geriatric cost of $100k+ per lifer.
         </p>
     </div>
 </div>
 
 <script>
-    const options = { maintainAspectRatio: false, plugins: { legend: { labels: { color: '#c9d1d9' } } } };
+    // Uniform Chart Configuration
+    const commonOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: { 
+            legend: { 
+                position: 'bottom', 
+                labels: { color: '#c9d1d9', boxWidth: 10, font: { size: 9 } } 
+            } 
+        }
+    };
 
-    // 1. Morality Chart (Doughnut)
+    const barOptions = {
+        ...commonOptions,
+        plugins: { legend: { display: false } },
+        scales: { 
+            y: { beginAtZero: true, ticks: { color: '#8b949e', font: { size: 9 } } },
+            x: { ticks: { color: '#c9d1d9', font: { size: 9 } } }
+        }
+    };
+
+    // 1. Morality (Doughnut)
     new Chart(document.getElementById('moralityChart'), {
         type: 'doughnut',
-        data: {
-            labels: ['Morally Acceptable', 'Unacceptable', 'Unsure/Depends'],
-            datasets: [{
-                data: [56, 35, 9],
-                backgroundColor: ['#f85149', '#30363d', '#484f58'],
-                borderColor: '#0d1117', borderWidth: 4
-            }]
-        },
-        options: options
+        data: { labels: ['Acceptable', 'Unacceptable', 'Unsure'], datasets: [{ data: [56, 35, 9], backgroundColor: ['#f85149', '#30363d', '#484f58'], borderColor: '#0d1117', borderWidth: 2 }] },
+        options: commonOptions
     });
 
-    // 2. Deterrence Chart (Line)
+    // 2. Deterrence (Line)
     new Chart(document.getElementById('deterrenceChart'), {
         type: 'line',
-        data: {
-            labels: ['0 Executions', '1 Execution'],
-            datasets: [{
-                label: 'Potential Murder Rate (Projected)',
-                data: [108, 100], /* 8 can tasarrufu görseli */
-                borderColor: '#f85149', backgroundColor: 'rgba(248, 81, 73, 0.1)', fill: true
-            }]
-        },
-        options: options
+        data: { labels: ['Base', 'Active'], datasets: [{ label: 'Homicide Incidents', data: [108, 100], borderColor: '#f85149', backgroundColor: 'rgba(248, 81, 73, 0.1)', fill: true, tension: 0.3 }] },
+        options: commonOptions
     });
 
-    // 3. Recidivism Chart (TALL - UZUN)
+    // 3. Recidivism (Bar)
     new Chart(document.getElementById('recidivismChart'), {
         type: 'bar',
-        data: {
-            labels: ['Violent Offender (Rearrest Risk)', 'Non-Violent Offender (Base)'],
-            datasets: [{
-                label: 'Rearrest Rate %',
-                data: [63.8, 39.8],
-                backgroundColor: ['#f85149', '#30363d']
-            }]
-        },
-        options: { ...options, scales: { y: { beginAtZero: true, max: 100, ticks: { color: '#c9d1d9' } } } }
+        data: { labels: ['Violent (63.8%)', 'Non-Violent'], datasets: [{ data: [63.8, 39.8], backgroundColor: ['#f85149', '#30363d'] }] },
+        options: barOptions
     });
 
-    // 4. Cost Chart (Horizontal Bar)
+    // 4. Cost (Horizontal Bar)
     new Chart(document.getElementById('costChart'), {
         type: 'bar',
         indexAxis: 'y',
-        data: {
-            labels: ['Standard Inmate ($34k)', 'Geriatric Lifer ($100k+)'],
-            datasets: [{
-                label: 'Annual Cost (USD)',
-                data: [34000, 100000],
-                backgroundColor: ['#30363d', '#f85149']
-            }]
-        },
-        options: options
+        data: { labels: ['Standard ($34k)', 'Elderly ($100k+)'], datasets: [{ data: [34000, 100000], backgroundColor: ['#30363d', '#f85149'] }] },
+        options: barOptions
     });
 </script>
 
