@@ -2,71 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Justice Archive | Technical Rationale</title>
+    <title>Capital Justice | 2026 Data Repository</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0b0e14; color: #d1d5db; padding: 40px; line-height: 1.6; }
-        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 12px; }
-        h1 { color: #f87171; text-align: center; border-bottom: 2px solid #f87171; padding-bottom: 20px; }
-        h2 { color: #ffffff; font-size: 1.4em; }
-        .stat-box { font-size: 2.5em; font-weight: bold; color: #f87171; margin: 10px 0; }
-        .source { font-size: 0.8em; color: #8b949e; margin-top: 15px; }
+        body { font-family: 'Inter', sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; line-height: 1.6; }
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 8px; }
+        h1 { color: #f85149; text-align: center; margin-bottom: 40px; font-weight: 800; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
+        h2 { color: #ffffff; font-size: 1.2em; margin-bottom: 15px; border-left: 4px solid #f85149; padding-left: 10px; }
+        .rationale { margin-top: 30px; background: #21262d; padding: 30px; border-radius: 8px; border: 1px solid #30363d; }
+        .source { font-size: 0.75em; color: #8b949e; margin-top: 10px; display: block; }
     </style>
 </head>
 <body>
-    <h1>Strategic Case for Capital Punishment</h1>
+
+    <h1>Technical Defense of Capital Punishment (2026)</h1>
 
     <div class="dashboard">
         <div class="card">
-            <h2>The Deterrence Coefficient</h2>
-            <div class="stat-box">7.6%</div>
-            <p>Reduction in homicide rates when capital punishment is an active legal threat.</p>
-            <canvas id="deterrenceChart"></canvas>
-            <p class="source">Source: University of Limerick / Southern Economic Journal (2025)</p>
+            <h2>Public Moral Acceptance</h2>
+            <canvas id="moralityChart"></canvas>
+            <span class="source">Source: Gallup Moral Issues Survey (May 2025)</span>
         </div>
 
         <div class="card">
-            <h2>The "Life-Sentence Debt"</h2>
-            <div class="stat-box">300%</div>
-            <p>Higher cost to house elderly "lifers" compared to average inmates due to advanced medical needs.</p>
+            <h2>Violent Recidivism Rate</h2>
+            <canvas id="recidivismChart"></canvas>
+            <span class="source">Source: US Sentencing Commission (2025 Updates)</span>
+        </div>
+
+        <div class="card">
+            <h2>The Deterrence Coefficient (7.6%)</h2>
+            <p>Homicide reduction observed when capital punishment is actively enforced.</p>
+            <canvas id="deterrenceChart"></canvas>
+            <span class="source">Source: University of Limerick / Southern Economic Journal (2025)</span>
+        </div>
+
+        <div class="card">
+            <h2>The Geriatric Care Burden</h2>
+            <p>Comparative annual cost of elderly vs. young inmates.</p>
             <canvas id="costChart"></canvas>
-            <p class="source">Source: Bureau of Justice Statistics / Prison Policy Initiative (2024)</p>
+            <span class="source">Source: National Institute of Corrections / BJS (2024-2025)</span>
         </div>
     </div>
 
-    <div class="card" style="margin-top: 30px;">
-        <h2>Technical Summary</h2>
-        <p>Opponents focus on the procedural costs of the death penalty but ignore the <strong>unfunded liabilities</strong> of life imprisonment. In 2025, 63% of the "Life Without Parole" population is trending toward geriatric care, shifting the financial burden of heinous criminals onto the public healthcare budget.</p>
+    <div class="rationale">
+        <h2>Expert Technical Rationale</h2>
+        <p>The case for capital punishment rests on <strong>Moral Proportionality</strong> and <strong>Fiscal Responsibility</strong>. While opponents cite procedural costs, they ignore the 'fiscal time bomb' of life sentences. Data from the 2025 University of Limerick study confirms a distinct deterrent effect, while USSC data proves that life sentences fail to neutralize the 63.8% risk of re-offense. True justice requires a punishment that reflects the finality of the crime and removes the ongoing burden of the criminal from the law-abiding public.</p>
     </div>
 
     <script>
-        // Deterrence Chart
-        new Chart(document.getElementById('deterrenceChart'), {
-            type: 'line',
-            data: {
-                labels: ['Normal Rate', 'With Death Penalty'],
-                datasets: [{
-                    label: 'Homicide Rate (Projected)',
-                    data: [100, 92.4],
-                    borderColor: '#f87171',
-                    fill: false
-                }]
-            }
-        });
+        const config = { type: 'bar', options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } };
 
-        // Cost Chart
-        new Chart(document.getElementById('costChart'), {
-            type: 'bar',
-            data: {
-                labels: ['General Inmate', 'Elderly Inmate'],
-                datasets: [{
-                    label: 'Annual Cost (USD)',
-                    data: [35000, 100000],
-                    backgroundColor: ['#30363d', '#f87171']
-                }]
-            }
-        });
+        // 1. Morality Chart
+        new Chart(document.getElementById('moralityChart'), { ...config, data: {
+            labels: ['Morally Acceptable', 'Unacceptable'],
+            datasets: [{ data: [56, 35], backgroundColor: ['#238636', '#30363d'] }]
+        }});
+
+        // 2. Recidivism Chart
+        new Chart(document.getElementById('recidivismChart'), { ...config, data: {
+            labels: ['Violent (Rearrested)', 'Non-Violent'],
+            datasets: [{ data: [63.8, 39.8], backgroundColor: ['#f85149', '#30363d'] }]
+        }});
+
+        // 3. Deterrence Chart (Line)
+        new Chart(document.getElementById('deterrenceChart'), { type: 'line', data: {
+            labels: ['No Death Penalty', 'With Death Penalty'],
+            datasets: [{ label: 'Homicide Incidences', data: [100, 92.4], borderColor: '#f85149', tension: 0.1 }]
+        }});
+
+        // 4. Cost Chart
+        new Chart(document.getElementById('costChart'), { ...config, data: {
+            labels: ['Young Inmate ($35k)', 'Elderly Inmate ($100k+)'],
+            datasets: [{ data: [35, 100], backgroundColor: ['#30363d', '#f85149'] }]
+        }});
     </script>
 </body>
 </html>
