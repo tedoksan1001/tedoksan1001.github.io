@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Justice Archive | Technical Rationale 2026</title>
+    <title>Justice Archive | Unified Technical Data 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #0d1117; color: #c9d1d9; padding: 30px; line-height: 1.6; }
@@ -15,7 +15,7 @@
         
         h1 { color: #f85149; text-align: center; margin-bottom: 5px; font-weight: 800; font-size: 1.8em; }
         .subtitle { text-align: center; color: #8b949e; margin-bottom: 25px; font-size: 0.9em; }
-        h2 { color: #ffffff; font-size: 1.05em; margin-bottom: 12px; border-left: 3px solid #f85149; padding-left: 10px; font-weight: 600; }
+        h2 { color: #ffffff; font-size: 1em; margin-bottom: 12px; border-left: 3px solid #f85149; padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
         .expert-section { background: #21262d; padding: 20px; border-radius: 10px; border: 1px solid #30363d; margin-top: 20px; }
         .quote-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
@@ -28,12 +28,12 @@
 <body>
 
 <div class="container">
-    <h1>Capital punishment: Technical rationale</h1>
-    <p class="subtitle">Evidence-based repository for moral equilibrium and public safety (2026)</p>
+    <h1>Capital Punishment: Technical Rationale</h1>
+    <p class="subtitle">Evidence-Based Repository for Moral Equilibrium and Public Safety (2026)</p>
 
     <div class="dashboard">
         <div class="card">
-            <h2>Public moral acceptance</h2>
+            <h2>Public Moral Acceptance</h2>
             <div class="chart-container">
                 <canvas id="moralityChart"></canvas>
             </div>
@@ -41,15 +41,15 @@
         </div>
 
         <div class="card">
-            <h2>Deterrence coefficient</h2>
+            <h2>Deterrence Coefficient</h2>
             <div class="chart-container">
                 <canvas id="deterrenceChart"></canvas>
             </div>
-            <span class="source">Source: Limerick Study (7.6% Homicide Reduction)</span>
+            <span class="source">Source: Isaac Ehrlich (7-8 Lives Saved/Execution)</span>
         </div>
 
         <div class="card">
-            <h2>Violent recidivism risk</h2>
+            <h2>Violent Recidivism Risk</h2>
             <div class="chart-container">
                 <canvas id="recidivismChart"></canvas>
             </div>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="card">
-            <h2>Geriatric fiscal burden</h2>
+            <h2>Geriatric Fiscal Burden</h2>
             <div class="chart-container">
                 <canvas id="costChart"></canvas>
             </div>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="expert-section">
-        <h2 style="border:none; padding:0; font-size: 0.9em;">Philosophical foundations & Technical summary</h2>
+        <h2 style="border:none; padding:0; font-size: 0.9em;">Philosophical Foundations & Technical Summary</h2>
         <div class="quote-grid">
             <div class="quote-card">"If he committed murder, he must die." <br><strong>— Kant</strong></div>
             <div class="quote-card">"Punishment is the criminal's right." <br><strong>— Hegel</strong></div>
@@ -80,6 +80,7 @@
 </div>
 
 <script>
+    // Uniform Chart Configuration
     const commonOptions = {
         maintainAspectRatio: false,
         responsive: true,
@@ -100,28 +101,28 @@
         }
     };
 
-    // 1. Morality
+    // 1. Morality (Doughnut)
     new Chart(document.getElementById('moralityChart'), {
         type: 'doughnut',
         data: { labels: ['Acceptable', 'Unacceptable', 'Unsure'], datasets: [{ data: [56, 35, 9], backgroundColor: ['#f85149', '#30363d', '#484f58'], borderColor: '#0d1117', borderWidth: 2 }] },
         options: commonOptions
     });
 
-    // 2. Deterrence (Fixed: 100% to 92.4%)
+    // 2. Deterrence (Line)
     new Chart(document.getElementById('deterrenceChart'), {
         type: 'line',
-        data: { labels: ['Base (No DP)', 'Active (DP)'], datasets: [{ label: 'Homicide Rate %', data: [100, 92.4], borderColor: '#f85149', backgroundColor: 'rgba(248, 81, 73, 0.1)', fill: true, tension: 0.3 }] },
-        options: { ...commonOptions, scales: { y: { min: 90, max: 105, ticks: { color: '#8b949e' } } } }
+        data: { labels: ['Base', 'Active'], datasets: [{ label: 'Homicide Incidents', data: [108, 100], borderColor: '#f85149', backgroundColor: 'rgba(248, 81, 73, 0.1)', fill: true, tension: 0.3 }] },
+        options: commonOptions
     });
 
-    // 3. Recidivism
+    // 3. Recidivism (Bar)
     new Chart(document.getElementById('recidivismChart'), {
         type: 'bar',
         data: { labels: ['Violent (63.8%)', 'Non-Violent'], datasets: [{ data: [63.8, 39.8], backgroundColor: ['#f85149', '#30363d'] }] },
         options: barOptions
     });
 
-    // 4. Cost
+    // 4. Cost (Horizontal Bar)
     new Chart(document.getElementById('costChart'), {
         type: 'bar',
         indexAxis: 'y',
