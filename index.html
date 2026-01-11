@@ -1,116 +1,82 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ağ Günlüğü</title>
-
+    <title>Justice Archive | Pro-Capital Punishment Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f4f4f9;
-            margin: 0;
-            color: #333;
-        }
-        header {
-            background: #4a90e2;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.7;
-        }
-        #secretBtn {
-            display: block;
-            margin: 40px auto 70px;
-            padding: 12px 25px;
-            background: #4a90e2;
-            border: none;
-            color: white;
-            font-size: 1em;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        #secretBtn:hover {
-            transform: scale(1.1);
-            background: #3b7ac2;
-        }
-        #bigMessage {
-            display: none;
-            text-align: center;
-            font-size: 3.3rem;
-            font-weight: bold;
-            color: #d00;
-            margin-top: 40px;
-            animation: pop 0.8s ease-out forwards;
-        }
-        @keyframes pop {
-            0% { transform: scale(0.1); opacity: 0; }
-            70% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); }
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0e14; color: #d1d5db; padding: 2% 10%; line-height: 1.6; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 12px; }
+        h1 { color: #f87171; text-align: center; font-size: 2.5em; margin-bottom: 40px; }
+        h2 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #ffffff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #30363d; }
+        th { color: #f87171; }
+        .highlight { color: #f87171; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Capital Justice: Data & Rationale (2026)</h1>
 
-    <header>
-        <h1>Ağ Günlüğü: İnternetin Hayatıma Etkisi</h1>
-    </header>
+    <div class="dashboard">
+        <div class="card">
+            <h2>The Case for Absolute Incapacitation</h2>
+            <p>Percentage of violent offenders who commit a new crime within 3 years of release.</p>
+            <canvas id="recidivismChart"></canvas>
+            <p style="font-size: 0.8em; margin-top: 10px;">Source: USSC Federal Recidivism Analysis</p>
+        </div>
 
-    <main>
+        <div class="card">
+            <h2>Global Context (2024-2025)</h2>
+            <table>
+                <tr><th>Country</th><th>2024 Executions</th><th>Trend</th></tr>
+                <tr><td>Iran</td><td>972+</td><td>UP (14%)</td></tr>
+                <tr><td>Saudi Arabia</td><td>345+</td><td>UP (32%)</td></tr>
+                <tr><td>Iraq</td><td>63+</td><td>UP (390%)</td></tr>
+                <tr><td>United States</td><td>25</td><td>STABLE</td></tr>
+            </table>
+            <p style="font-size: 0.8em;">Data reflects highest execution figures since 2015.</p>
+        </div>
 
-        <p>İnternet, günlük hayatımın merkezine yerleşmiş durumda. Sabah uyanır uyanmaz haberleri kontrol etmekten, ders çalışırken kaynak bulmaya kadar çoğu işi onunla yapıyorum. Özellikle araştırma yaparken internetin hızından ve çeşitliliğinden faydalanıyorum. Kütüphanelerde saatler sürecek bir bilgiyi birkaç dakikada bulmak büyük kolaylık sağlıyor.</p>
+        <div class="card">
+            <h2>Moral Acceptance Index</h2>
+            <p>Public response to: "Is the death penalty morally justified for murder?"</p>
+            <canvas id="moralityChart"></canvas>
+        </div>
+    </div>
 
-        <p>İletişim konusunda da internet belirleyici oldu. Arkadaşlarımla mesajlaşmak, öğretmenlerin duyurularını takip etmek ve okul ödevlerimi göndermek için sürekli çevrim içiyim. Bu durum zaman kazandırsa da bazen gereğinden fazla ekran süresi harcamama neden oluyor. Bu yüzden interneti kullanırken süre kontrolü yapmaya çalışıyorum.</p>
-
-        <p>Eğitim alanında ise internet benim için en büyük destek. Çözemediğim sorular için videolara bakıyor, anlamadığım konularla ilgili farklı kaynakları karşılaştırıyorum. Bu sayede hem daha hızlı öğreniyorum hem de tek bir kaynağa bağlı kalmamış oluyorum. İnternetteki içerik çeşitliliği öğrenme sürecimi daha verimli hâle getiriyor.</p>
-
-        <p>Sonuç olarak internet, doğru kullanıldığında bana zaman kazandıran, bilgiye hızlı ulaşmamı sağlayan ve iletişimi kolaylaştıran bir araç. Ancak fazla kullanımın getirdiği dikkat dağınıklığı ve zaman kaybı gibi etkiler de var. Bu yüzden interneti bilinçli, kontrollü ve amaç odaklı kullanmanın önemli olduğunu düşünüyorum.</p>
-
-        <button id="secretBtn">© 2025 Ağ Günlüğü</button>
-
-        <div id="bigMessage">AYŞE HOCAM SİZİ ÇOK SEVİYORUZ</div>
-
-        <!-- Gizli ses oynatıcı -->
-        <audio id="audioPlayer" src="1.mp3"></audio>
-
-    </main>
-
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <div class="card" style="margin-top: 20px;">
+        <h2>The "Just Deserts" Legal Framework</h2>
+        <p>In 2025, University of Limerick research confirmed that the death penalty has a <strong>7.6% deterrent effect</strong> on homicides when applied consistently. Even without deterrence, the <span class="highlight">Retributive Model</span> argues that the state's failure to execute a murderer is a betrayal of the victim’s right to equal value under the law.</p>
+    </div>
 
     <script>
-        const btn = document.getElementById("secretBtn");
-        const msg = document.getElementById("bigMessage");
-        const audio = document.getElementById("audioPlayer");
+        // Recidivism Bar Chart
+        new Chart(document.getElementById('recidivismChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Violent Offenders', 'Non-Violent Offenders'],
+                datasets: [{
+                    label: '% Rearrested',
+                    data: [63.8, 39.8],
+                    backgroundColor: ['#f87171', '#30363d']
+                }]
+            }
+        });
 
-        btn.addEventListener("click", () => {
-            msg.style.display = "block";
-
-            // Ses çal
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log("iOS kullanıcı etkileşimi gerekli"));
-
-            // Confetti
-            const end = Date.now() + 2000;
-            (function boom() {
-                confetti({
-                    particleCount: 15,
-                    spread: 80,
-                    startVelocity: 40,
-                    origin: { x: Math.random(), y: Math.random() - 0.1 }
-                });
-                if (Date.now() < end) requestAnimationFrame(boom);
-            })();
+        // Morality Pie Chart
+        new Chart(document.getElementById('moralityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Morally Justified', 'Not Justified', 'Unsure'],
+                datasets: [{
+                    data: [64, 25, 11],
+                    backgroundColor: ['#f87171', '#4b5563', '#1f2937'],
+                    borderColor: '#0b0e14'
+                }]
+            }
         });
     </script>
-
 </body>
 </html>
