@@ -3,270 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karbonhidratların Kimyası | Master Veri Portalı</title>
+    <title>Karbonhidrat Ansiklopedisi | Dark Master</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-deep: #050505;
-            --card-deep: #0f1115;
-            --neon-green: #00ff88;
-            --neon-blue: #00d4ff;
-            --neon-purple: #bc13fe;
-            --text-gray: #a0a0a0;
+            --dark-bg: #0a0a0a;
+            --card-bg: #161616;
+            --neon-green: #39ff14;
+            --pure-white: #ffffff;
+            --soft-gray: #b0b0b0;
+            --accent-blue: #00d4ff;
         }
 
         body { 
-            background-color: var(--bg-deep); 
-            color: #e0e0e0; 
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: -0.02em;
+            background-color: var(--dark-bg); 
+            color: var(--pure-white);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
         }
 
-        /* Navigasyon - Tamamen Karanlık */
-        .navbar {
-            background: rgba(5, 5, 5, 0.9) !important;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #222;
+        h1, h2, h3, h4 { 
+            font-family: 'Orbitron', sans-serif; 
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 20px;
         }
 
-        /* Hero Alanı */
-        .hero-visual {
-            background: radial-gradient(circle at center, #112211 0%, #050505 100%);
-            padding: 120px 0;
-            border-bottom: 1px solid #1a1a1a;
+        .hero-section {
+            padding: 100px 0;
+            background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%);
+            border-bottom: 3px solid var(--neon-green);
+            text-align: center;
         }
 
-        /* Kartlar - Beyaz Kutu Yok */
-        .cyber-card {
-            background: var(--card-deep);
-            border: 1px solid #1a1a1a;
-            border-radius: 12px;
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 15px;
             padding: 30px;
-            height: 100%;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 30px;
+            transition: 0.3s ease-in-out;
         }
-        .cyber-card:hover {
+
+        .info-card:hover {
             border-color: var(--neon-green);
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
-            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
         }
 
-        .mono-text { font-family: 'JetBrains Mono', monospace; color: var(--neon-green); }
+        .highlight-text { color: var(--neon-green); font-weight: bold; }
+        .blue-text { color: var(--accent-blue); font-weight: bold; }
 
-        /* Tablo Karartma */
-        .table { color: #e0e0e0; --bs-table-bg: transparent; border-color: #222; }
-        .table thead { border-bottom: 2px solid var(--neon-blue); }
-
-        /* Accordion Karartma */
-        .accordion-item { background: transparent; border: 1px solid #222; margin-bottom: 10px; border-radius: 8px !important; }
-        .accordion-button { background: var(--card-deep); color: var(--neon-blue); border-radius: 8px !important; }
-        .accordion-button:not(.collapsed) { background: #15181d; color: var(--neon-green); box-shadow: none; }
-        .accordion-body { color: var(--text-gray); background: #0a0a0a; }
-
-        /* Özel İnce Çizgi */
-        .separator { width: 50px; height: 3px; background: var(--neon-green); margin: 20px 0; }
-
-        /* Badge */
-        .badge-cyber {
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            font-size: 0.7rem;
-            padding: 4px 10px;
+        .formula-box {
+            background: #000;
+            border: 1px dashed var(--neon-green);
+            padding: 20px;
+            display: inline-block;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            color: var(--neon-green);
+            margin: 20px 0;
         }
+
+        .table { color: var(--pure-white) !important; border-color: #444; }
+        .table thead th { color: var(--neon-green); border-bottom: 2px solid var(--neon-green); text-align: center; }
+        .table tbody td { border-bottom: 1px solid #222; vertical-align: middle; }
+
+        .source-tag { font-size: 0.75rem; color: var(--soft-gray); font-style: italic; }
+
+        .feature-list i { color: var(--neon-green); margin-right: 10px; }
+        .feature-list li { list-style: none; margin-bottom: 12px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-dark sticky-top">
+    <header class="hero-section">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-microchip me-2 text-success"></i>BIO-DATA v3.0</a>
-            <div class="navbar-nav ms-auto flex-row">
-                <a class="nav-link px-3 active" href="#struct">YAPI</a>
-                <a class="nav-link px-3" href="#class">SINIFLAR</a>
-                <a class="nav-link px-3" href="#meta">METABOLİZMA</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hero-visual text-center">
-        <div class="container">
-            <h1 class="display-1 fw-bold mb-3 animate__animated animate__pulse">KARBONHİDRATLAR</h1>
-            <p class="lead text-success mono-text">Polihidroksilik Aldehit ve Keton Türevleri Analizi</p>
-            <div class="d-flex justify-content-center gap-3 mt-4">
-                <span class="badge badge-cyber">REF: 1-37</span>
-                <span class="badge badge-cyber">4 KKAL/G</span>
-                <span class="badge badge-cyber">C:H:O</span>
-            </div>
+            <h1 class="display-2 animate__animated animate__fadeIn">KARBONHİDRATLAR</h1>
+            <p class="lead" style="color: var(--soft-gray); font-size: 1.5rem;">Yeryüzünün En Yaygın Organik Molekülleri ve Yaşamın Yakıtı</p>
         </div>
     </header>
 
     <main class="container my-5">
         
-        <section id="struct" class="mb-5">
-            <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="cyber-card">
-                        <h2 class="text-white mb-4">1. Kimyasal Kimlik ve Parametreler</h2>
-                        <p class="text-gray">Karbonhidratlar, en az bir asimetrik karbon atomu içeren (Dihidroksiaseton hariç) kompleks organik yapılardır. Temel olarak karbonun hidratı olarak bilinseler de, modern biyokimyada <strong>fonksiyonel grup</strong> üzerinden tanımlanırlar.</p>
-                        
-                        <div class="row mt-4">
-                            <div class="col-md-6">
-                                <h6 class="text-success"><i class="fas fa-code me-2"></i>Formülasyon</h6>
-                                <div class="p-3 bg-black rounded border border-secondary mono-text mb-3">
-                                    General: C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub><br>
-                                    Glucose: C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>
-                                </div>
-                                <p class="small text-gray">Deoksiriboz gibi (C₅H₁₀O₄) şekerler oksijen eksikliği nedeniyle bu genel kuralı ihlal eder.</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-success"><i class="fas fa-project-diagram me-2"></i>İzomeri Farkları</h6>
-                                <p class="small text-gray">
-                                    <strong>Epimerler:</strong> Sadece bir asimetrik karbonun dizilişi farklı olanlar (Örn: Glikoz ve Galaktoz).<br>
-                                    <strong>Optik Aktivite:</strong> Polarize ışığı sağa (D-serisi) veya sola (L-serisi) çevirme yetenekleri. Canlılarda çoğunlukla D-izomerleri bulunur.
-                                </p>
-                            </div>
+        <section class="mb-5">
+            <div class="info-card">
+                <h2>1. KİMYASAL KİMLİK VE YAPI</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p>Karbonhidratlar; karbon (C), hidrojen (H) ve oksijenden (O) oluşan, temel kimlikleri itibarıyla <span class="highlight-text">polihidroksilik alkollerin aldehit veya keton türevleri</span> olan hayati bileşiklerdir <span class="source-tag">[2, 7-9]</span>.</p>
+                        <div class="text-center">
+                            <div class="formula-box">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub> veya C<sub>n</sub>H<sub>2n</sub>O<sub>n</sub></div>
                         </div>
-                        
+                        <p><strong>Önemli Detaylar:</strong> 
+                            Sadece bir enerji kaynağı değil, aynı zamanda <span class="blue-text">asimetrik karbon atomları</span> sayesinde optik aktivite gösteren, ışığı sağa veya sola çevirebilen karmaşık geometrik yapılardır <span class="source-tag">[28]</span>.
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="p-3 bg-black border border-secondary rounded">
+                            <h5 class="text-warning">İstisnalar! <span class="source-tag">[2, 6]</span></h5>
+                            <ul class="small">
+                                <li><strong>Deoksiriboz (C₅H₁₀O₄):</strong> Oksijen sayısı uymadığı halde bir şekerdir.</li>
+                                <li><strong>Laktik Asit (C₃H₆O₃):</strong> Formüle uyduğu halde bir şeker değildir.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cyber-card border-primary">
-                        <h5 class="text-info">Endüstriyel & Biyolojik Roller</h5>
-                        <ul class="list-unstyled small mt-3">
-                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i><strong>Gıda:</strong> Stabilizör, jel oluşturucu (Pektin).</li>
-                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i><strong>İletişim:</strong> Glikolipitler ile hücre tanıma.</li>
-                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i><strong>Yapı:</strong> Bakterilerde peptidoglikan duvarı.</li>
-                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i><strong>Nükleik:</strong> DNA/RNA omurga bileşeni.</li>
+                
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>2. FONKSİYONEL GENİŞLİK</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="info-card h-100">
+                        <h4><i class="fas fa-microchip"></i> Hücresel Haberleşme</h4>
+                        <p>Hücre membranına bağlı karbonhidratlar (glikoproteinler ve glikolipidler), <span class="highlight-text">hücresel haberleşme</span> ve moleküler tanınma olaylarında (reseptör olarak) görev alırlar <span class="source-tag">[6, 12-14]</span>.</p>
+                        <ul class="feature-list">
+                            <li><li><i class="fas fa-check"></i> Hücrelerin birbirini tanıması</li></li>
+                            <li><li><i class="fas fa-check"></i> Hormonların hücreye bağlanması</li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-card h-100">
+                        <h4><i class="fas fa-industry"></i> Gıda Endüstrisi</h4>
+                        <p>Sadece besin değil, endüstriyel yardımcıdırlar <span class="source-tag">[4, 16, 17]</span>:</p>
+                        <ul class="feature-list">
+                            <li><li><i class="fas fa-flask"></i> <strong>Kıvam Verici:</strong> Soslarda ve krema yapısında.</li></li>
+                            <li><li><i class="fas fa-vial"></i> <strong>Stabilizör:</strong> Ürünlerin bozulmadan kalmasını sağlar.</li></li>
+                            <li><li><i class="fas fa-cookie"></i> <strong>Jel Oluşturucu:</strong> Şekerleme ve jöle üretiminde.</li></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="class" class="mb-5">
-            <h2 class="mb-4 text-white">2. Kapsamlı Sınıflandırma Matrisi</h2>
-            <div class="cyber-card">
+        <section class="mb-5">
+            <h2>3. DETAYLI SINIFLANDIRMA</h2>
+            <div class="info-card">
+                <h4>Karbon Zinciri Uzunluğuna Göre <span class="source-tag">[8, 15, 18, 24]</span></h4>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Kategori</th>
-                                <th>Karbon (C)</th>
-                                <th>Fonksiyonel Grup</th>
-                                <th>Önemli Örnekler</th>
+                                <th>Karbon Sayısı</th>
+                                <th>Biyokimyasal Adı</th>
+                                <th>Kritik Örnekler</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Trioz</td><td>3C</td><td>Aldoz/Ketoz</td><td>Gliseraldehit, Dihidroksiaseton</td></tr>
-                            <tr><td>Pentoz</td><td>5C</td><td>Aldoz</td><td>Riboz, Ksiloz, Deoksiriboz</td></tr>
-                            <tr><td>Heksoz</td><td>6C</td><td>Aldoz/Ketoz</td><td>Glikoz, Fruktoz, Galaktoz, Mannoz</td></tr>
-                            <tr><td>Heptoz</td><td>7C</td><td>Ketoz</td><td>Sedoheptüloz (Fotosentez ara ürünü)</td></tr>
-                            <tr><td>Nanoz</td><td>9C</td><td>Asidik</td><td>Nöraminik asit, Sialik asit</td></tr>
+                            <tr><td>3 Karbon (Trioz)</td><td>Gliseraldehit</td><td>Metabolizmanın ilk basamak ara ürünü.</td></tr>
+                            <tr><td>4 Karbon (Tetroz)</td><td>Eritroz</td><td>Bazı bitki metabolizmalarında görülür.</td></tr>
+                            <tr><td>5 Karbon (Pentoz)</td><td>Riboz & Deoksiriboz</td><td>DNA ve RNA'nın omurgasını oluşturur.</td></tr>
+                            <tr><td>6 Karbon (Heksoz)</td><td>Glukoz & Fruktoz</td><td>En temel enerji molekülleri.</td></tr>
+                            <tr><td>7 Karbon (Heptoz)</td><td>Sedoheptüloz</td><td>Fotosentezin ara basamaklarında bulunur.</td></tr>
+                            <tr><td>9 Karbon (Nanoz)</td><td>Sialik Asit</td><td>Hücre zarlarında koruyucu görev yapar.</td></tr>
                         </tbody>
                     </table>
                 </div>
-
-                <div class="accordion mt-4" id="complexAcc">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#c1">Disakkaritler ve Bağ Kimyası</button>
-                        </h2>
-                        <div id="c1" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                İki monosakkarit <strong>Glikozidik Bağ</strong> ile birleşir. 
-                                <ul>
-                                    <li><strong>Sükroz:</strong> Glikoz + Fruktoz (İndirgen olmayan şeker)</li>
-                                    <li><strong>Laktoz:</strong> Glikoz + Galaktoz (Süt şekeri)</li>
-                                    <li><strong>Maltoz:</strong> Glikoz + Glikoz ($\alpha$ 1-4 bağı)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#c2">Polisakkaritler: Polimerik Devler</button>
-                        </h2>
-                        <div id="c2" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <strong>Nişasta:</strong> Amiloz ve Amilopektin karışımıdır.<br>
-                                <strong>Glikojen:</strong> Karaciğer ve kaslarda depolanır, çok dallanmış bir yapıdır.<br>
-                                <strong>Selüloz:</strong> $\beta$ 1-4 bağları nedeniyle insanlar tarafından sindirilemez, müthiş bir yapısal dayanıklılık sağlar.
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 [attachment_0](attachment)
             </div>
-        </section>
 
-        <section id="meta" class="mb-5">
-            <h2 class="mb-4 text-white">3. Gelişmiş Metabolik Yolaklar</h2>
-            <div class="row g-4">
-                <div class="col-md-7">
-                    <div class="cyber-card">
-                        <h5 class="text-success mb-3"><i class="fas fa-microscope me-2"></i>Glukoz Metabolizması</h5>
-                        <div class="p-3 border-start border-success mb-3">
-                            <strong class="text-white">Glikoliz:</strong> Şekerin sitoplazmada yıkılarak ATP ve Pirüvat oluşturması.
-                        </div>
-                        <div class="p-3 border-start border-primary mb-3">
-                            <strong class="text-white">Glikoneojenez:</strong> Laktat, gliserol veya amino asitlerden "sıfırdan" glikoz sentezi. Özellikle açlık anında hayati önem taşır.
-                        </div>
-                        <div class="p-3 border-start border-purple">
-                            <strong class="text-white">Pentoz Fosfat Yolu:</strong> Enerji üretmez, ancak DNA için <strong>Riboz</strong> ve yağ sentezi için <strong>NADPH</strong> üretir.
-                        </div>
+            <div class="info-card">
+                <h4>Molekül Birimine Göre <span class="source-tag">[8, 18-23]</span></h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="highlight-text">Disakkarit Denklemleri:</h5>
+                        <ul class="feature-list">
+                            <li><li><i class="fas fa-link"></i> <strong>Maltoz:</strong> Glukoz + Glukoz</li></li>
+                            <li><li><i class="fas fa-link"></i> <strong>Sükroz:</strong> Glukoz + Fruktoz</li></li>
+                            <li><li><i class="fas fa-link"></i> <strong>Laktoz:</strong> Glukoz + Galaktoz</li></li>
+                        </ul>
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="cyber-card" style="background: #110000; border-color: #440000;">
-                        <h5 class="text-danger mb-3"><i class="fas fa-syringe me-2"></i>Kan Şekeri Kontrolü</h5>
-                        <p class="small text-gray">Normal açlık plazma glukozu: <strong>60-70 mg/dL</strong>.</p>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>İnsülin</span>
-                            <span class="text-danger"><i class="fas fa-arrow-down"></i> Düşürür</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>Glukagon</span>
-                            <span class="text-success"><i class="fas fa-arrow-up"></i> Yükseltir</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Epinefrin</span>
-                            <span class="text-success"><i class="fas fa-arrow-up"></i> Yükseltir</span>
-                        </div>
-                        
+                    <div class="col-md-6">
+                        <h5 class="highlight-text">Polisakkarit Çeşitleri:</h5>
+                        <p><strong>Nişasta:</strong> Bitkisel depo. <br> <strong>Glikojen:</strong> Hayvansal depo. <br> <strong>Selüloz:</strong> Bitkisel yapı (insanda sindirilmez). <br> <strong>Kitin:</strong> Mantar duvarı ve böcek dış iskeleti.</p>
                     </div>
                 </div>
             </div>
-            
         </section>
 
         <section class="mb-5">
-            <div class="cyber-card">
-                <h3 class="text-white mb-4">Laboratuvar Verileri & Ayıraçlar</h3>
+            <h2>4. METABOLİK YOLLAR VE KAN ŞEKERİ</h2>
+            <div class="info-card">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h4>Temel Metabolik Süreçler <span class="source-tag">[10, 32]</span></h4>
+                        <ul class="feature-list">
+                            <li><li><i class="fas fa-fire"></i> <strong>Glikoliz:</strong> Şekerin enerjiye (ATP) dönüşümü.</li></li>
+                            <li><li><i class="fas fa-plus-circle"></i> <strong>Glikojenez:</strong> Şekerin depolanması.</li></li>
+                            <li><li><i class="fas fa-minus-circle"></i> <strong>Glikojenoliz:</strong> Depo şekerin kana geri verilmesi.</li></li>
+                            <li><li><i class="fas fa-magic"></i> <strong>Glikoneojenez:</strong> Yağ ve proteinden şeker sentezi.</li></li>
+                            <li><li><i class="fas fa-dna"></i> <strong>Pentoz Fosfat Yolu:</strong> DNA ve RNA sentezi için ham madde üretimi.</li></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-5 bg-black p-4 rounded border border-danger">
+                        <h4 class="text-danger">Kritik Kan Dengesi</h4>
+                        <p>Açlık normali: <span class="highlight-text">60-70 mg/dL</span> <span class="source-tag">[32, 36]</span></p>
+                        <p><span class="text-info">İNSÜLİN:</span> Kandaki şekeri hücreye sokarak seviyeyi <strong>düşürür</strong>.</p>
+                        <p><span class="text-warning">GLUKAGON:</span> Karaciğerdeki depoyu çözerek seviyeyi <strong>yükseltir</strong>.</p>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <div class="info-card">
+                <h2>5. FİZİKSEL VE KİMYASAL KARAKTERİSTİKLER</h2>
                 <div class="row text-center">
-                    <div class="col-md-4">
-                        <div class="p-3">
-                            <i class="fas fa-vials fa-2x text-warning mb-2"></i>
-                            <h6>Benedict Testi</h6>
-                            <p class="small text-gray">İndirgen şekerlerle (Glikoz vb.) ısıtıldığında kiremit kırmızısı çökelek verir.</p>
-                        </div>
+                    <div class="col-md-3">
+                        <h5 class="highlight-text">Tatlılık Derecesi</h5>
+                        <p class="small">Fruktoz (173) en tatlı, Galaktoz (32) en az tatlıdır <span class="source-tag">[26, 27]</span>.</p>
                     </div>
-                    <div class="col-md-4">
-                        <div class="p-3">
-                            <i class="fas fa-eye fa-2x text-info mb-2"></i>
-                            <h6>Polarize Işık</h6>
-                            <p class="small text-gray">Asimetrik karbonlar nedeniyle şekerler ışığı kırar (D/L İzomerleri).</p>
-                        </div>
+                    <div class="col-md-3 border-start border-secondary">
+                        <h5 class="highlight-text">Halka Yapısı</h5>
+                        <p class="small">Şekerler çözeltide <strong>Piranoz</strong> veya <strong>Furanoz</strong> halkasına dönüşür <span class="source-tag">[30]</span>.</p>
                     </div>
-                    <div class="col-md-4">
-                        <div class="p-3">
-                            <i class="fas fa-tint fa-2x text-primary mb-2"></i>
-                            <h6>Çözünürlük</h6>
-                            <p class="small text-gray">Molekül büyüdükçe (Polisakkaritleştikçe) suda çözünürlük azalır.</p>
-                        </div>
+                    <div class="col-md-3 border-start border-secondary">
+                        <h5 class="highlight-text">İndirgen Özellik</h5>
+                        <p class="small">Karbonil grubu serbest olan şekerler "İndirgen Şeker"dir (Örn: Glikoz) <span class="source-tag">[31]</span>.</p>
+                    </div>
+                    <div class="col-md-3 border-start border-secondary">
+                        <h5 class="highlight-text">Çözünürlük</h5>
+                        <p class="small">Molekül büyüdükçe (Polisakkaritleştikçe) suda çözünürlük azalır <span class="source-tag">[26]</span>.</p>
                     </div>
                 </div>
             </div>
@@ -274,11 +241,9 @@
 
     </main>
 
-    <footer class="py-5 border-top border-secondary mt-5">
-        <div class="container text-center">
-            <p class="text-muted small">Referans Kodları: [1] Nelson & Cox (Lehninger), [5] Campbell Biology, [10] Harper's Illustrated Biochemistry.</p>
-            <p class="mono-text" style="font-size: 0.8rem; color: var(--neon-green);">System Status: Stable | Data Integrity: Verified</p>
-        </div>
+    <footer class="text-center py-5 border-top border-secondary bg-black">
+        <p class="text-muted mb-0">Referanslar: Lehninger, Harper, Campbell [1-37]</p>
+        <p class="highlight-text mb-0">© 2026 Karbonhidrat Araştırma ve Eğitim Merkezi</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
