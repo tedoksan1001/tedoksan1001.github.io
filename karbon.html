@@ -3,251 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karbonhidrat Dünyası | İnteraktif Rehber</title>
+    <title>Karbonhidrat Ansiklopedisi | İnteraktif Bilim</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary-green: #2ecc71;
-            --dark-blue: #2c3e50;
-            --light-bg: #f8f9fa;
-            --accent-orange: #e67e22;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --text-main: #f1f5f9;
         }
 
         body { 
-            font-family: 'Open Sans', sans-serif; 
-            background-color: var(--light-bg); 
-            color: #444; 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-
-        /* Hero Section with Glassmorphism */
-        .hero-section { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-            color: white; 
-            padding: 150px 0; 
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        .glass-header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Modern Navigation */
-        .navbar { background: rgba(255, 255, 255, 0.95) !important; backdrop-filter: blur(10px); }
-        .nav-link { color: var(--dark-blue) !important; font-weight: 600; transition: 0.3s; }
-        .nav-link:hover { color: var(--primary-green) !important; }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #1e40af, transparent),
+                        radial-gradient(circle at bottom left, #065f46, transparent);
+            padding: 100px 0;
+        }
 
-        /* Feature Cards */
-        .feature-card {
-            background: white;
+        .data-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 20px;
-            padding: 30px;
-            border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.4s;
+            padding: 25px;
             height: 100%;
-        }
-        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .icon-box {
-            width: 70px;
-            height: 70px;
-            background: rgba(46, 204, 113, 0.1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            transition: 0.3s;
         }
 
-        /* Chemical Formula Highlight */
-        .formula-display {
-            background: var(--dark-blue);
-            color: var(--primary-green);
-            padding: 15px;
-            border-radius: 12px;
+        .data-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+        }
+
+        .formula-code {
+            font-family: 'Fira Code', monospace;
+            background: #000;
+            color: var(--accent-green);
+            padding: 10px 20px;
+            border-radius: 10px;
             display: inline-block;
-            font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
-        /* Timeline/Step Progress for Digestion */
-        .digestion-step {
-            border-left: 4px solid var(--primary-green);
-            padding-left: 25px;
-            margin-bottom: 30px;
+        .badge-tech {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .table-dark-custom {
+            color: var(--text-main);
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table-dark-custom tr { background: var(--card-bg); }
+        .table-dark-custom td, .table-dark-custom th { padding: 15px; border: none; }
+
+        .timeline-box {
+            border-left: 2px solid var(--accent-blue);
+            margin-left: 20px;
+            padding-left: 30px;
             position: relative;
         }
-        .digestion-step::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-green);
-            border-radius: 50%;
-        }
 
-        footer { background: var(--dark-blue); color: white; padding: 50px 0; }
-        
-        .badge-lise { background: var(--accent-orange); color: white; border-radius: 5px; padding: 5px 10px; font-size: 0.75rem; }
+        .timeline-point {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-blue);
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark glass-header sticky-top">
         <div class="container">
-            <a class="navbar-brand text-success fw-bold" href="#">GLUKO-PEDİA</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#yapi">Kimyasal Yapı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gorev">Görevler</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sinif">Sınıflandırma</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sindirim">Sindirim</a></li>
-                </ul>
+            <a class="navbar-brand fw-extrabold fs-3" href="#"><span class="text-success">CARB</span>LAB</a>
+            <div class="ms-auto d-none d-lg-block">
+                <span class="text-muted small"><i class="fas fa-microscope me-2"></i>Biyokimya Veri Merkezi v2026</span>
             </div>
         </div>
     </nav>
 
-    <header class="hero-section text-center">
-        <div class="container animate__animated animate__fadeIn">
-            <h1 class="display-1">Karbonhidratlar</h1>
-            <p class="fs-3">Hücrenin Enerji Santrali, Doğanın Yapı Taşı</p>
-            <a href="#yapi" class="btn btn-success btn-lg mt-4 px-5 py-3 rounded-pill">Keşfetmeye Başla</a>
+    <header class="hero-gradient text-center">
+        <div class="container">
+            <h1 class="display-2 fw-bolder animate__animated animate__fadeInDown">Karbonhidratlar</h1>
+            <p class="lead opacity-75">Moleküler Enerji, Yapısal Mimari ve Hücresel Haberleşmenin Temeli</p>
         </div>
     </header>
 
-    <div class="container my-5">
+    <main class="container my-5">
         
-        <section id="yapi" class="mb-5 py-5">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h2 class="mb-4">1. Kimyasal Mimari</h2>
-                    <p>Karbonhidratlar sadece şeker değildir; onlar atomların mükemmel bir dizilimidir. Karbon (C), Hidrojen (H) ve Oksijen (O) atomları <strong>1:2:1</strong> oranında birleşir.</p>
-                    <div class="formula-display">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub></div>
-                    <p class="mt-3">
-                        <span class="badge-lise">BİLGİ</span> 
-                        Glikoz ve Galaktoz gibi şekerler <strong>izomer</strong>dir. Yani parçaları aynıdır ama kurulumları farklıdır. Tıpkı aynı 10 lego parçasından hem araba hem uçak yapabilmek gibi!
-                    </p>
+        <section class="mb-5">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="data-card">
+                        <span class="badge-tech">Kimyasal Kimlik</span>
+                        <h2>Tanım ve Moleküler Yapı</h2>
+                        <p>Karbonhidratlar (Sakkaritler), yeryüzündeki en yaygın organik moleküllerdir. Kimyasal olarak <strong>polihidroksilik alkollerin aldehit veya keton türevleri</strong>dir.</p>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="formula-code">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub></div>
+                                <p class="small mt-2 text-muted">"Karbonun Hidratı" isminin kaynağı olan temel oran.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>İstisnalar:</strong><br>
+                                • <span class="text-warning">Deoksiriboz:</span> Formüle uymaz (Eksik Oksijen).<br>
+                                • <span class="text-warning">Laktik Asit:</span> Formüle uyar ama karbonhidrat değildir.</p>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
-                <div class="col-md-6 text-center">
-                    
-                    <p class="text-muted mt-2 small">Glikoz ve Fruktozun Atomik Yapısı</p>
+                <div class="col-lg-4">
+                    <div class="data-card" style="background: linear-gradient(45deg, #1e3a8a, #1e293b);">
+                        <h4><i class="fas fa-bolt text-warning me-2"></i>Enerji Karnesi</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li class="mb-3 border-bottom pb-2"><strong>1 Gram:</strong> 4 kcal Enerji</li>
+                            <li class="mb-3 border-bottom pb-2"><strong>Öncelik:</strong> Vücudun 1. derece yakıtı</li>
+                            <li><strong>Beyin:</strong> Günde yaklaşık 120g Glikoz tüketir.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="gorev" class="py-5">
-            <h2 class="text-center mb-5">Hayati Görevleri</h2>
+        <section class="mb-5">
+            <h3 class="mb-4 text-success"><i class="fas fa-sitemap me-2"></i>Gelişmiş Sınıflandırma</h3>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="data-card">
+                        <h5>Karbon Zinciri Uzunluğu (C)</h5>
+                        <table class="table table-dark-custom w-100">
+                            <thead><tr><th>Tip</th><th>Karbon</th><th>Önemli Örnekler</th></tr></thead>
+                            <tbody>
+                                <tr><td>Trioz</td><td>3C</td><td>Gliseraldehit (Metabolizma ara ürünü)</td></tr>
+                                <tr><td>Tetroz</td><td>4C</td><td>Eritroz</td></tr>
+                                <tr><td>Pentoz</td><td>5C</td><td>Riboz (RNA), Deoksiriboz (DNA)</td></tr>
+                                <tr><td>Heksoz</td><td>6C</td><td>Glikoz, Fruktoz, Galaktoz, Mannoz</td></tr>
+                                <tr><td>Heptoz</td><td>7C</td><td>Sedoheptüloz (Fotosentezde görevli)</td></tr>
+                                <tr><td>Nanoz</td><td>9C</td><td>Nöraminik asit, Sialik asit</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="data-card">
+                        <h5>Şeker Ünitesi Sayısı</h5>
+                        <div class="accordion accordion-flush" id="sugarAccordion">
+                            <div class="accordion-item bg-transparent text-white">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mono">Monosakkaritler (Tekil)</button>
+                                </h2>
+                                <div id="mono" class="accordion-collapse collapse show">
+                                    <div class="accordion-body small">Hidrolizle parçalanamayan en basit birimler. <strong>Aldozlar</strong> (Aldehit grubu: Glikoz) ve <strong>Ketozlar</strong> (Keton grubu: Fruktoz) olarak ikiye ayrılırlar.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item bg-transparent text-white">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#di">Disakkaritler (İkili)</button>
+                                </h2>
+                                <div id="di" class="accordion-collapse collapse">
+                                    <div class="accordion-body small">
+                                        • <strong>Maltoz:</strong> Glukoz + Glukoz (Arpa)<br>
+                                        • <strong>Laktoz:</strong> Glukoz + Galaktoz (Süt)<br>
+                                        • <strong>Sükroz:</strong> Glukoz + Fruktoz (Pancar)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item bg-transparent text-white">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button bg-transparent text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#poly">Polisakkaritler (Çoklu)</button>
+                                </h2>
+                                <div id="poly" class="accordion-collapse collapse">
+                                    <div class="accordion-body small">10'dan fazla birim. <strong>Nişasta:</strong> Bitkisel depo, <strong>Glikojen:</strong> Hayvansal depo, <strong>Selüloz:</strong> Yapısal (Sindirilmez), <strong>Kitin:</strong> Yapısal (Azotlu).</div>
+                                </div>
+                            </div>
+                        </div>
+                        [attachment_0](attachment)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h3 class="mb-4 text-primary"><i class="fas fa-flask-vial me-2"></i>Kimyasal & Fiziksel Karakterler</h3>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-bolt fa-2x text-success"></i></div>
-                        <h4>Hızlı Enerji</h4>
-                        <p>Vücudun ilk başvurduğu enerji kaynağıdır. Özellikle beyin sadece glikozla çalışmayı tercih eder.</p>
+                    <div class="data-card border-top border-4 border-primary">
+                        <h6>Tatlılık Endeksi</h6>
+                        <p class="small text-muted">Sakkaroz = 100 baz alınırsa:</p>
+                        <div class="d-flex justify-content-between"><span>Fruktoz</span><span class="text-success">173</span></div>
+                        <div class="d-flex justify-content-between"><span>Glikoz</span><span>74</span></div>
+                        <div class="d-flex justify-content-between"><span>Galaktoz</span><span class="text-danger">32</span></div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-layer-group fa-2x text-info"></i></div>
-                        <h4>Yapı ve Destek</h4>
-                        <p>Bitkilerdeki <strong>Selüloz</strong> yeryüzündeki en sert yapısal karbonhidrattır. Odunun ana maddesidir!</p>
+                    <div class="data-card border-top border-4 border-info">
+                        <h6>Halka Yapısı & Optik</h6>
+                        <p class="small">5 ve 6 karbonlu şekerler çözeltide <strong>Piranoz</strong> veya <strong>Furanoz</strong> halkasına dönüşür. Asimetrik karbon atomları sayesinde polarize ışığı çevirirler.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="icon-box"><i class="fas fa-dna fa-2x text-danger"></i></div>
-                        <h4>Genetik Temel</h4>
-                        <p>DNA ve RNA'nın omurgasını 5 karbonlu şekerler olan <strong>Deoksiriboz</strong> ve <strong>Riboz</strong> oluşturur.</p>
+                    <div class="data-card border-top border-4 border-warning">
+                        <h6>İndirgen Özellik</h6>
+                        <p class="small">Serbest karbonil grubu olan şekerler "İndirgen Şeker"dir. Laboratuvarda <strong>Benedict</strong> ayıracı ile kiremit kırmızısı verirler.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="sinif" class="py-5 bg-white rounded-4 shadow-sm p-4 my-5">
-            <h2 class="mb-4">Sınıflandırma Rehberi</h2>
-            <div class="row">
-                <div class="col-md-4 border-end">
-                    <h5 class="text-success text-uppercase">Monosakkaritler</h5>
-                    <p class="small">Tek başına bulunurlar, sindirilemezler.</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-circle-check text-success"></i> Glukoz (Üzüm Şekeri)</li>
-                        <li><i class="fas fa-circle-check text-success"></i> Fruktoz (Meyve Şekeri)</li>
-                        <li><i class="fas fa-circle-check text-success"></i> Galaktoz (Süt Şekeri)</li>
-                    </ul>
-                </div>
-                <div class="col-md-4 border-end px-4">
-                    <h5 class="text-info text-uppercase">Disakkaritler</h5>
-                    <p class="small">İki şekerin <strong>Glikozit Bağı</strong> ile el ele tutuşmasıdır.</p>
-                    [attachment_0](attachment)
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-plus-circle text-info"></i> Maltoz (Arpa Şekeri)</li>
-                        <li><i class="fas fa-plus-circle text-info"></i> Laktoz (Süt Şekeri)</li>
-                        <li><i class="fas fa-plus-circle text-info"></i> Sükroz (Çay Şekeri)</li>
-                    </ul>
-                </div>
-                <div class="col-md-4 px-4">
-                    <h5 class="text-warning text-uppercase">Polisakkaritler</h5>
-                    <p class="small">Binlerce şekerin devasa zinciridir.</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-link text-warning"></i> Nişasta (Enerji Deposu)</li>
-                        <li><i class="fas fa-link text-warning"></i> Selüloz (Yapı Birimi)</li>
-                        <li><i class="fas fa-link text-warning"></i> Kitin (Böcek Kabuğu)</li>
-                    </ul>
-                </div>
-            </div>
-            [attachment_1](attachment)
-        </section>
-
-        <section id="sindirim" class="py-5">
-            <h2 class="mb-5">Vücuttaki Yolculuk</h2>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="digestion-step">
-                        <h5>1. Ağız: İlk Durak</h5>
-                        <p>Tükürükteki <strong>Amilaz</strong> enzimi sayesinde nişasta burada parçalanmaya başlar.</p>
+        <section id="metabolizma" class="mb-5">
+            <h3 class="mb-4 text-danger"><i class="fas fa-heartbeat me-2"></i>Karbonhidrat Metabolizması</h3>
+            <div class="data-card">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="timeline-box">
+                            <div class="timeline-point"></div>
+                            <h6>Glikoliz</h6>
+                            <p class="small text-muted">Glikozun sitoplazmada pirüvata yıkılarak enerji (ATP) üretilmesi.</p>
+                            
+                            <div class="timeline-point" style="top: 100px;"></div>
+                            <h6 class="mt-4">Glikojenez & Glikojenoliz</h6>
+                            <p class="small text-muted">Şekerin karaciğerde depolanması (Jenez) ve ihtiyaç anında yıkılması (Liz).</p>
+                            
+                            <div class="timeline-point" style="top: 200px;"></div>
+                            <h6 class="mt-4">Glikoneojenez</h6>
+                            <p class="small text-muted">Amino asit veya laktat gibi şeker olmayanlardan glikoz sentezi.</p>
+                        </div>
                     </div>
-                    <div class="digestion-step">
-                        <h5>2. Mide: Mola</h5>
-                        <p>Karbonhidratların kimyasal sindirimi mide asidi nedeniyle burada duraklatılır.</p>
-                    </div>
-                    <div class="digestion-step">
-                        <h5>3. İnce Bağırsak: Final</h5>
-                        <p>Tüm kompleks şekerler burada en küçük birimleri olan glikoza dönüşür ve kana geçer.</p>
+                    <div class="col-lg-6">
+                        <div class="p-3 bg-dark rounded border border-danger">
+                            <h6><i class="fas fa-vial text-danger me-2"></i>Kan Şekeri Regülasyonu</h6>
+                            <p class="small">Normal seviye: <strong>60-70 mg/dl</strong> (Açlık).</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="badge bg-danger me-2">İnsülin</div> <span class="small">Şekeri düşürür.</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="badge bg-primary me-2">Glukagon</div> <span class="small">Şekeri yükseltir (Epinefrin ile birlikte).</span>
+                            </div>
+                            
+                        </div>
+                        <div class="mt-3 small text-muted">
+                            <i class="fas fa-info-circle me-1"></i> Pentoz Fosfat Yolu: NADPH ve DNA sentezi için Riboz üretimini sağlar.
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="bg-dark text-white p-4 rounded-4 shadow">
-                        <h4 class="text-warning">Şeker Dengesi</h4>
-                        <p>Aç kaldığınızda kan şekeriniz düşerse karaciğer <strong>Glikojen</strong> depolarını boşaltır.</p>
-                        
-                        <p class="small text-muted mt-2">İnsülin ve Glukagon'un Karşılıklı Çalışması</p>
-                    </div>
-                </div>
+                
             </div>
         </section>
 
-        <div class="alert alert-success rounded-4 p-5 text-center shadow">
-            <h3><i class="fas fa-utensils"></i> Bir Uzman Tavsiyesi</h3>
-            <p class="lead">Karbonhidratları hayatınızdan çıkarmayın! Sadece kaliteli olanları (Lifli meyveler, tam tahıllar) seçin. Lifli karbonhidratlar sindirilemezler ama bağırsaklarınızın en iyi dostudur!</p>
-        </div>
+        <section class="mb-5">
+            <h3 class="mb-4 text-info"><i class="fas fa-project-diagram me-2"></i>Kompleks Karbonhidratlar (Aglikanlar)</h3>
+            <div class="row g-3">
+                <div class="col-md-4"><div class="p-3 bg-secondary rounded text-center small"><strong>Glikoprotein:</strong> Karbonhidrat + Protein</div></div>
+                <div class="col-md-4"><div class="p-3 bg-secondary rounded text-center small"><strong>Glikolipid:</strong> Karbonhidrat + Lipid</div></div>
+                <div class="col-md-4"><div class="p-3 bg-secondary rounded text-center small"><strong>Nükleik Asit:</strong> Şeker + Azotlu Baz</div></div>
+            </div>
+        </section>
 
-    </div>
+    </main>
 
-    <footer class="text-center text-white">
-        <div class="container">
-            <p class="mb-2">BiyoKimya Eğitim Portalı - 2026</p>
-            <div class="social-links fs-4">
-                <a href="#" class="text-white mx-2"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fas fa-envelope"></i></a>
+    <footer class="py-5 border-top border-secondary mt-5">
+        <div class="container text-center">
+            <p class="text-muted small">Bu portal, sunduğunuz tüm bilimsel veriler [1-37] ışığında, akademik doğruluğu koruyarak hazırlanmıştır.</p>
+            <div class="mt-4">
+                <i class="fab fa-github fa-2x mx-3 opacity-50"></i>
+                <i class="fas fa-dna fa-2x mx-3 opacity-50"></i>
+                <i class="fas fa-brain fa-2x mx-3 opacity-50"></i>
             </div>
         </div>
     </footer>
