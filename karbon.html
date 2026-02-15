@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
         .hero-section { background: linear-gradient(135deg, #1e3c72, #2a5298, #27ae60); color: white; padding: 120px 0; border-bottom: 8px solid #1e8449; }
         .section-title { position: relative; padding-bottom: 15px; margin-bottom: 35px; font-weight: 700; color: #2c3e50; border-bottom: 3px solid #27ae60; display: inline-block; }
@@ -26,8 +27,8 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-atom me-2"></i>BiyoKimya Portal</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand fw-bold" href="#"><i aria-hidden="true" class="fas fa-atom me-2"></i>BiyoKimya Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menüyü aç/kapat">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -57,7 +58,7 @@
                     <h2 class="section-title">1. Tanım ve Kimyasal Kimlik</h2>
                     <p class="lead">Karbonhidratlar; <strong>Karbon (C)</strong>, <strong>Hidrojen (H)</strong> ve <strong>Oksijen (O)</strong> atomlarından oluşan "Sulu Karbonlar"dır.</p>
                     <div class="formula-box mb-4">
-                        <i class="fas fa-vial me-2"></i><strong>Genel Formül:</strong> $C_n(H_2O)_n$ veya $C_n H_{2n} O_n$ <br>
+                        <i aria-hidden="true" class="fas fa-vial me-2"></i><strong>Genel Formül:</strong> C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub> veya C<sub>n</sub>H<sub>2n</sub>O<sub>n</sub> <br>
                         <small class="text-muted">Lise İpucu: Çoğu şeker "-oz" ekiyle biter (Glikoz, Fruktoz, Galaktoz).</small>
                     </div>
                     
@@ -65,10 +66,10 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="sidebar-note">
-                        <h5><i class="fas fa-exclamation-triangle"></i> İstisnalara Dikkat!</h5>
+                        <h5><i aria-hidden="true" class="fas fa-exclamation-triangle"></i> İstisnalara Dikkat!</h5>
                         <ul>
-                            <li><strong>Deoksiriboz:</strong> $C_5H_{10}O_4$ (Formüle uymaz ama şekerdir).</li>
-                            <li><strong>Laktik Asit:</strong> $C_3H_6O_3$ (Formüle uyar ama şeker değildir).</li>
+                            <li><strong>Deoksiriboz:</strong> C<sub>5</sub>H<sub>10</sub>O<sub>4</sub> (Formüle uymaz ama şekerdir).</li>
+                            <li><strong>Laktik Asit:</strong> C<sub>3</sub>H<sub>6</sub>O<sub>3</sub> (Formüle uyar ama şeker değildir).</li>
                         </ul>
                     </div>
                 </div>
@@ -82,28 +83,28 @@
             <div class="row g-4">
                 <div class="col-md-3">
                     <div class="card h-100 p-4 text-center">
-                        <i class="fas fa-battery-full fa-3x text-success mb-3"></i>
+                        <i aria-hidden="true" class="fas fa-battery-full fa-3x text-success mb-3"></i>
                         <h5>Enerji Kaynağı</h5>
                         <p>Vücudun 1. derece yakıtıdır. 1 gram = <strong>4 kkal</strong> enerji.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100 p-4 text-center">
-                        <i class="fas fa-warehouse fa-3x text-primary mb-3"></i>
+                        <i aria-hidden="true" class="fas fa-warehouse fa-3x text-primary mb-3"></i>
                         <h5>Depo Maddesi</h5>
                         <p>Bitkide <strong>Nişasta</strong>, İnsanda <strong>Glikojen</strong> olarak saklanır.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100 p-4 text-center">
-                        <i class="fas fa-hard-hat fa-3x text-danger mb-3"></i>
+                        <i aria-hidden="true" class="fas fa-hard-hat fa-3x text-danger mb-3"></i>
                         <h5>Yapısal Birim</h5>
                         <p>Bitki hücresi duvarı (Selüloz) ve eklem bacaklı kabuğu (Kitin).</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100 p-4 text-center">
-                        <i class="fas fa-satellite-dish fa-3x text-warning mb-3"></i>
+                        <i aria-hidden="true" class="fas fa-satellite-dish fa-3x text-warning mb-3"></i>
                         <h5>Hücre Tanıma</h5>
                         <p>Glikoproteinler sayesinde hücrelerin birbirini tanımasını sağlar.</p>
                     </div>
@@ -147,7 +148,7 @@
         </section>
 
         <section class="experiment-box shadow-sm">
-            <h4 class="text-warning fw-bold"><i class="fas fa-flask"></i> Laboratuvar Notu: Şekeri Nasıl Tanırız?</h4>
+            <h4 class="text-warning fw-bold"><i aria-hidden="true" class="fas fa-flask"></i> Laboratuvar Notu: Şekeri Nasıl Tanırız?</h4>
             <div class="row mt-3">
                 <div class="col-md-6 border-end">
                     <p><strong>Nişasta Ayracı:</strong> İyot çözeltisi (Lügol). Nişasta olan bir patatese damlatırsan <strong>Mavi-Mor</strong> renk alır.</p>
@@ -163,7 +164,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="p-4 bg-white border rounded-4 shadow-sm h-100">
-                        <h4><i class="fas fa-sync text-primary"></i> Temel Yollar</h4>
+                        <h4><i aria-hidden="true" class="fas fa-sync text-primary"></i> Temel Yollar</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Glikoliz:</strong> Glikozun enerji için parçalanması.</li>
                             <li class="list-group-item"><strong>Glikoneojenez:</strong> Aç kalındığında protein veya yağdan şeker yapılması.</li>
@@ -173,7 +174,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="p-4 bg-white border rounded-4 shadow-sm h-100">
-                        <h4><i class="fas fa-user-md text-danger"></i> Hormonal Kontrol</h4>
+                        <h4><i aria-hidden="true" class="fas fa-user-md text-danger"></i> Hormonal Kontrol</h4>
                         <p>Kan şekerimiz (Normalde 70-110 mg/dl) iki polis tarafından korunur:</p>
                         <ul>
                             <li><strong>İnsülin:</strong> Yükselen şekeri hücreye sokar (Düşürür).</li>
@@ -189,17 +190,17 @@
             <h3 class="fw-bold mb-4">Gıda Endüstrisi ve Sen</h3>
             <div class="row">
                 <div class="col-md-4">
-                    <i class="fas fa-cookie-bite fa-2x mb-2 text-warning"></i>
+                    <i aria-hidden="true" class="fas fa-cookie-bite fa-2x mb-2 text-warning"></i>
                     <h6>Tatlandırıcı</h6>
                     <p class="small">Fruktoz en tatlı şekerdir, bu yüzden endüstride mısır şurubu olarak çok kullanılır.</p>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-apple-alt fa-2x mb-2 text-success"></i>
+                    <i aria-hidden="true" class="fas fa-apple-alt fa-2x mb-2 text-success"></i>
                     <h6>Besinsel Lif (Posa)</h6>
                     <p class="small">Selülozu sindiremeyiz ama bağırsaklarımızı süpürge gibi temizler.</p>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-dna fa-2x mb-2 text-info"></i>
+                    <i aria-hidden="true" class="fas fa-dna fa-2x mb-2 text-info"></i>
                     <h6>Yaşamın Kodu</h6>
                     <p class="small">Riboz ve Deoksiriboz şekerleri olmasaydı DNA ve RNA molekülleri oluşamazdı.</p>
                 </div>
@@ -211,9 +212,9 @@
     <footer class="text-center">
         <div class="container">
             <div class="mb-4">
-                <a href="#" class="btn btn-outline-light btn-sm mx-1"><i class="fab fa-github"></i></a>
-                <a href="#" class="btn btn-outline-light btn-sm mx-1"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="btn btn-outline-light btn-sm mx-1"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="GitHub"><i aria-hidden="true" class="fab fa-github"></i></a>
+                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="Instagram"><i aria-hidden="true" class="fab fa-instagram"></i></a>
+                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="E-posta"><i aria-hidden="true" class="fas fa-envelope"></i></a>
             </div>
             <p class="mb-1 text-secondary">Bu site bir eğitim projesidir.</p>
             <p class="fw-bold">© 2026 Karbonhidrat Rehberi | Tüm Hakları Doğada Saklıdır.</p>
