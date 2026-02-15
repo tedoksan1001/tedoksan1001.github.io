@@ -3,31 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karbonhidrat Dünyası: Enerjinin Kaynağı</title>
+    <title>Karbonhidrat Dünyası: Enerjinin Temeli</title>
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --bg-dark: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-bright: #ffffff;
+            --accent: #2ecc71;
+            --accent-glow: rgba(46, 204, 113, 0.2);
+            --secondary-accent: #f1c40f;
+            --danger: #f85149;
+        }
+
         html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
-        .hero-section { background: linear-gradient(135deg, #1e3c72, #2a5298, #27ae60); color: white; padding: 120px 0; border-bottom: 8px solid #1e8449; }
-        .section-title { position: relative; padding-bottom: 15px; margin-bottom: 35px; font-weight: 700; color: #2c3e50; border-bottom: 3px solid #27ae60; display: inline-block; }
-        .card { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; background: #fff; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .formula-box { background: #e8f5e9; border-left: 6px solid #2ecc71; padding: 20px; border-radius: 10px; font-size: 1.1rem; }
-        .info-badge { background: #f39c12; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
-        .experiment-box { background: #fff3e0; border: 2px dashed #e67e22; padding: 20px; border-radius: 15px; margin: 20px 0; }
-        footer { background: #2c3e50; color: white; padding: 60px 0; margin-top: 80px; }
-        .table-custom { border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .table-custom thead { background: #27ae60; color: white; }
-        .sidebar-note { background: #d1ecf1; border-radius: 10px; padding: 15px; font-size: 0.9rem; border-left: 5px solid #0c5460; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: radial-gradient(circle at top right, #1e3c72 0%, #0d1117 70%);
+            color: var(--text-bright);
+            padding: 160px 0 100px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-weight: 800;
+            color: var(--text-bright);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 35px;
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--text-main);
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        /* Custom Elements */
+        .formula-box {
+            background: #1c2128;
+            border: 1px solid var(--accent);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            box-shadow: inset 0 0 10px var(--accent-glow);
+        }
+
+        .experiment-box {
+            background: rgba(241, 196, 15, 0.05);
+            border: 2px dashed var(--secondary-accent);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .table-custom {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+        .table-custom thead { background: var(--accent); color: #000; }
+        .table-custom tbody tr { border-bottom: 1px solid var(--border-color); }
+        .table-custom td, .table-custom th { padding: 15px; border: none; color: var(--text-main); background-color: transparent; }
+        .table-custom tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+        .sidebar-note {
+            background: rgba(56, 139, 253, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid #388bfd;
+        }
+
+        /* Back to Top */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            z-index: 1000;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        #backToTop:hover { transform: scale(1.1); }
+
+        footer {
+            background: #010409;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 0;
+            margin-top: 100px;
+        }
+
+        .badge-custom {
+            background: var(--accent-glow);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        section { animation: fadeIn 0.8s ease-out forwards; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+    <button id="backToTop" title="Yukarı Çık" aria-label="Sayfanın başına dön">
+        <i aria-hidden="true" class="fas fa-chevron-up"></i>
+    </button>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm border-bottom border-secondary">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i aria-hidden="true" class="fas fa-atom me-2"></i>BiyoKimya Portal</a>
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+                <i aria-hidden="true" class="fas fa-microscope text-accent me-2" style="color: var(--accent);"></i>
+                <span>BiyoKimya Portal</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menüyü aç/kapat">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,6 +195,7 @@
                     <li class="nav-item"><a class="nav-link" href="#nedir">Kimyasal Yapı</a></li>
                     <li class="nav-item"><a class="nav-link" href="#gorevler">Görevler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#sinif">Sınıflandırma</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gi">Glisemik İndeks</a></li>
                     <li class="nav-item"><a class="nav-link" href="#metabolizma">Metabolizma</a></li>
                 </ul>
             </div>
@@ -44,183 +204,310 @@
 
     <header class="hero-section text-center">
         <div class="container">
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 text-uppercase fw-bold">Yaşamın Temel Taşı</span>
-            <h1 class="display-2 fw-bold mb-4">Karbonhidratlar</h1>
-            <p class="lead fs-4">Dünyadaki en bol bulunan organik moleküllerin sırlarını keşfedin.</p>
+            <span class="badge-custom mb-3 text-uppercase">Biyoenerjetik Temeller</span>
+            <h1 class="display-1 fw-bolder mb-4 text-white">Karbonhidratlar</h1>
+            <p class="lead fs-4 text-secondary mx-auto" style="max-width: 800px;">
+                Yaşamın birincil enerji yakıtı ve yapısal iskeleti. Basit şekerlerden karmaşık devasa moleküllere kadar biyokimyasal bir yolculuk.
+            </p>
+            <div class="mt-5">
+                <a href="#nedir" class="btn btn-accent btn-lg px-5 py-3 fw-bold" style="background: var(--accent); color: #000;">Keşfetmeye Başla</a>
+            </div>
         </div>
     </header>
 
     <div class="container my-5">
-        
-        <section id="nedir" class="mb-5">
+
+        <section id="nedir" class="mb-5 pt-5">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-7">
-                    <h2 class="section-title">1. Tanım ve Kimyasal Kimlik</h2>
+                    <h2 class="section-title">1. Tanım ve Moleküler Kimlik</h2>
                     <p class="lead">Karbonhidratlar; <strong>Karbon (C)</strong>, <strong>Hidrojen (H)</strong> ve <strong>Oksijen (O)</strong> atomlarından oluşan "Sulu Karbonlar"dır.</p>
+
                     <div class="formula-box mb-4">
-                        <i aria-hidden="true" class="fas fa-vial me-2"></i><strong>Genel Formül:</strong> C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub> veya C<sub>n</sub>H<sub>2n</sub>O<sub>n</sub> <br>
-                        <small class="text-muted">Lise İpucu: Çoğu şeker "-oz" ekiyle biter (Glikoz, Fruktoz, Galaktoz).</small>
+                        <div class="mb-2"><i aria-hidden="true" class="fas fa-code me-2"></i><strong>Genel Formül:</strong></div>
+                        <div class="fs-4">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub></div>
+                        <hr class="border-secondary">
+                        <small class="text-secondary">Kimyasal Tanım: Polihidroksil aldehitler veya ketonlar.</small>
                     </div>
-                    
-                    <p>Kimyasal olarak, <strong>polihidroksilik alkollerin aldehit veya keton türevleri</strong>dir. Yani yapılarında çok sayıda -OH (hidroksil) grubu ile bir adet karbonil grubu bulunur.</p>
+
+                    <p>Karbonhidratlar, karbonil grubunun (C=O) konumuna göre <strong>Aldoz</strong> (uçta) veya <strong>Ketoz</strong> (içte) olarak ikiye ayrılırlar. Örneğin; Glikoz bir aldoz, Fruktoz ise bir ketozdur.</p>
                 </div>
                 <div class="col-lg-5">
                     <div class="sidebar-note">
-                        <h5><i aria-hidden="true" class="fas fa-exclamation-triangle"></i> İstisnalara Dikkat!</h5>
-                        <ul>
-                            <li><strong>Deoksiriboz:</strong> C<sub>5</sub>H<sub>10</sub>O<sub>4</sub> (Formüle uymaz ama şekerdir).</li>
-                            <li><strong>Laktik Asit:</strong> C<sub>3</sub>H<sub>6</sub>O<sub>3</sub> (Formüle uyar ama şeker değildir).</li>
+                        <h5 class="text-white"><i aria-hidden="true" class="fas fa-atom text-info me-2"></i> İzomerlik Kavramı</h5>
+                        <p class="small mb-0">Aynı kapalı formüle sahip olup farklı diziliş gösteren moleküllere izomer denir.
+                        <strong>Glikoz, Fruktoz ve Galaktoz</strong>'un hepsinin formülü C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>'dır, ancak yapıları farklıdır.</p>
+                    </div>
+                    <div class="card mt-4 p-3 border-danger bg-opacity-10">
+                        <h6 class="text-danger fw-bold"><i aria-hidden="true" class="fas fa-exclamation-circle me-2"></i> İstisnalar</h6>
+                        <ul class="small mb-0 list-unstyled">
+                            <li><i aria-hidden="true" class="fas fa-check me-2 text-secondary"></i><strong>Deoksiriboz:</strong> C<sub>5</sub>H<sub>10</sub>O<sub>4</sub> (Orana uymaz)</li>
+                            <li><i aria-hidden="true" class="fas fa-check me-2 text-secondary"></i><strong>Laktik Asit:</strong> C<sub>3</sub>H<sub>6</sub>O<sub>3</sub> (Şeker değildir)</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <hr class="my-5">
+        <hr class="border-secondary my-5">
 
         <section id="gorevler" class="mb-5">
-            <h2 class="section-title">2. Neden Karbonhidrat Tüketiriz?</h2>
+            <h2 class="section-title">2. Biyolojik Fonksiyonlar</h2>
             <div class="row g-4">
                 <div class="col-md-3">
-                    <div class="card h-100 p-4 text-center">
-                        <i aria-hidden="true" class="fas fa-battery-full fa-3x text-success mb-3"></i>
-                        <h5>Enerji Kaynağı</h5>
-                        <p>Vücudun 1. derece yakıtıdır. 1 gram = <strong>4 kkal</strong> enerji.</p>
+                    <div class="card p-4">
+                        <i aria-hidden="true" class="fas fa-bolt fa-3x text-accent mb-3"></i>
+                        <h5 class="text-white">Enerji Kaynağı</h5>
+                        <p class="small">Beynin ve kırmızı kan hücrelerinin tek yakıtıdır. 1 gramı yaklaşık <strong>4 kcal</strong> enerji üretir.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 p-4 text-center">
-                        <i aria-hidden="true" class="fas fa-warehouse fa-3x text-primary mb-3"></i>
-                        <h5>Depo Maddesi</h5>
-                        <p>Bitkide <strong>Nişasta</strong>, İnsanda <strong>Glikojen</strong> olarak saklanır.</p>
+                    <div class="card p-4">
+                        <i aria-hidden="true" class="fas fa-box-archive fa-3x text-info mb-3"></i>
+                        <h5 class="text-white">Depolama</h5>
+                        <p class="small">Fazla enerji bitkilerde <strong>Nişasta</strong>, hayvan ve mantarlarda <strong>Glikojen</strong> olarak saklanır.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 p-4 text-center">
-                        <i aria-hidden="true" class="fas fa-hard-hat fa-3x text-danger mb-3"></i>
-                        <h5>Yapısal Birim</h5>
-                        <p>Bitki hücresi duvarı (Selüloz) ve eklem bacaklı kabuğu (Kitin).</p>
+                    <div class="card p-4">
+                        <i aria-hidden="true" class="fas fa-layer-group fa-3x text-secondary-accent mb-3"></i>
+                        <h5 class="text-white">Yapısal Destek</h5>
+                        <p class="small">Hücre duvarı (Selüloz), eklembacaklı dış iskeleti (Kitin) ve DNA/RNA yapısına katılırlar.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 p-4 text-center">
-                        <i aria-hidden="true" class="fas fa-satellite-dish fa-3x text-warning mb-3"></i>
-                        <h5>Hücre Tanıma</h5>
-                        <p>Glikoproteinler sayesinde hücrelerin birbirini tanımasını sağlar.</p>
+                    <div class="card p-4">
+                        <i aria-hidden="true" class="fas fa-fingerprint fa-3x text-danger mb-3"></i>
+                        <h5 class="text-white">Hücresel Kimlik</h5>
+                        <p class="small">Glikokaliks yapısı ile hücrelerin birbirini tanımasını ve reseptör görevlerini sağlarlar.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="sinif" class="mb-5">
-            <h2 class="section-title">3. Karbonhidratların Sınıflandırılması</h2>
-            <p>Molekül büyüklüğüne, fonksiyonel grubuna ve karbon sayısına göre 3 farklı şekilde incelenirler:</p>
-            
+        <section id="sinif" class="mb-5 pt-5">
+            <h2 class="section-title">3. Sınıflandırma ve Bağ Yapısı</h2>
+            <p>Karbonhidratlar, birbirlerine <strong>Glikozidik Bağ</strong> ile bağlanarak kompleksleşirler. Bu bağın kurulması sırasında bir molekül su açığa çıkar (Dehidrasyon).</p>
+
             <div class="table-responsive mb-4">
-                <table class="table table-bordered table-custom text-center align-middle">
+                <table class="table table-custom text-center align-middle">
                     <thead>
                         <tr>
-                            <th>Grup</th>
-                            <th>Özellik</th>
-                            <th>En Önemli Örnekler</th>
+                            <th>Kategori</th>
+                            <th>Birim Sayısı</th>
+                            <th>Örnekler</th>
+                            <th>Bulunduğu Yer</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Monosakkaritler</strong></td>
-                            <td>En küçük birim, sindirilmez.</td>
-                            <td>Glikoz (Kan Şekeri), Fruktoz (Meyve), Galaktoz (Süt)</td>
+                            <td>Tek Birim</td>
+                            <td>Glikoz, Riboz, Fruktoz</td>
+                            <td>Meyveler, Kan, Bal</td>
                         </tr>
                         <tr>
                             <td><strong>Disakkaritler</strong></td>
-                            <td>İki birimin birleşmesi (Dehidrasyon).</td>
-                            <td>Sükroz (Çay Şekeri), Laktoz (Süt Şekeri), Maltoz (Arpa)</td>
+                            <td>İki Birim</td>
+                            <td>Sükroz, Laktoz, Maltoz</td>
+                            <td>Çay Şekeri, Süt, Arpa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Oligosakkaritler</strong></td>
+                            <td>3-10 Birim</td>
+                            <td>Rafinoz, Stakiyoz</td>
+                            <td>Baklagiller</td>
                         </tr>
                         <tr>
                             <td><strong>Polisakkaritler</strong></td>
-                            <td>Binlerce birimin dev zinciri.</td>
-                            <td>Nişasta, Glikojen, Selüloz, Kitin</td>
+                            <td>10+ Birim</td>
+                            <td>Glikojen, Selüloz, Kitin</td>
+                            <td>Kas, Karaciğer, Bitki Lifi</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            [attachment_0](attachment)
         </section>
 
-        <section class="experiment-box shadow-sm">
-            <h4 class="text-warning fw-bold"><i aria-hidden="true" class="fas fa-flask"></i> Laboratuvar Notu: Şekeri Nasıl Tanırız?</h4>
-            <div class="row mt-3">
-                <div class="col-md-6 border-end">
-                    <p><strong>Nişasta Ayracı:</strong> İyot çözeltisi (Lügol). Nişasta olan bir patatese damlatırsan <strong>Mavi-Mor</strong> renk alır.</p>
+        <!-- Glisemik İndeks Bölümü -->
+        <section id="gi" class="mb-5 pt-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">4. Glisemik İndeks ve Sağlık</h2>
+                    <p>Glisemik İndeks (Gİ), bir besinin kan şekerini ne kadar hızlı yükselttiğinin ölçüsüdür. Saf glikoz 100 kabul edilerek hesaplanır.</p>
+                    <div class="card p-4 border-info">
+                        <ul class="list-unstyled mb-0">
+                            <li><span class="badge bg-danger me-2">Yüksek Gİ (>70):</span> Ani şeker yükselmesi ve hızlı acıkma. (Beyaz Ekmek, Patates)</li>
+                            <li><span class="badge bg-warning text-dark me-2">Orta Gİ (56-69):</span> Dengeli emilim. (Tam Buğday, Muz)</li>
+                            <li><span class="badge bg-success me-2">Düşük Gİ (<55):</span> Uzun süreli tokluk ve stabil enerji. (Mercimek, Elma)</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p><strong>Glikoz Ayracı:</strong> Benedict veya Fehling çözeltisi. Isıtıldığında glikozla <strong>Kiremit Kırmızısı</strong> renk verir.</p>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="giChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="experiment-box shadow">
+            <h4 class="text-secondary-accent fw-bold"><i aria-hidden="true" class="fas fa-flask-vial me-2"></i> Biyokimya Laboratuvarı: Ayraçlar</h4>
+            <div class="row mt-4">
+                <div class="col-md-6 border-end border-secondary">
+                    <h5>Nişasta Testi (Lügol)</h5>
+                    <p class="small">İyot çözeltisi nişasta ile <strong>Mavi-Mor</strong> renk verir. Bu, bitkisel dokulardaki enerji deposunu saptamak için kullanılır.</p>
+                </div>
+                <div class="col-md-6 ps-md-4">
+                    <h5>Glikoz Testi (Benedict)</h5>
+                    <p class="small">Benedict çözeltisi indirgen şekerlerle ısıtıldığında <strong>Kiremit Kırmızısı</strong> çökelek oluşturur.</p>
                 </div>
             </div>
         </section>
 
         <section id="metabolizma" class="py-5">
-            <h2 class="section-title">4. Vücudumuzdaki Yolculuk (Metabolizma)</h2>
-            <div class="row">
+            <h2 class="section-title">5. Hormonal Denge ve Metabolizma</h2>
+            <div class="row g-4">
                 <div class="col-md-6">
-                    <div class="p-4 bg-white border rounded-4 shadow-sm h-100">
-                        <h4><i aria-hidden="true" class="fas fa-sync text-primary"></i> Temel Yollar</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Glikoliz:</strong> Glikozun enerji için parçalanması.</li>
-                            <li class="list-group-item"><strong>Glikoneojenez:</strong> Aç kalındığında protein veya yağdan şeker yapılması.</li>
-                            <li class="list-group-item"><strong>Glikojenez:</strong> Fazla şekerin "bankaya" (karaciğer) yatırılması.</li>
+                    <div class="card p-4 h-100 shadow-sm">
+                        <h4 class="text-info"><i aria-hidden="true" class="fas fa-arrows-spin me-2"></i> Metabolik Yollar</h4>
+                        <ul class="list-group list-group-flush bg-transparent">
+                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikoliz:</strong> Glikozun sitoplazmada pirüvata yıkımı (ATP üretimi).</li>
+                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikojenoliz:</strong> Açlık anında glikojenin glikoza dönüştürülmesi.</li>
+                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikoneojenez:</strong> Karbonhidrat dışı (amino asit, gliserol) kaynaklardan şeker sentezi.</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="p-4 bg-white border rounded-4 shadow-sm h-100">
-                        <h4><i aria-hidden="true" class="fas fa-user-md text-danger"></i> Hormonal Kontrol</h4>
-                        <p>Kan şekerimiz (Normalde 70-110 mg/dl) iki polis tarafından korunur:</p>
-                        <ul>
-                            <li><strong>İnsülin:</strong> Yükselen şekeri hücreye sokar (Düşürür).</li>
-                            <li><strong>Glukagon:</strong> Düşen şekeri depodan kana salar (Yükseltir).</li>
-                        </ul>
-                        
+                    <div class="card p-4 h-100 shadow-sm border-danger">
+                        <h4 class="text-danger"><i aria-hidden="true" class="fas fa-syringe me-2"></i> Pankreatik Kontrol</h4>
+                        <p>Kan şekeri <strong>70-110 mg/dL</strong> arasında tutulmalıdır:</p>
+                        <div class="d-flex align-items-start mb-3">
+                            <i aria-hidden="true" class="fas fa-arrow-down text-success mt-1 me-3"></i>
+                            <div>
+                                <strong>İnsülin:</strong> Toklukta salgılanır. Şekeri hücreye sokar ve depolamayı (Glikojenez) artırır.
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <i aria-hidden="true" class="fas fa-arrow-up text-danger mt-1 me-3"></i>
+                            <div>
+                                <strong>Glukagon:</strong> Açlıkta salgılanır. Karaciğerdeki glikojeni yıkarak kana şeker verir.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="mt-5 p-5 bg-light rounded-5 text-center shadow-inner">
-            <h3 class="fw-bold mb-4">Gıda Endüstrisi ve Sen</h3>
-            <div class="row">
+        <!-- Biliyor muydunuz? Bölümü -->
+        <section class="mt-5 p-5 rounded-4 shadow-lg" style="background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); border: 1px solid var(--border-color);">
+            <h3 class="fw-bold mb-5 text-center text-white"><i aria-hidden="true" class="fas fa-lightbulb text-warning me-2"></i> Biliyor muydunuz?</h3>
+            <div class="row g-4 text-center">
                 <div class="col-md-4">
-                    <i aria-hidden="true" class="fas fa-cookie-bite fa-2x mb-2 text-warning"></i>
-                    <h6>Tatlandırıcı</h6>
-                    <p class="small">Fruktoz en tatlı şekerdir, bu yüzden endüstride mısır şurubu olarak çok kullanılır.</p>
+                    <div class="px-3">
+                        <i aria-hidden="true" class="fas fa-beer fa-3x mb-3 text-warning"></i>
+                        <h6 class="text-white">Auto-Brewery Sendromu</h6>
+                        <p class="small text-secondary">Nadir bir durumda, bağırsaktaki mayalar karbonhidratları alkole dönüştürerek kişinin sarhoş olmasına neden olabilir.</p>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <i aria-hidden="true" class="fas fa-apple-alt fa-2x mb-2 text-success"></i>
-                    <h6>Besinsel Lif (Posa)</h6>
-                    <p class="small">Selülozu sindiremeyiz ama bağırsaklarımızı süpürge gibi temizler.</p>
+                    <div class="px-3 border-start border-end border-secondary">
+                        <i aria-hidden="true" class="fas fa-brain fa-3x mb-3 text-info"></i>
+                        <h6 class="text-white">Beynin Tek Yakıtı</h6>
+                        <p class="small text-secondary">İnsan beyni, vücut ağırlığının sadece %2'sini oluşturmasına rağmen, günlük glikoz tüketiminin %20'sinden sorumludur.</p>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <i aria-hidden="true" class="fas fa-dna fa-2x mb-2 text-info"></i>
-                    <h6>Yaşamın Kodu</h6>
-                    <p class="small">Riboz ve Deoksiriboz şekerleri olmasaydı DNA ve RNA molekülleri oluşamazdı.</p>
+                    <div class="px-3">
+                        <i aria-hidden="true" class="fas fa-leaf fa-3x mb-3 text-success"></i>
+                        <h6 class="text-white">Diyet Lifi (Selüloz)</h6>
+                        <p class="small text-secondary">İnsanlar selülozu sindiremezler, ancak bu lifler sindirim sistemini temizler ve kolon kanseri riskini azaltır.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
     </div>
 
-    <footer class="text-center">
+    <footer class="text-center text-md-start">
         <div class="container">
-            <div class="mb-4">
-                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="GitHub"><i aria-hidden="true" class="fab fa-github"></i></a>
-                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="Instagram"><i aria-hidden="true" class="fab fa-instagram"></i></a>
-                <a href="#" class="btn btn-outline-light btn-sm mx-1" aria-label="E-posta"><i aria-hidden="true" class="fas fa-envelope"></i></a>
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-white fw-bold">BiyoKimya Portal</h5>
+                    <p class="text-secondary small">Bilimsel veriler ışığında biyolojiyi ve kimyayı anlamak.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-secondary me-3" aria-label="GitHub"><i aria-hidden="true" class="fab fa-github fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3" aria-label="LinkedIn"><i aria-hidden="true" class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-secondary" aria-label="E-posta"><i aria-hidden="true" class="fas fa-envelope fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-1 text-secondary small">Bu site bir eğitim projesidir.</p>
+                    <p class="fw-bold text-white small">© 2026 Karbonhidrat Rehberi | Tüm Hakları Doğada Saklıdır.</p>
+                </div>
             </div>
-            <p class="mb-1 text-secondary">Bu site bir eğitim projesidir.</p>
-            <p class="fw-bold">© 2026 Karbonhidrat Rehberi | Tüm Hakları Doğada Saklıdır.</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Back to Top Button Logic
+        const btt = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btt.style.display = "block";
+            } else {
+                btt.style.display = "none";
+            }
+        };
+        btt.onclick = function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+
+        // Chart.js - Glisemik İndeks Grafiği
+        const ctx = document.getElementById('giChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Glukoz', 'Beyaz Ekmek', 'Patates (Haşlanmış)', 'Muz', 'Elma', 'Mercimek'],
+                datasets: [{
+                    label: 'Glisemik İndeks Değeri',
+                    data: [100, 75, 78, 51, 38, 28],
+                    backgroundColor: [
+                        'rgba(248, 81, 73, 0.7)',
+                        'rgba(248, 81, 73, 0.7)',
+                        'rgba(248, 81, 73, 0.7)',
+                        'rgba(241, 196, 15, 0.7)',
+                        'rgba(46, 204, 113, 0.7)',
+                        'rgba(46, 204, 113, 0.7)'
+                    ],
+                    borderColor: [
+                        '#f85149', '#f85149', '#f85149', '#f1c40f', '#2ecc71', '#2ecc71'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 110,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#8b949e' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#8b949e' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
