@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karbonhidrat Dünyası: Enerjinin Temeli</title>
+    <title>Organik Moleküller: Yaşamın Temel Taşları</title>
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -159,13 +159,10 @@
             font-weight: 600;
         }
 
-        .chart-container {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-top: 20px;
-        }
+        .x-small { font-size: 0.75rem; }
+
+        .border-accent { border-color: var(--accent) !important; }
+        .border-secondary-accent { border-color: var(--secondary-accent) !important; }
 
         /* Animations */
         @keyframes fadeIn {
@@ -192,11 +189,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#nedir">Kimyasal Yapı</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gorevler">Görevler</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sinif">Sınıflandırma</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gi">Glisemik İndeks</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#metabolizma">Metabolizma</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#giris">Giriş</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#karbohidratlar">Karbohidratlar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#lipitler">Lipitler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#proteinler">Proteinler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#enzimler">Enzimler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#nukleik">Nükleik Asitler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#vitaminler">Vitaminler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#ayiraclar">Ayıraçlar</a></li>
                 </ul>
             </div>
         </div>
@@ -204,45 +204,40 @@
 
     <header class="hero-section text-center">
         <div class="container">
-            <span class="badge-custom mb-3 text-uppercase">Biyoenerjetik Temeller</span>
-            <h1 class="display-1 fw-bolder mb-4 text-white">Karbonhidratlar</h1>
+            <span class="badge-custom mb-3 text-uppercase">Biyolojik Makromoleküller</span>
+            <h1 class="display-1 fw-bolder mb-4 text-white">Organik Moleküller</h1>
             <p class="lead fs-4 text-secondary mx-auto" style="max-width: 800px;">
-                Yaşamın birincil enerji yakıtı ve yapısal iskeleti. Basit şekerlerden karmaşık devasa moleküllere kadar biyokimyasal bir yolculuk.
+                Yaşamın temelini oluşturan karbon temelli bileşikler. Karbohidratlardan nükleik asitlere, hücrenin mimarisi ve fonksiyonunun ardındaki kimya.
             </p>
             <div class="mt-5">
-                <a href="#nedir" class="btn btn-accent btn-lg px-5 py-3 fw-bold" style="background: var(--accent); color: #000;">Keşfetmeye Başla</a>
+                <a href="#giris" class="btn btn-accent btn-lg px-5 py-3 fw-bold" style="background: var(--accent); color: #000;">Keşfetmeye Başla</a>
             </div>
         </div>
     </header>
 
-    <div class="container my-5">
+    <div class="container my-5" id="main-content">
 
-        <section id="nedir" class="mb-5 pt-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-7">
-                    <h2 class="section-title">1. Tanım ve Moleküler Kimlik</h2>
-                    <p class="lead">Karbonhidratlar; <strong>Karbon (C)</strong>, <strong>Hidrojen (H)</strong> ve <strong>Oksijen (O)</strong> atomlarından oluşan "Sulu Karbonlar"dır.</p>
+        <section id="giris" class="mb-5 pt-5">
+            <h2 class="section-title">1. Organik Moleküllere Giriş</h2>
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-8">
+                    <p class="lead text-white">Organik moleküller; karbon atomunun hidrojen, oksijen, azot, kükürt ve fosfor gibi elementlerle kovalent bağlar kurması sonucu oluşan bileşiklerdir.</p>
+                    <p>Hücrelerin temel bileşenlerini oluşturan bu moleküller, inorganik moleküllere göre daha büyük ve karmaşıktır. Bitkiler, hayvanlar ve mikroorganizmalar tarafından doğal olarak sentezlenebildikleri gibi laboratuvarda sentetik olarak da üretilebilirler.</p>
 
-                    <div class="formula-box mb-4">
-                        <div class="mb-2"><i aria-hidden="true" class="fas fa-code me-2"></i><strong>Genel Formül:</strong></div>
-                        <div class="fs-4">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub></div>
-                        <hr class="border-secondary">
-                        <small class="text-secondary">Kimyasal Tanım: Polihidroksil aldehitler veya ketonlar.</small>
+                    <div class="p-4 mb-5 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-4 shadow-sm">
+                        <h5 class="text-white fw-bold"><i aria-hidden="true" class="fas fa-sync-alt me-2 text-info"></i>Metabolik Döngü: Dehidrasyon ve Hidroliz</h5>
+                        <p class="small mb-0">Monomerlerin enzimler aracılığıyla birleşip polimerleri oluştururken su açığa çıkarmasına <strong>dehidrasyon</strong> denir (ATP harcanır). Polimerlerin su kullanılarak monomerlerine parçalanmasına ise <strong>hidroliz</strong> (sindirim) denir.</p>
                     </div>
-
-                    <p>Karbonhidratlar, karbonil grubunun (C=O) konumuna göre <strong>Aldoz</strong> (uçta) veya <strong>Ketoz</strong> (içte) olarak ikiye ayrılırlar. Örneğin; Glikoz bir aldoz, Fruktoz ise bir ketozdur.</p>
                 </div>
-                <div class="col-lg-5">
-                    <div class="sidebar-note">
-                        <h5 class="text-white"><i aria-hidden="true" class="fas fa-atom text-info me-2"></i> İzomerlik Kavramı</h5>
-                        <p class="small mb-0">Aynı kapalı formüle sahip olup farklı diziliş gösteren moleküllere izomer denir.
-                        <strong>Glikoz, Fruktoz ve Galaktoz</strong>'un hepsinin formülü C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>'dır, ancak yapıları farklıdır.</p>
-                    </div>
-                    <div class="card mt-4 p-3 border-danger bg-opacity-10">
-                        <h6 class="text-danger fw-bold"><i aria-hidden="true" class="fas fa-exclamation-circle me-2"></i> İstisnalar</h6>
-                        <ul class="small mb-0 list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-check me-2 text-secondary"></i><strong>Deoksiriboz:</strong> C<sub>5</sub>H<sub>10</sub>O<sub>4</sub> (Orana uymaz)</li>
-                            <li><i aria-hidden="true" class="fas fa-check me-2 text-secondary"></i><strong>Laktik Asit:</strong> C<sub>3</sub>H<sub>6</sub>O<sub>3</sub> (Şeker değildir)</li>
+                <div class="col-lg-4">
+                    <div class="card border-info bg-opacity-10 p-4">
+                        <h5 class="text-info fw-bold mb-3"><i aria-hidden="true" class="fas fa-atom me-2"></i>Temel Gruplar</h5>
+                        <ul class="list-unstyled mb-0 lh-lg">
+                            <li><i aria-hidden="true" class="fas fa-circle-dot text-info me-2"></i>Karbohidratlar</li>
+                            <li><i aria-hidden="true" class="fas fa-circle-dot text-info me-2"></i>Lipitler (Yağlar)</li>
+                            <li><i aria-hidden="true" class="fas fa-circle-dot text-info me-2"></i>Proteinler</li>
+                            <li><i aria-hidden="true" class="fas fa-circle-dot text-info me-2"></i>Nükleik Asitler</li>
+                            <li><i aria-hidden="true" class="fas fa-circle-dot text-info me-2"></i>Vitaminler</li>
                         </ul>
                     </div>
                 </div>
@@ -251,179 +246,399 @@
 
         <hr class="border-secondary my-5">
 
-        <section id="gorevler" class="mb-5">
-            <h2 class="section-title">2. Biyolojik Fonksiyonlar</h2>
+        <section id="karbohidratlar" class="mb-5 pt-5">
+            <h2 class="section-title">2. Karbohidratlar</h2>
+            <p class="lead">Enerji sağlayan temel besin ögeleridir. Karbon (C), Hidrojen (H) ve Oksijen (O) atomlarından oluşurlar. Bazı çeşitleri (kitin gibi) Azot (N) da içerir.</p>
+
+            <div class="formula-box mb-5 text-center">
+                <span class="text-secondary small d-block mb-2">Genel Moleküler Formül</span>
+                <span class="fs-1 fw-bold">(CH<sub>2</sub>O)<sub>n</sub></span>
+            </div>
+
             <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="card p-4">
-                        <i aria-hidden="true" class="fas fa-bolt fa-3x text-accent mb-3"></i>
-                        <h5 class="text-white">Enerji Kaynağı</h5>
-                        <p class="small">Beynin ve kırmızı kan hücrelerinin tek yakıtıdır. 1 gramı yaklaşık <strong>4 kcal</strong> enerji üretir.</p>
+                <div class="col-lg-4">
+                    <div class="card h-100 p-4 border-accent">
+                        <h4 class="text-white fw-bold mb-3">Monosakkaritler</h4>
+                        <p class="small">Basit şekerlerdir. Karbon sayılarına göre sınıflandırılırlar:</p>
+                        <ul class="small list-unstyled">
+                            <li class="mb-3">
+                                <span class="badge bg-secondary mb-1">Pentozlar (5C)</span><br>
+                                <strong>Riboz:</strong> RNA ve ATP'nin yapısında.<br>
+                                <strong>Deoksiriboz:</strong> DNA'nın yapısında (Ribozdan bir oksijen eksiktir).
+                            </li>
+                            <li>
+                                <span class="badge bg-secondary mb-1">Heksozlar (6C)</span><br>
+                                <strong>Glikoz:</strong> Kan şekeri. Fotosentezle üretilir.<br>
+                                <strong>Fruktoz:</strong> Meyve şekeri. En tatlı şeker.<br>
+                                <strong>Galaktoz:</strong> Süt şekeri.
+                            </li>
+                        </ul>
+                        <div class="sidebar-note mt-auto bg-opacity-10 border-info">
+                            <p class="small mb-0 text-info"><strong>İzomerlik:</strong> Glikoz, fruktoz ve galaktozun kapalı formülleri aynı (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>), açık formülleri farklıdır.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card p-4">
-                        <i aria-hidden="true" class="fas fa-box-archive fa-3x text-info mb-3"></i>
-                        <h5 class="text-white">Depolama</h5>
-                        <p class="small">Fazla enerji bitkilerde <strong>Nişasta</strong>, hayvan ve mantarlarda <strong>Glikojen</strong> olarak saklanır.</p>
+                <div class="col-lg-4">
+                    <div class="card h-100 p-4 border-info">
+                        <h4 class="text-white fw-bold mb-3">Disakkaritler</h4>
+                        <p class="small">İki monosakkaritin <strong>glikozit bağı</strong> ile birleşmesiyle oluşur (Dehidrasyon).</p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-dark table-borderless small mb-0">
+                                <tbody>
+                                    <tr><td>Glikoz + Glikoz</td><td>&rarr;</td><td><strong>Maltoz</strong> (Arpa)</td></tr>
+                                    <tr><td>Glikoz + Fruktoz</td><td>&rarr;</td><td><strong>Sükroz</strong> (Çay)</td></tr>
+                                    <tr><td>Glikoz + Galaktoz</td><td>&rarr;</td><td><strong>Laktoz</strong> (Süt)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-3 mt-4 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded small">
+                            <i aria-hidden="true" class="fas fa-exclamation-triangle text-danger me-2"></i>
+                            <strong>Laktoz İntoleransı:</strong> Laktozu parçalayan enzimin eksikliği sonucu oluşan sindirim sorunudur.
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card p-4">
-                        <i aria-hidden="true" class="fas fa-layer-group fa-3x text-secondary-accent mb-3"></i>
-                        <h5 class="text-white">Yapısal Destek</h5>
-                        <p class="small">Hücre duvarı (Selüloz), eklembacaklı dış iskeleti (Kitin) ve DNA/RNA yapısına katılırlar.</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card p-4">
-                        <i aria-hidden="true" class="fas fa-fingerprint fa-3x text-danger mb-3"></i>
-                        <h5 class="text-white">Hücresel Kimlik</h5>
-                        <p class="small">Glikokaliks yapısı ile hücrelerin birbirini tanımasını ve reseptör görevlerini sağlarlar.</p>
+                <div class="col-lg-4">
+                    <div class="card h-100 p-4 border-secondary-accent">
+                        <h4 class="text-white fw-bold mb-3">Polisakkaritler</h4>
+                        <p class="small">Çok sayıda glikozun dehidrasyonu ile oluşan dev moleküllerdir.</p>
+                        <ul class="small list-unstyled">
+                            <li class="mb-3">
+                                <span class="badge bg-info text-dark mb-1">Depo Polisakkaritler</span><br>
+                                <strong>Nişasta:</strong> Bitkilerde (kök, tohum, yumru).<br>
+                                <strong>Glikojen:</strong> Hayvan, mantar ve bakterilerde (Karaciğer ve kaslarda).
+                            </li>
+                            <li>
+                                <span class="badge bg-success mb-1">Yapısal Polisakkaritler</span><br>
+                                <strong>Selüloz:</strong> Bitki hücre duvarı. İnsanlar sindiremez ama lifli yapısı bağırsaklara faydalıdır.<br>
+                                <strong>Kitin:</strong> Mantar çeperi ve eklembacaklı iskeleti. <strong>Azot içerir.</strong>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="sinif" class="mb-5 pt-5">
-            <h2 class="section-title">3. Sınıflandırma ve Bağ Yapısı</h2>
-            <p>Karbonhidratlar, birbirlerine <strong>Glikozidik Bağ</strong> ile bağlanarak kompleksleşirler. Bu bağın kurulması sırasında bir molekül su açığa çıkar (Dehidrasyon).</p>
+        <hr class="border-secondary my-5">
 
-            <div class="table-responsive mb-4">
-                <table class="table table-custom text-center align-middle">
+        <section id="lipitler" class="mb-5 pt-5">
+            <h2 class="section-title">3. Lipitler (Yağlar)</h2>
+            <p class="lead">Suda çözünmeyen (hidrofobik), enerji içeriği zengin ve polimer yapılı olmayan organik moleküllerdir.</p>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h4 class="text-white mb-3"><i aria-hidden="true" class="fas fa-oil-can text-warning me-2"></i>Yağ Asitleri ve Trigliseritler</h4>
+                        <p class="small">Vücutta en fazla bulunan lipit türü <strong>trigliseritlerdir</strong>. 1 gliserol ve 3 yağ asidinin <strong>ester bağı</strong> ile bağlanmasıyla oluşur.</p>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 bg-dark rounded border border-secondary h-100">
+                                    <h6 class="text-white">Doymuş</h6>
+                                    <p class="x-small mb-0">Tek bağ, oda sıcaklığında katı. (Tereyağı, iç yağı)</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-dark rounded border border-secondary h-100">
+                                    <h6 class="text-white">Doymamış</h6>
+                                    <p class="x-small mb-0">Çift bağ, oda sıcaklığında sıvı. (Zeytinyağı)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="small mt-3 mb-0"><strong>Esansiyel Yağ Asitleri:</strong> Vücutta üretilemeyip dışarıdan alınması gereken yağlardır (Örn: Omega-3).</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h4 class="text-white mb-3"><i aria-hidden="true" class="fas fa-layer-group text-info me-2"></i>Fosfolipitler</h4>
+                        <p class="small">Hücre zarlarının ana bileşenidir. Gliserola iki yağ asidi ve bir fosfat grubu bağlıdır.</p>
+                        <div class="d-flex align-items-center gap-3 p-3 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-3">
+                            <div class="text-center">
+                                <span class="badge bg-primary rounded-pill mb-1">Baş</span><br>
+                                <small>Hidrofilik (Su seven)</small>
+                            </div>
+                            <i aria-hidden="true" class="fas fa-arrows-left-right text-secondary"></i>
+                            <div class="text-center">
+                                <span class="badge bg-secondary rounded-pill mb-1">Kuyruk</span><br>
+                                <small>Hidrofobik (Suyu sevmeyen)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card p-4 border-secondary-accent">
+                        <h4 class="text-white mb-3"><i aria-hidden="true" class="fas fa-circle-nodes text-secondary-accent me-2"></i>Steroitler</h4>
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <p>Dört halkalı karbon yapısına sahiptirler. Hücre zarı yapısına katılırlar, hormonların (eşeysel hormonlar) ve vitaminlerin (D vitamini) öncül maddesidirler.</p>
+                                <p class="small mb-0"><strong>Kolesterol:</strong> En önemli steroittir. Hayvan hücre zarının akışkanlığını ve stabilitesini düzenler. Safra asitlerinin yapısına katılır.</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="p-3 border border-secondary rounded text-center">
+                                    <i aria-hidden="true" class="fas fa-shield-halved fa-3x text-secondary-accent mb-2"></i>
+                                    <p class="small mb-0">Yüksek sıcaklıkta zarın aşırı akışkanlığını önler, düşük sıcaklıkta akışkanlığı korur.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-secondary my-5">
+
+        <section id="proteinler" class="mb-5 pt-5">
+            <h2 class="section-title">4. Proteinler</h2>
+            <p class="lead text-white">Hücrenin en önemli yapısal ve fonksiyonel birimleridir. Genetik koda göre sentezlenirler.</p>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card p-4 border-danger bg-opacity-10">
+                        <h4 class="text-white fw-bold mb-3"><i aria-hidden="true" class="fas fa-dna text-danger me-2"></i>Amino Asitlerin Yapısı</h4>
+                        <p class="small">Proteinlerin yapı taşları amino asitlerdir. Bir merkezî karbona bağlı:</p>
+                        <ul class="small">
+                            <li><strong>Amino Grubu:</strong> Bazik özellik kazandırır.</li>
+                            <li><strong>Karboksil Grubu:</strong> Asidik özellik kazandırır.</li>
+                            <li><strong>Radikal (R) Grup:</strong> Amino asitlerin çeşitliliğini belirleyen değişkendir.</li>
+                        </ul>
+                        <div class="formula-box p-3 mt-3 bg-dark border-danger text-danger">
+                            <small class="d-block mb-1">Peptit Bağı Oluşumu</small>
+                            A.A 1 + A.A 2 &rarr; Dipeptit + H<sub>2</sub>O
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card p-4 border-info h-100">
+                        <h4 class="text-white fw-bold mb-3"><i aria-hidden="true" class="fas fa-snowflake text-info me-2"></i>Yapısal Bozulma: Denatürasyon</h4>
+                        <p class="small">Proteinlerin 3D yapısı hassastır. Yüksek ısı, aşırı pH ve tuz derişimi proteinin şeklini bozarak işlevsiz hale getirir. Buna <strong>denatürasyon</strong> denir.</p>
+                        <div class="p-3 bg-info bg-opacity-10 border border-info border-opacity-25 rounded small text-info">
+                            <i aria-hidden="true" class="fas fa-info-circle me-2"></i>
+                            <strong>Önemli:</strong> Bazı durumlarda protein eski haline dönebilir (Renatürasyon). Pişmiş yumurta denatürasyona, sütün soğuyunca eski formuna dönmesi (kısmen) renatürasyona örnektir.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card p-4">
+                        <h5 class="text-white fw-bold mb-3">Proteinlerin Görevleri</h5>
+                        <div class="row g-3">
+                            <div class="col-md-3 text-center p-3 border-end border-secondary">
+                                <i aria-hidden="true" class="fas fa-shield-virus fa-2x text-success mb-2"></i>
+                                <h6 class="text-white small">Savunma</h6>
+                                <p class="x-small mb-0">Antikorlar mikroplara karşı korur.</p>
+                            </div>
+                            <div class="col-md-3 text-center p-3 border-end border-secondary">
+                                <i aria-hidden="true" class="fas fa-truck-moving fa-2x text-primary mb-2"></i>
+                                <h6 class="text-white small">Taşıma</h6>
+                                <p class="x-small mb-0">Hemoglobin oksijen taşır.</p>
+                            </div>
+                            <div class="col-md-3 text-center p-3 border-end border-secondary">
+                                <i aria-hidden="true" class="fas fa-dumbbell fa-2x text-warning mb-2"></i>
+                                <h6 class="text-white small">Hareket</h6>
+                                <p class="x-small mb-0">Aktin-Miyosin kasları kasılmasını sağlar.</p>
+                            </div>
+                            <div class="col-md-3 text-center p-3">
+                                <i aria-hidden="true" class="fas fa-gear fa-2x text-info mb-2"></i>
+                                <h6 class="text-white small">Düzenleme</h6>
+                                <h6 class="text-white small">Düzenleme</h6>
+                                <p class="x-small mb-0">İnsülin gibi hormonlar kan şekerini dengeler.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-secondary my-5">
+
+        <section id="enzimler" class="mb-5 pt-5">
+            <h2 class="section-title">5. Enzimler</h2>
+            <p class="lead">Biyokimyasal reaksiyonların aktivasyon enerjisini düşürerek hızlandıran biyolojik katalizörlerdir.</p>
+
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="card p-4 border-accent h-100">
+                        <h4 class="text-white fw-bold mb-3">Enzimlerin Yapısı ve Çalışması</h4>
+                        <p class="small">Enzimler proteinden oluşan <strong>apoenzim</strong> ve yardımcı gruplardan (<strong>Kofaktör/Koenzim</strong>) meydana gelir. Aktif formuna <strong>Holoenzim</strong> denir.</p>
+                        <ul class="small lh-lg">
+                            <li><strong>Aktif Bölge:</strong> Substratın bağlandığı özel alan.</li>
+                            <li><strong>İndüklenmiş Uyum:</strong> Enzim ve substratın şekil değiştirerek tam uyuşması.</li>
+                            <li><strong>Geri Bildirim (Feedback):</strong> Son ürünün yolun başındaki enzimi durdurması.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="experiment-box shadow-sm h-100 m-0">
+                        <h5 class="text-secondary-accent fw-bold mb-3"><i aria-hidden="true" class="fas fa-flask-vial me-2"></i>Katalaz Örneği</h5>
+                        <p class="small">Karaciğerde bulunan <strong>katalaz enzimi</strong>, zehirli hidrojen peroksiti (H<sub>2</sub>O<sub>2</sub>) su ve oksijene parçalar.</p>
+                        <div class="formula-box p-2 text-center x-small" style="color: var(--secondary-accent); border-color: var(--secondary-accent);">
+                            2H<sub>2</sub>O<sub>2</sub> &rarr; 2H<sub>2</sub>O + O<sub>2</sub>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card p-4 border-info">
+                        <h5 class="text-white fw-bold mb-4">Aktiviteyi Etkileyen Koşullar (Detaylar)</h5>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <ul class="small lh-lg">
+                                    <li><strong>Sıcaklık:</strong> Enzimlerin en iyi çalıştığı sıcaklığa <strong>optimum sıcaklık</strong> denir (Genelde 35-40°C). Çok yüksek sıcaklık proteini denatüre eder.</li>
+                                    <li><strong>pH Değeri:</strong> Her enzimin ayrıdır. Örn: Pepsin (asidik/mide), Tripsin (bazik/ince bağırsak) ortamda iyi çalışır.</li>
+                                    <li><strong>Su Oranı:</strong> Enzimlerin çalışması için ortamda en az <strong>%15</strong> su bulunmalıdır. Bal ve reçelin bozulmama sebebi budur.</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="small lh-lg">
+                                    <li><strong>Enzim-Substrat Miktarı:</strong> Enzim ve substrat arttıkça hız artar. Enzim sabitse, substrat doygunluğa ulaşınca hız sabitlenir.</li>
+                                    <li><strong>Substrat Yüzeyi:</strong> Enzimler substrata dış yüzeyinden başlar. Yüzey arttıkça hız artar (Örn: Kıymanın kuşbaşı etten hızlı sindirilmesi).</li>
+                                    <li><strong>İnhibitörler:</strong> Enzim çalışmasını yavaşlatan veya durduran maddelerdir.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-secondary my-5">
+
+        <section id="nukleik" class="mb-5 pt-5">
+            <h2 class="section-title">6. Nükleik Asitler</h2>
+            <p class="lead text-white">Genetik bilgiyi depolayan ve protein sentezini yöneten makromoleküllerdir.</p>
+
+            <div class="p-4 mb-5 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-4 shadow-sm text-center">
+                <h5 class="text-white mb-2">Nükleotitlerin Yapısı</h5>
+                <div class="d-flex justify-content-center align-items-center gap-3">
+                    <span class="badge bg-secondary p-2">Azotlu Organik Baz</span>
+                    <i aria-hidden="true" class="fas fa-plus small"></i>
+                    <span class="badge bg-info text-dark p-2">Beş Karbonlu Şeker</span>
+                    <i aria-hidden="true" class="fas fa-plus small"></i>
+                    <span class="badge bg-primary p-2">Fosfat Grubu</span>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4 border-info h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h4 class="text-info fw-bold">DNA</h4>
+                            <span class="badge bg-info text-dark">Çift Zincirli</span>
+                        </div>
+                        <p class="small">Kalıtsal bilgiyi depolar ve aktarır.</p>
+                        <ul class="small">
+                            <li><strong>Şekeri:</strong> Deoksiriboz.</li>
+                            <li><strong>Bazları:</strong> Adenin, Guanin, Sitozin ve <strong>Timin</strong>.</li>
+                            <li>A=T ve G&equiv;C eşleşmesi görülür.</li>
+                            <li>Kendini eşleyebilir (Replikasyon).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4 border-warning h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h4 class="text-warning fw-bold">RNA</h4>
+                            <span class="badge bg-warning text-dark">Tek Zincirli</span>
+                        </div>
+                        <p class="small">Protein sentezinde aracı olarak görev yapar.</p>
+                        <ul class="small">
+                            <li><strong>Şekeri:</strong> Riboz.</li>
+                            <li><strong>Bazları:</strong> Adenin, Guanin, Sitozin ve <strong>Urasil</strong>.</li>
+                            <li>Kendini eşleyemez, DNA üzerinden sentezlenir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-secondary my-5">
+
+        <section id="vitaminler" class="mb-5 pt-5">
+            <h2 class="section-title">7. Vitaminler</h2>
+            <p class="lead">Sağlıklı yaşam için gerekli, enerji vermeyen, düzenleyici organik moleküllerdir. Sindirilmeden kana geçerler.</p>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4 border-success h-100">
+                        <h4 class="text-success fw-bold mb-3">Yağda Çözünenler (A, D, E, K)</h4>
+                        <p class="small">Karaciğerde depolanırlar, yağda çözünürler ve hidrofobiktirler.</p>
+                        <div class="row g-2">
+                            <div class="col-12"><div class="p-2 bg-dark rounded small"><strong>A Vitamini:</strong> Görme pigmenti yapısı, gece körlüğü önleme, cilt sağlığı.</div></div>
+                            <div class="col-12"><div class="p-2 bg-dark rounded small"><strong>D Vitamini:</strong> Kalsiyum ve fosfor emilimi, kemik ve diş sağlığı. Güneş ışığıyla aktifleşir.</div></div>
+                            <div class="col-12"><div class="p-2 bg-dark rounded small"><strong>E Vitamini:</strong> Güçlü antioksidan, hücre zarını toksik maddelerden koruma.</div></div>
+                            <div class="col-12"><div class="p-2 bg-dark rounded small"><strong>K Vitamini:</strong> Kanın pıhtılaşma faktörlerini aktifleştirme.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4 border-info h-100">
+                        <h4 class="text-info fw-bold mb-3">Suda Çözünenler (B, C)</h4>
+                        <p class="small">Depolanmazlar (B12 hariç az miktar), fazlası idrarla atılır. Günlük alınmalıdırlar.</p>
+                        <div class="p-3 bg-dark rounded small mb-2">
+                            <strong>B Vitamini Grubu:</strong> Enerji metabolizmasında <strong>koenzim</strong> olarak görev alırlar. Sinir sistemi ve kan hücresi oluşumu için gereklidir.
+                        </div>
+                        <div class="p-3 bg-dark rounded small">
+                            <strong>C Vitamini (Askorbik Asit):</strong> Antioksidan özelliktedir. <strong>Kolajen proteininin</strong> sentezinde görev alır. Bağışıklığı güçlendirir. Isı ve ışıktan etkilenip bozulabilir.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-secondary my-5">
+
+        <section id="ayiraclar" class="mb-5 pt-5">
+            <h2 class="section-title">8. Organik Moleküllerin Ayıraçları</h2>
+            <p class="lead">Besinlerdeki organik molekülleri tespit etmek için kullanılan kimyasal belirteçlerdir (indikatörler). Bu ayıraçlar hedef molekülle etkileşime girerek karakteristik renk değişimleri oluştururlar.</p>
+
+            <div class="table-responsive">
+                <table class="table table-custom align-middle">
                     <thead>
                         <tr>
-                            <th>Kategori</th>
-                            <th>Birim Sayısı</th>
-                            <th>Örnekler</th>
-                            <th>Bulunduğu Yer</th>
+                            <th>Hedef Molekül</th>
+                            <th>Kullanılan Ayıraç</th>
+                            <th>Beklenen Renk Değişimi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Monosakkaritler</strong></td>
-                            <td>Tek Birim</td>
-                            <td>Glikoz, Riboz, Fruktoz</td>
-                            <td>Meyveler, Kan, Bal</td>
+                            <td><strong>Nişasta</strong></td>
+                            <td>İyot çözeltisi (Lugol)</td>
+                            <td><span class="badge" style="background-color: #4b0082;">Mavi-Mor</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Disakkaritler</strong></td>
-                            <td>İki Birim</td>
-                            <td>Sükroz, Laktoz, Maltoz</td>
-                            <td>Çay Şekeri, Süt, Arpa</td>
+                            <td><strong>Glikojen</strong></td>
+                            <td>İyot çözeltisi (Lugol)</td>
+                            <td><span class="badge" style="background-color: #8b4513;">Kahverengi-Kırmızı</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Oligosakkaritler</strong></td>
-                            <td>3-10 Birim</td>
-                            <td>Rafinoz, Stakiyoz</td>
-                            <td>Baklagiller</td>
+                            <td><strong>Selüloz</strong></td>
+                            <td>İyotlu çinko klorür</td>
+                            <td><span class="badge bg-info text-dark">Açık mavi veya Yeşil</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Polisakkaritler</strong></td>
-                            <td>10+ Birim</td>
-                            <td>Glikojen, Selüloz, Kitin</td>
-                            <td>Kas, Karaciğer, Bitki Lifi</td>
+                            <td><strong>Glikoz / Fruktoz</strong></td>
+                            <td>Benedict veya Fehling çözeltisi</td>
+                            <td><span class="badge" style="background-color: #b22222;">Kiremit Kırmızısı / Turuncu</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proteinler</strong></td>
+                            <td>Biüret reaktifi / Nitrik asit</td>
+                            <td><span class="badge" style="background-color: #800080;">Mor / Sarı</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yağlar</strong></td>
+                            <td>Sudan III / Sudan IV</td>
+                            <td><span class="badge bg-danger">Kırmızı / Turuncu</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Doymamış Yağlar</strong></td>
+                            <td>Osmik asit</td>
+                            <td><span class="badge bg-dark border">Siyah / Koyu Kahverengi</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </section>
 
-        <!-- Glisemik İndeks Bölümü -->
-        <section id="gi" class="mb-5 pt-5">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="section-title">4. Glisemik İndeks ve Sağlık</h2>
-                    <p>Glisemik İndeks (Gİ), bir besinin kan şekerini ne kadar hızlı yükselttiğinin ölçüsüdür. Saf glikoz 100 kabul edilerek hesaplanır.</p>
-                    <div class="card p-4 border-info">
-                        <ul class="list-unstyled mb-0">
-                            <li><span class="badge bg-danger me-2">Yüksek Gİ (>70):</span> Ani şeker yükselmesi ve hızlı acıkma. (Beyaz Ekmek, Patates)</li>
-                            <li><span class="badge bg-warning text-dark me-2">Orta Gİ (56-69):</span> Dengeli emilim. (Tam Buğday, Muz)</li>
-                            <li><span class="badge bg-success me-2">Düşük Gİ (<55):</span> Uzun süreli tokluk ve stabil enerji. (Mercimek, Elma)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="chart-container">
-                        <canvas id="giChart" height="250"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="experiment-box shadow">
-            <h4 class="text-secondary-accent fw-bold"><i aria-hidden="true" class="fas fa-flask-vial me-2"></i> Biyokimya Laboratuvarı: Ayraçlar</h4>
-            <div class="row mt-4">
-                <div class="col-md-6 border-end border-secondary">
-                    <h5>Nişasta Testi (Lügol)</h5>
-                    <p class="small">İyot çözeltisi nişasta ile <strong>Mavi-Mor</strong> renk verir. Bu, bitkisel dokulardaki enerji deposunu saptamak için kullanılır.</p>
-                </div>
-                <div class="col-md-6 ps-md-4">
-                    <h5>Glikoz Testi (Benedict)</h5>
-                    <p class="small">Benedict çözeltisi indirgen şekerlerle ısıtıldığında <strong>Kiremit Kırmızısı</strong> çökelek oluşturur.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="metabolizma" class="py-5">
-            <h2 class="section-title">5. Hormonal Denge ve Metabolizma</h2>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card p-4 h-100 shadow-sm">
-                        <h4 class="text-info"><i aria-hidden="true" class="fas fa-arrows-spin me-2"></i> Metabolik Yollar</h4>
-                        <ul class="list-group list-group-flush bg-transparent">
-                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikoliz:</strong> Glikozun sitoplazmada pirüvata yıkımı (ATP üretimi).</li>
-                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikojenoliz:</strong> Açlık anında glikojenin glikoza dönüştürülmesi.</li>
-                            <li class="list-group-item bg-transparent text-main border-secondary"><strong>Glikoneojenez:</strong> Karbonhidrat dışı (amino asit, gliserol) kaynaklardan şeker sentezi.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card p-4 h-100 shadow-sm border-danger">
-                        <h4 class="text-danger"><i aria-hidden="true" class="fas fa-syringe me-2"></i> Pankreatik Kontrol</h4>
-                        <p>Kan şekeri <strong>70-110 mg/dL</strong> arasında tutulmalıdır:</p>
-                        <div class="d-flex align-items-start mb-3">
-                            <i aria-hidden="true" class="fas fa-arrow-down text-success mt-1 me-3"></i>
-                            <div>
-                                <strong>İnsülin:</strong> Toklukta salgılanır. Şekeri hücreye sokar ve depolamayı (Glikojenez) artırır.
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start">
-                            <i aria-hidden="true" class="fas fa-arrow-up text-danger mt-1 me-3"></i>
-                            <div>
-                                <strong>Glukagon:</strong> Açlıkta salgılanır. Karaciğerdeki glikojeni yıkarak kana şeker verir.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Biliyor muydunuz? Bölümü -->
-        <section class="mt-5 p-5 rounded-4 shadow-lg" style="background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); border: 1px solid var(--border-color);">
-            <h3 class="fw-bold mb-5 text-center text-white"><i aria-hidden="true" class="fas fa-lightbulb text-warning me-2"></i> Biliyor muydunuz?</h3>
-            <div class="row g-4 text-center">
-                <div class="col-md-4">
-                    <div class="px-3">
-                        <i aria-hidden="true" class="fas fa-beer fa-3x mb-3 text-warning"></i>
-                        <h6 class="text-white">Auto-Brewery Sendromu</h6>
-                        <p class="small text-secondary">Nadir bir durumda, bağırsaktaki mayalar karbonhidratları alkole dönüştürerek kişinin sarhoş olmasına neden olabilir.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="px-3 border-start border-end border-secondary">
-                        <i aria-hidden="true" class="fas fa-brain fa-3x mb-3 text-info"></i>
-                        <h6 class="text-white">Beynin Tek Yakıtı</h6>
-                        <p class="small text-secondary">İnsan beyni, vücut ağırlığının sadece %2'sini oluşturmasına rağmen, günlük glikoz tüketiminin %20'sinden sorumludur.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="px-3">
-                        <i aria-hidden="true" class="fas fa-leaf fa-3x mb-3 text-success"></i>
-                        <h6 class="text-white">Diyet Lifi (Selüloz)</h6>
-                        <p class="small text-secondary">İnsanlar selülozu sindiremezler, ancak bu lifler sindirim sistemini temizler ve kolon kanseri riskini azaltır.</p>
-                    </div>
-                </div>
+            <div class="p-4 mt-4 bg-warning bg-opacity-10 border border-warning border-opacity-25 rounded-4 shadow-sm">
+                <h6 class="text-warning fw-bold"><i aria-hidden="true" class="fas fa-microscope me-2"></i>Laboratuvar Notu:</h6>
+                <p class="small mb-0">Benedict ve Fehling testleri, renk değişiminin gözlenebilmesi için reaksiyon karışımının <strong>ısıtılmasını</strong> gerektirir.</p>
             </div>
         </section>
 
@@ -443,7 +658,7 @@
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-1 text-secondary small">Bu site bir eğitim projesidir.</p>
-                    <p class="fw-bold text-white small">© 2026 Karbonhidrat Rehberi | Tüm Hakları Doğada Saklıdır.</p>
+                    <p class="fw-bold text-white small">© 2025 Organik Moleküller Rehberi | MEB Müfredatı Uyumludur.</p>
                 </div>
             </div>
         </div>
@@ -464,50 +679,6 @@
         btt.onclick = function() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         };
-
-        // Chart.js - Glisemik İndeks Grafiği
-        const ctx = document.getElementById('giChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Glukoz', 'Beyaz Ekmek', 'Patates (Haşlanmış)', 'Muz', 'Elma', 'Mercimek'],
-                datasets: [{
-                    label: 'Glisemik İndeks Değeri',
-                    data: [100, 75, 78, 51, 38, 28],
-                    backgroundColor: [
-                        'rgba(248, 81, 73, 0.7)',
-                        'rgba(248, 81, 73, 0.7)',
-                        'rgba(248, 81, 73, 0.7)',
-                        'rgba(241, 196, 15, 0.7)',
-                        'rgba(46, 204, 113, 0.7)',
-                        'rgba(46, 204, 113, 0.7)'
-                    ],
-                    borderColor: [
-                        '#f85149', '#f85149', '#f85149', '#f1c40f', '#2ecc71', '#2ecc71'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 110,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#8b949e' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#8b949e' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
     </script>
 </body>
 </html>
