@@ -54,6 +54,53 @@
         }
         .page.active {
             display: flex;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page.active > * {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        .page.active > *:nth-child(1) { animation-delay: 0.1s; }
+        .page.active > *:nth-child(2) { animation-delay: 0.2s; }
+        .page.active > *:nth-child(3) { animation-delay: 0.3s; }
+        .page.active > *:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+        .btn-hover:active {
+            transform: scale(0.96);
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(88, 238, 43, 0.3);
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(88, 238, 43, 0.6);
         }
 
         @keyframes scan-line {
@@ -122,9 +169,10 @@
 
             <!-- Action Buttons -->
             <div class="w-full space-y-3">
-                <button onclick="showPage('dashboard-page')" class="w-full group relative flex items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-background-dark text-lg font-bold tracking-wide transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(88,238,43,0.3)] hover:shadow-[0_0_30px_rgba(88,238,43,0.5)]">
+                <button onclick="showPage('dashboard-page')" class="w-full btn-hover group relative flex items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-background-dark text-lg font-bold tracking-wide shadow-[0_0_20px_rgba(88,238,43,0.3)] hover:shadow-[0_0_40px_rgba(88,238,43,0.6)]">
                     <span class="relative z-10">Hemen Başla</span>
                     <span class="material-symbols-outlined relative z-10 ml-2 text-[20px]">arrow_forward</span>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </button>
             </div>
         </section>
@@ -292,22 +340,22 @@
         </section>
 
         <!-- Bottom Navigation -->
-        <nav id="bottom-nav" class="hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-surface-dark/95 backdrop-blur-md border-t border-white/10 pb-6 pt-3 px-6 flex justify-between items-center">
-            <button onclick="showPage('dashboard-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+        <nav id="bottom-nav" class="hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-surface-dark/95 backdrop-blur-md border-t border-white/10 pb-6 pt-3 px-6 flex justify-between items-center shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+            <button onclick="showPage('dashboard-page')" class="flex flex-1 flex-col items-center gap-1 text-gray-400 hover:text-primary transition-all active:scale-90">
                 <span class="material-symbols-outlined">home</span>
                 <span class="text-[10px] font-medium">Ana Sayfa</span>
             </button>
-            <button onclick="showPage('scan-page')" class="flex flex-col items-center gap-1 text-primary">
-                <div class="bg-primary/20 p-2 rounded-full -mt-8 border-4 border-background-dark">
+            <button onclick="showPage('scan-page')" class="flex flex-1 flex-col items-center gap-1 text-primary active:scale-90 transition-all">
+                <div class="bg-primary/20 p-2 rounded-full -mt-10 border-4 border-background-dark shadow-[0_0_20px_rgba(88,238,43,0.4)]">
                     <span class="material-symbols-outlined text-3xl">barcode_scanner</span>
                 </div>
                 <span class="text-[10px] font-medium">Barkod</span>
             </button>
-            <button onclick="showPage('recipes-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+            <button onclick="showPage('recipes-page')" class="flex flex-1 flex-col items-center gap-1 text-gray-400 hover:text-primary transition-all active:scale-90">
                 <span class="material-symbols-outlined">menu_book</span>
                 <span class="text-[10px] font-medium">Tarifler</span>
             </button>
-            <button onclick="showPage('etwinning-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+            <button onclick="showPage('etwinning-page')" class="flex flex-1 flex-col items-center gap-1 text-gray-400 hover:text-primary transition-all active:scale-90">
                 <span class="material-symbols-outlined">public</span>
                 <span class="text-[10px] font-medium">eTwinning</span>
             </button>
@@ -547,8 +595,8 @@
             }
 
             return `
-                <div class="relative flex bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 ${colorClass} overflow-hidden">
-                    <div class="w-16 h-16 rounded-lg bg-gray-800 shrink-0 overflow-hidden relative">
+                <div class="relative flex bg-surface-dark/40 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/5 border-l-4 ${colorClass} overflow-hidden transition-all hover:translate-x-1 hover:bg-surface-dark/60 group">
+                    <div class="w-16 h-16 rounded-xl bg-gray-800 shrink-0 overflow-hidden relative shadow-inner">
                         <img src="${product.imageUrl || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
                     </div>
                     <div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
@@ -630,9 +678,9 @@
                 const isSelected = selectedIngredients.includes(ing.id);
 
                 const html = `
-                    <button onclick="toggleIngredient('${ing.id}')" class="relative flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all ${isSelected ? 'border-primary bg-primary/10' : 'border-white/5 bg-surface-dark'}">
+                    <button onclick="toggleIngredient('${ing.id}')" class="relative flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all active:scale-90 hover:shadow-[0_0_15px_rgba(88,238,43,0.15)] ${isSelected ? 'border-primary bg-primary/10 scale-105 shadow-[0_0_20px_rgba(88,238,43,0.2)]' : 'border-white/5 bg-surface-dark opacity-80 hover:opacity-100'}">
                         ${inPantry ? '<span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>' : ''}
-                        <span class="text-2xl mb-1">${ing.icon}</span>
+                        <span class="text-2xl mb-1 transition-transform group-hover:scale-110">${ing.icon}</span>
                         <span class="text-[10px] font-semibold text-center">${ing.name}</span>
                         ${inPantry ? '<span class="text-[8px] text-primary font-bold mt-1">Elde Var</span>' : ''}
                     </button>
@@ -689,11 +737,12 @@
                 const matchPercent = matchCount > 0 ? Math.round((matchCount / recipe.ingredients.length) * 100) : 0;
 
                 const html = `
-                    <div class="bg-surface-dark rounded-2xl overflow-hidden border border-white/5 shadow-lg">
-                        <div class="relative h-64">
-                            <img src="${recipe.imageUrl}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&q=80&w=400'">
+                    <div class="bg-surface-dark/40 backdrop-blur-md rounded-3xl overflow-hidden border border-white/5 shadow-xl transition-all hover:shadow-primary/5 hover:-translate-y-1 group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="${recipe.imageUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&q=80&w=400'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                             ${matchPercent > 0 ? `
-                            <div class="absolute top-3 left-3 bg-primary text-background-dark px-2 py-1 rounded-full text-[10px] font-bold">
+                            <div class="absolute top-4 left-4 bg-primary shadow-[0_0_20px_rgba(88,238,43,0.5)] text-background-dark px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
                                 %${matchPercent} Uyumlu
                             </div>
                             ` : ''}
@@ -743,20 +792,21 @@
                 const matchPercent = matchCount > 0 ? Math.round((matchCount / recipe.ingredients.length) * 100) : 0;
 
                 const html = `
-                    <article class="relative flex flex-col overflow-hidden rounded-2xl bg-surface-dark border border-white/5">
+                    <article class="relative flex flex-col overflow-hidden rounded-3xl bg-surface-dark/40 backdrop-blur-md border border-white/5 shadow-xl transition-all hover:shadow-primary/10 hover:-translate-y-1 group">
                         <div class="relative aspect-[16/9] w-full overflow-hidden">
-                            <img src="${recipe.imageUrl}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&q=80&w=400'">
-                            <div class="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-primary/90 backdrop-blur-sm px-3 py-1 text-xs font-bold text-background-dark">
+                            <img src="${recipe.imageUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&q=80&w=400'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent opacity-60"></div>
+                            <div class="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-primary shadow-[0_0_15px_rgba(88,238,43,0.4)] px-3 py-1 text-[10px] font-extrabold text-background-dark uppercase">
                                 %${matchPercent} Uyumlu
                             </div>
                         </div>
-                        <div class="p-4 flex flex-col gap-2">
-                            <h3 class="text-lg font-bold text-white">${recipe.name}</h3>
-                            <div class="flex flex-wrap gap-2">
+                        <div class="p-5 flex flex-col gap-2">
+                            <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">${recipe.name}</h3>
+                            <div class="flex flex-wrap gap-2 mt-1">
                                 ${recipe.ingredients.map(ing => {
                                     const hasIt = selectedIngredients.includes(ing);
                                     const ingName = allIngredients.find(i => i.id === ing)?.name || ing;
-                                    return `<span class="px-2 py-0.5 rounded-md text-[10px] ${hasIt ? 'bg-primary/20 text-primary' : 'bg-white/5 text-gray-500'} font-bold">${ingName}</span>`;
+                                    return `<span class="px-2 py-0.5 rounded-md text-[10px] ${hasIt ? 'bg-primary/20 text-primary border border-primary/20' : 'bg-white/5 text-gray-500 border border-transparent'} font-bold transition-all">${ingName}</span>`;
                                 }).join('')}
                             </div>
                         </div>
