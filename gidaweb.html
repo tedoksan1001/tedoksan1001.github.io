@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gıda Dedektifi - Akıllı Mutfak Asistanı</title>
+
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#58ee2b",
+                        "primary-dark": "#3db81e",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1e2b1a",
+                        "card-dark": "#161b22",
+                        "border-dark": "#30363d"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes scan-line {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan {
+            animation: scan-line 2.5s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white font-display antialiased">
+    <!-- App Container -->
+    <div id="app" class="relative flex min-h-screen w-full flex-col overflow-hidden mx-auto max-w-md bg-background-light dark:bg-background-dark shadow-2xl">
+
+        <!-- Welcome Page -->
+        <section id="welcome-page" class="page active flex-col items-center justify-between px-6 pt-12 pb-8 relative z-10">
+            <!-- Background Ambient Glow -->
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[30%] bg-primary/20 blur-[100px] rounded-full pointer-events-none"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[40%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+            <!-- Logo Section -->
+            <div class="w-full flex flex-col items-center justify-center mt-4">
+                <div class="relative flex items-center justify-center w-20 h-20 mb-4 bg-primary/10 rounded-full border border-primary/20">
+                    <span class="material-symbols-outlined text-primary text-[40px] z-10">travel_explore</span>
+                    <span class="material-symbols-outlined text-white/40 text-[24px] absolute bottom-4 right-4 z-0">nutrition</span>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+                    Gıda Dedektifi
+                </h2>
+            </div>
+
+            <!-- Hero Illustration -->
+            <div class="w-full flex-1 flex items-center justify-center my-6">
+                <div class="relative w-full aspect-square max-w-[320px]">
+                    <div class="w-full h-full bg-cover bg-center rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8_J4HQLn7dTxUHbXW9EvGmEJtyKiTxidqiV9cFyKETwOuYiHm4qV37cdEvQQYQLvB1hKa5Qtr4sZbLhmbBezBxiOvE7cRPXntGvzCI13nP6l9faz-4gYDsdH8sgY3_gIWYaV_Rk80Uw8NoSoOrany0RAUxtrFTK_SwyJvE5lroBUjTUR8pYAEr5b4ReRrxySfklZ-uOgzbc6PCSyNnNvqotRP8vDALQBvwroTwzlZ49X313pnr971Mr5gBXWxvmZVPgIFH85fFjY');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Floating Cards -->
+                    <div class="absolute -right-4 top-10 bg-gray-800/80 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-lg animate-bounce" style="animation-duration: 3s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400">
+                                <span class="material-symbols-outlined text-sm">warning</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 font-medium">Kalan Gün</p>
+                                <p class="text-xs text-white font-bold">2 Gün</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="w-full text-center space-y-4 mb-8">
+                <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                    Gıdayı Koru, <br/>
+                    <span class="text-primary">Dünyayı Kurtar.</span>
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-[280px] mx-auto">
+                    Son kullanma tarihlerini takip edin ve artan malzemelerle harika yemekler pişirin.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="w-full space-y-3">
+                <button onclick="showPage('dashboard-page')" class="w-full group relative flex items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-background-dark text-lg font-bold tracking-wide transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(88,238,43,0.3)] hover:shadow-[0_0_30px_rgba(88,238,43,0.5)]">
+                    <span class="relative z-10">Hemen Başla</span>
+                    <span class="material-symbols-outlined relative z-10 ml-2 text-[20px]">arrow_forward</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Other Pages -->
+        <!-- Dashboard Page -->
+        <section id="dashboard-page" class="page flex-col w-full overflow-y-auto pb-32">
+            <header class="px-6 py-8">
+                <div class="flex items-center justify-between mb-2">
+                    <h1 class="text-3xl font-extrabold tracking-tight">Buzdolabım</h1>
+                    <div class="relative">
+                        <span class="material-symbols-outlined text-2xl">notifications</span>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </div>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400">Gıda israfını önlemek için takipte kal.</p>
+            </header>
+
+            <!-- Stats Card -->
+            <div class="px-6 mb-8">
+                <div class="bg-primary/10 border border-primary/20 rounded-2xl p-5 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Kurtarılan Gıda</p>
+                        <h3 class="text-2xl font-bold">12.5 kg</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">eco</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory List -->
+            <div class="px-6 space-y-4" id="inventory-list">
+                <h2 class="text-lg font-bold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500">warning</span>
+                    Yakında Tüketilmeli
+                </h2>
+                <!-- List items will be injected here -->
+                <div id="loading-inventory" class="flex justify-center py-10">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+                <div id="empty-inventory" class="hidden text-center py-10 text-gray-500">
+                    Buzdolabın şu an boş. Ürün eklemek için barkodu tara!
+                </div>
+
+                <button onclick="showManualAdd()" class="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-white/10 rounded-2xl text-gray-500 hover:text-primary hover:border-primary transition-all">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    <span class="font-bold">Manuel Ürün Ekle</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Scan Page -->
+        <section id="scan-page" class="page flex-col relative">
+            <header class="absolute top-0 left-0 w-full z-20 px-5 pt-12 pb-4 flex justify-between items-center bg-gradient-to-b from-black/60 to-transparent">
+                <button onclick="showPage('dashboard-page')" class="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-md border border-white/10 text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
+                    <span class="material-symbols-outlined text-primary text-[18px]">security</span>
+                    <span class="text-xs font-semibold tracking-wide text-white uppercase">Barkod Tara</span>
+                </div>
+                <div class="w-10"></div>
+            </header>
+
+            <!-- Scanner View -->
+            <div id="reader" class="flex-1 w-full bg-black"></div>
+
+            <!-- Overlay Elements -->
+            <div class="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center">
+                <div class="mb-8 text-center">
+                    <p class="text-white font-medium text-lg drop-shadow-md">Ürün barkodunu taratın</p>
+                    <p class="text-white/60 text-sm mt-1">Son kullanma tarihini takip etmek için çerçeveye hizalayın</p>
+                </div>
+                <!-- Scanner Reticle -->
+                <div class="relative w-72 h-48 border-2 border-white/20 rounded-2xl overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 left-0 w-8 h-8 border-t-[4px] border-l-[4px] border-primary rounded-tl-xl"></div>
+                    <div class="absolute top-0 right-0 w-8 h-8 border-t-[4px] border-r-[4px] border-primary rounded-tr-xl"></div>
+                    <div class="absolute bottom-0 left-0 w-8 h-8 border-b-[4px] border-l-[4px] border-primary rounded-bl-xl"></div>
+                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-[4px] border-r-[4px] border-primary rounded-br-xl"></div>
+                    <div class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_#58ee2b] animate-scan"></div>
+                </div>
+                <!-- Manual Entry Button -->
+                <div class="mt-10 pointer-events-auto">
+                    <button onclick="showManualAdd()" class="group flex items-center gap-2 px-5 py-3 rounded-xl bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 transition-all active:scale-95">
+                        <span class="material-symbols-outlined text-white/80 group-hover:text-primary transition-colors">keyboard</span>
+                        <span class="text-sm font-semibold text-white/90">Barkodu elle gir</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Card (Bottom Sheet) -->
+            <div id="scan-result-card" class="hidden absolute bottom-0 left-0 w-full z-30 bg-surface-dark rounded-t-[2rem] border-t border-white/10 p-6 pt-8 shadow-[0_-8px_30px_rgba(0,0,0,0.5)] transform translate-y-0 transition-transform">
+                <div class="flex gap-4 items-start">
+                    <div class="relative w-20 h-24 shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 shadow-lg">
+                        <img id="scanned-product-img" src="https://via.placeholder.com/150" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 right-0 p-1 bg-background-dark rounded-tl-lg">
+                            <div class="bg-primary text-black rounded-full p-0.5">
+                                <span class="material-symbols-outlined text-[14px] font-bold block">check</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 id="scanned-product-name" class="text-xl font-bold text-white truncate leading-tight">Ürün Bulundu</h3>
+                        <p class="text-white/50 text-xs mt-1">Gıda Ürünü</p>
+                        <div class="mt-3">
+                            <label class="text-[10px] uppercase tracking-wider text-primary font-bold mb-1 block">Son Kullanma Tarihi</label>
+                            <input type="date" id="expiry-input" class="w-full bg-white/10 border border-white/10 rounded-lg text-sm text-white px-3 py-2">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button onclick="hideResultCard()" class="flex-1 py-3.5 rounded-xl bg-white/10 text-white font-semibold text-sm">Vazgeç</button>
+                    <button onclick="saveProduct()" class="flex-[2] py-3.5 rounded-xl bg-primary text-background-dark font-bold text-sm shadow-[0_0_15px_rgba(88,238,43,0.3)]">Onayla ve Ekle</button>
+                </div>
+            </div>
+        </section>
+        <!-- Recipes Page -->
+        <section id="recipes-page" class="page flex-col w-full overflow-y-auto pb-32">
+            <header class="px-6 pt-10 pb-4 sticky top-0 bg-background-dark/95 backdrop-blur-md z-20">
+                <h1 class="text-3xl font-extrabold tracking-tight">Ne Pişirsem?</h1>
+                <p class="text-gray-400 text-sm mt-1">Eldeki malzemeleri seç, sana tarif önerelim.</p>
+            </header>
+
+            <!-- Ingredient Selection -->
+            <div class="px-6 mb-8">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-primary mb-4">Malzemelerini Seç</h3>
+                <div class="grid grid-cols-4 gap-3" id="ingredient-selection">
+                    <!-- Ingredients will be injected here -->
+                </div>
+            </div>
+
+            <!-- Recipe Results -->
+            <div class="px-6">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Önerilen Tarifler</h3>
+                <div class="space-y-4" id="recipe-results">
+                    <p class="text-gray-500 text-center py-10 italic">Malzeme seçerek tarifleri görebilirsiniz.</p>
+                </div>
+            </div>
+        </section>
+        <!-- eTwinning Page -->
+        <section id="etwinning-page" class="page flex-col w-full overflow-y-auto pb-32">
+            <header class="px-6 pt-10 pb-4 sticky top-0 bg-background-dark/95 backdrop-blur-md z-20">
+                <h1 class="text-3xl font-extrabold tracking-tight">eTwinning Kültürü</h1>
+                <p class="text-gray-400 text-sm mt-1">Dünya mutfağından sürdürülebilir tarifler.</p>
+            </header>
+
+            <!-- Country Selection -->
+            <div class="flex gap-4 overflow-x-auto px-6 py-4 no-scrollbar" id="country-selection">
+                <!-- Countries will be injected here -->
+            </div>
+
+            <!-- Country Recipes -->
+            <div class="px-6 space-y-6" id="etwinning-recipes">
+                <!-- Recipes will be injected here -->
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav id="bottom-nav" class="hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-surface-dark/95 backdrop-blur-md border-t border-white/10 pb-6 pt-3 px-6 flex justify-between items-center">
+            <button onclick="showPage('dashboard-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-[10px] font-medium">Ana Sayfa</span>
+            </button>
+            <button onclick="showPage('scan-page')" class="flex flex-col items-center gap-1 text-primary">
+                <div class="bg-primary/20 p-2 rounded-full -mt-8 border-4 border-background-dark">
+                    <span class="material-symbols-outlined text-3xl">barcode_scanner</span>
+                </div>
+                <span class="text-[10px] font-medium">Barkod</span>
+            </button>
+            <button onclick="showPage('recipes-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-[10px] font-medium">Tarifler</span>
+            </button>
+            <button onclick="showPage('etwinning-page')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">public</span>
+                <span class="text-[10px] font-medium">eTwinning</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyABTomIDlkfHmW_YrL0a5vpbnxNxeed3jg",
+            authDomain: "gidadedektifi-web.firebaseapp.com",
+            projectId: "gidadedektifi-web",
+            storageBucket: "gidadedektifi-web.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Router / Page Management
+        let inventoryUnsubscribe = null;
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Toggle Bottom Nav visibility
+            const bottomNav = document.getElementById('bottom-nav');
+            if (pageId === 'welcome-page') {
+                if (bottomNav) bottomNav.classList.add('hidden');
+            } else {
+                if (bottomNav) bottomNav.classList.remove('hidden');
+            }
+
+            if (pageId === 'dashboard-page') {
+                loadInventory();
+            } else if (inventoryUnsubscribe) {
+                inventoryUnsubscribe();
+                inventoryUnsubscribe = null;
+            }
+            if (pageId === 'recipes-page') {
+                loadIngredients();
+            }
+            if (pageId === 'etwinning-page') {
+                loadCountries();
+            }
+            if (pageId === 'scan-page') {
+                startScanner();
+            } else {
+                stopScanner();
+            }
+        }
+
+        let html5QrCode;
+        function startScanner() {
+            html5QrCode = new Html5Qrcode("reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+        }
+
+        function stopScanner() {
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
+                }).catch(err => console.error("Error stopping scanner:", err));
+            }
+        }
+
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`Scan result: ${decodedText}`, decodedResult);
+            // Simulate product lookup
+            const mockProducts = {
+                "8690637101111": { name: "Sütaş Tam Yağlı Yoğurt 750g", imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDSUR4Hq2gKTLB1JcaJz7nnVYTRbyMDYgcwG-U0foYVYAtdn3D88SPgoT_qsF02jaCNaq4SSpoKTRprE0iyKsQLwZJ4hjuYataMvQZCYgPMQx2MjJjihCtmWP_hq9-aSiYC0O5-5nppBfZBHp9i2jlbdqtsN5pGZpTuxuT488H8EhHTmmBgCU1swP0kEaHN11TCxbJcVes7dJIJSByt96SIRur6N5g_e7q8xi1nBUN2fecOSGNnOhQQO2H0PGu3y_HM--RPE8m1flg" },
+                "default": { name: "Yeni Ürün", imageUrl: "https://via.placeholder.com/150" }
+            };
+
+            const product = mockProducts[decodedText] || mockProducts["default"];
+            document.getElementById('scanned-product-name').textContent = product.name;
+            document.getElementById('scanned-product-img').src = product.imageUrl;
+            document.getElementById('scan-result-card').classList.remove('hidden');
+        }
+
+        function hideResultCard() {
+            document.getElementById('scan-result-card').classList.add('hidden');
+        }
+
+        function showManualAdd() {
+            document.getElementById('scanned-product-name').textContent = "Yeni Ürün";
+            document.getElementById('scanned-product-img').src = "https://via.placeholder.com/150";
+            document.getElementById('scan-result-card').classList.remove('hidden');
+            // Allow editing name for manual add
+            const nameEl = document.getElementById('scanned-product-name');
+            nameEl.contentEditable = true;
+            nameEl.focus();
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('scanned-product-name').textContent;
+            const imageUrl = document.getElementById('scanned-product-img').src;
+            const expiryDate = document.getElementById('expiry-input').value;
+
+            if (!expiryDate) {
+                alert("Lütfen son kullanma tarihini seçin.");
+                return;
+            }
+
+            db.collection("products").add({
+                name,
+                imageUrl,
+                expiryDate,
+                quantity: 1,
+                addedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                hideResultCard();
+                showPage('dashboard-page');
+            }).catch(error => {
+                console.error("Error adding product: ", error);
+            });
+        }
+
+        function checkNotifications(products) {
+            if (!("Notification" in window)) return;
+
+            if (Notification.permission === "granted") {
+                const today = new Date();
+                products.forEach(product => {
+                    const expiry = new Date(product.expiryDate);
+                    const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+                    if (diffDays >= 0 && diffDays <= 2) {
+                        new Notification("Gıda Dedektifi", {
+                            body: `${product.name} ürününün süresi dolmak üzere! (${diffDays} gün kaldı)`,
+                            icon: product.imageUrl || "https://via.placeholder.com/150"
+                        });
+                    }
+                });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+
+        function loadInventory() {
+            const listContainer = document.getElementById('inventory-list');
+            const itemsContainer = document.getElementById('inventory-items-container') || createItemsContainer(listContainer);
+            const loading = document.getElementById('loading-inventory');
+            const empty = document.getElementById('empty-inventory');
+
+            if (inventoryUnsubscribe) return; // Already listening
+
+            inventoryUnsubscribe = db.collection("products").orderBy("expiryDate").onSnapshot((querySnapshot) => {
+                loading.classList.add('hidden');
+                itemsContainer.innerHTML = '';
+
+                if (querySnapshot.empty) {
+                    empty.classList.remove('hidden');
+                } else {
+                    empty.classList.add('hidden');
+                    const products = [];
+                    querySnapshot.forEach((doc) => {
+                        const product = doc.data();
+                        products.push(product);
+                        const itemHtml = createInventoryItem(doc.id, product);
+                        itemsContainer.insertAdjacentHTML('beforeend', itemHtml);
+                    });
+                    checkNotifications(products);
+                }
+            }, (error) => {
+                console.error("Error fetching products: ", error);
+                loading.classList.add('hidden');
+                addMockDataIfEmpty();
+            });
+        }
+
+        function createItemsContainer(parent) {
+            const div = document.createElement('div');
+            div.id = 'inventory-items-container';
+            div.className = 'space-y-4';
+            // Insert after the header
+            const header = parent.querySelector('h2');
+            header.insertAdjacentElement('afterend', div);
+            return div;
+        }
+
+        function createInventoryItem(id, product) {
+            const expiry = new Date(product.expiryDate);
+            const today = new Date();
+            const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+            let colorClass = "border-primary";
+            let statusText = `${diffDays} gün kaldı`;
+            if (diffDays <= 0) {
+                colorClass = "border-red-500";
+                statusText = "Süresi doldu!";
+            } else if (diffDays <= 3) {
+                colorClass = "border-yellow-400";
+            }
+
+            return `
+                <div class="relative flex bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 ${colorClass} overflow-hidden">
+                    <div class="w-16 h-16 rounded-lg bg-gray-800 shrink-0 overflow-hidden relative">
+                        <img src="${product.imageUrl || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-white leading-tight">${product.name}</h3>
+                                <p class="text-xs font-bold text-gray-400 mt-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                    ${product.expiryDate}
+                                </p>
+                            </div>
+                            <button onclick="deleteProduct('${id}')" class="text-gray-500 hover:text-red-500 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-xs font-bold text-yellow-500">${statusText}</span>
+                            <div class="flex items-center bg-background-dark rounded-lg px-2 py-1 gap-2 border border-white/5">
+                                <span class="text-xs font-bold">${product.quantity || 1} adet</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
+                db.collection("products").doc(id).delete();
+            }
+        }
+
+        function addMockDataIfEmpty() {
+             const list = document.getElementById('inventory-list');
+             if (list.children.length > 1) return; // Already has items or header
+
+             const mockData = [
+                 { name: "Sütaş Yoğurt", expiryDate: "2023-10-14", quantity: 1, imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDSUR4Hq2gKTLB1JcaJz7nnVYTRbyMDYgcwG-U0foYVYAtdn3D88SPgoT_qsF02jaCNaq4SSpoKTRprE0iyKsQLwZJ4hjuYataMvQZCYgPMQx2MjJjihCtmWP_hq9-aSiYC0O5-5nppBfZBHp9i2jlbdqtsN5pGZpTuxuT488H8EhHTmmBgCU1swP0kEaHN11TCxbJcVes7dJIJSByt96SIRur6N5g_e7q8xi1nBUN2fecOSGNnOhQQO2H0PGu3y_HM--RPE8m1flg" },
+                 { name: "Yumurta", expiryDate: "2023-10-20", quantity: 6, imageUrl: "https://via.placeholder.com/150" }
+             ];
+             mockData.forEach(p => {
+                 list.insertAdjacentHTML('beforeend', createInventoryItem('mock', p));
+             });
+        }
+
+        // Recipe Finder Logic
+        const allIngredients = [
+            { id: "egg", name: "Yumurta", icon: "🥚" },
+            { id: "tomato", name: "Domates", icon: "🍅" },
+            { id: "onion", name: "Soğan", icon: "🧅" },
+            { id: "spinach", name: "Ispanak", icon: "🥬" },
+            { id: "cheese", name: "Peynir", icon: "🧀" },
+            { id: "milk", name: "Süt", icon: "🥛" },
+            { id: "bread", name: "Ekmek", icon: "🍞" },
+            { id: "potato", name: "Patates", icon: "🥔" }
+        ];
+
+        const allRecipes = [
+            { name: "Menemen", ingredients: ["egg", "tomato", "onion"], imageUrl: "https://via.placeholder.com/300?text=Menemen" },
+            { name: "Peynirli Omlet", ingredients: ["egg", "cheese"], imageUrl: "https://via.placeholder.com/300?text=Omlet" },
+            { name: "Ispanaklı Börek", ingredients: ["spinach", "cheese", "milk"], imageUrl: "https://via.placeholder.com/300?text=Borek" },
+            { name: "Ekmek Tatlısı", ingredients: ["bread", "milk"], imageUrl: "https://via.placeholder.com/300?text=Tatli" }
+        ];
+
+        let selectedIngredients = [];
+
+        function loadIngredients() {
+            const container = document.getElementById('ingredient-selection');
+            container.innerHTML = '';
+            allIngredients.forEach(ing => {
+                const isSelected = selectedIngredients.includes(ing.id);
+                const html = `
+                    <button onclick="toggleIngredient('${ing.id}')" class="flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all ${isSelected ? 'border-primary bg-primary/10' : 'border-white/5 bg-surface-dark'}">
+                        <span class="text-2xl mb-1">${ing.icon}</span>
+                        <span class="text-[10px] font-semibold text-center">${ing.name}</span>
+                    </button>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+            updateRecipes();
+        }
+
+        function toggleIngredient(id) {
+            if (selectedIngredients.includes(id)) {
+                selectedIngredients = selectedIngredients.filter(i => i !== id);
+            } else {
+                selectedIngredients.push(id);
+            }
+            loadIngredients();
+        }
+
+        // eTwinning Logic
+        const etwinningData = [
+            {
+                country: "Türkiye",
+                flag: "🇹🇷",
+                recipes: [
+                    { name: "Bayat Ekmek Köftesi", description: "Artan ekmeklerin değerlendirildiği geleneksel bir lezzet.", imageUrl: "https://via.placeholder.com/300?text=Kofte" },
+                    { name: "Kıtır Ekmek Çorbası", description: "Bayat ekmeklerin fırınlanarak çorbalara katılması.", imageUrl: "https://via.placeholder.com/300?text=Corba" }
+                ]
+            },
+            {
+                country: "İtalya",
+                flag: "🇮🇹",
+                recipes: [
+                    { name: "Panzanella", description: "Bayat ekmek, domates ve zeytinyağı ile yapılan Toskana salatası.", imageUrl: "https://via.placeholder.com/300?text=Panzanella" },
+                    { name: "Ribollita", description: "Artan sebze ve ekmeklerle yapılan meşhur bir İtalyan çorbası.", imageUrl: "https://via.placeholder.com/300?text=Ribollita" }
+                ]
+            },
+            {
+                country: "İspanya",
+                flag: "🇪🇸",
+                recipes: [
+                    { name: "Gazpacho", description: "Olgunlaşmış domateslerin değerlendirildiği soğuk çorba.", imageUrl: "https://via.placeholder.com/300?text=Gazpacho" }
+                ]
+            }
+        ];
+
+        let selectedCountry = etwinningData[0].country;
+
+        function loadCountries() {
+            const container = document.getElementById('country-selection');
+            container.innerHTML = '';
+            etwinningData.forEach(item => {
+                const isActive = selectedCountry === item.country;
+                const html = `
+                    <button onclick="selectCountry('${item.country}')" class="flex-shrink-0 px-6 py-2 rounded-full border-2 transition-all ${isActive ? 'border-primary bg-primary/10 text-primary' : 'border-white/5 bg-surface-dark text-gray-400'} font-bold">
+                        ${item.flag} ${item.country}
+                    </button>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+            updateCountryRecipes();
+        }
+
+        function selectCountry(country) {
+            selectedCountry = country;
+            loadCountries();
+        }
+
+        function updateCountryRecipes() {
+            const container = document.getElementById('etwinning-recipes');
+            container.innerHTML = '';
+            const data = etwinningData.find(item => item.country === selectedCountry);
+
+            data.recipes.forEach(recipe => {
+                const html = `
+                    <div class="bg-surface-dark rounded-2xl overflow-hidden border border-white/5 shadow-lg">
+                        <img src="${recipe.imageUrl}" class="w-full h-64 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-white mb-2">${recipe.name}</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">${recipe.description}</p>
+                            <button class="mt-4 text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                                Tarifi Görüntüle <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function updateRecipes() {
+            const container = document.getElementById('recipe-results');
+            if (selectedIngredients.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-10 italic">Malzeme seçerek tarifleri görebilirsiniz.</p>';
+                return;
+            }
+
+            const filteredRecipes = allRecipes.filter(recipe =>
+                recipe.ingredients.some(ing => selectedIngredients.includes(ing))
+            );
+
+            if (filteredRecipes.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-10 italic">Uygun tarif bulunamadı.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            filteredRecipes.forEach(recipe => {
+                const matchCount = recipe.ingredients.filter(ing => selectedIngredients.includes(ing)).length;
+                const matchPercent = Math.round((matchCount / recipe.ingredients.length) * 100);
+
+                const html = `
+                    <article class="relative flex flex-col overflow-hidden rounded-2xl bg-surface-dark border border-white/5">
+                        <div class="relative aspect-[16/9] w-full overflow-hidden">
+                            <img src="${recipe.imageUrl}" class="w-full h-full object-cover">
+                            <div class="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-primary/90 backdrop-blur-sm px-3 py-1 text-xs font-bold text-background-dark">
+                                %${matchPercent} Uyumlu
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col gap-2">
+                            <h3 class="text-lg font-bold text-white">${recipe.name}</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${recipe.ingredients.map(ing => {
+                                    const hasIt = selectedIngredients.includes(ing);
+                                    return `<span class="px-2 py-0.5 rounded-md text-[10px] ${hasIt ? 'bg-primary/20 text-primary' : 'bg-white/5 text-gray-500'} font-bold">${allIngredients.find(i => i.id === ing).name}</span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </article>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+    </script>
+</body>
+</html>
