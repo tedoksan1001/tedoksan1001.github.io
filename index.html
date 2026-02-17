@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gıda Dedektifi</title>
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d1117">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark text-light">
+
+    <nav class="navbar navbar-dark bg-dark shadow border-bottom border-secondary sticky-top">
+        <div class="container-fluid px-3">
+            <span class="navbar-brand fw-bold">
+                <i class="fas fa-search-location text-success me-2"></i>Gıda Dedektifi
+            </span>
+            <button class="btn btn-outline-success btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#scanModal">
+                <i class="fas fa-barcode"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container py-4 pb-5 mb-5" id="app">
+        <!-- Home Section -->
+        <section id="home-section" class="app-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 mb-0 fw-bold">Ürünlerim</h2>
+                <span class="badge bg-success opacity-75" id="product-count">0 Ürün</span>
+            </div>
+            <div id="product-list" class="row g-3">
+                <!-- Products will be loaded here -->
+                <div class="col-12 text-center py-5 text-secondary">
+                    <i class="fas fa-box-open fa-3x mb-3 opacity-25"></i>
+                    <p>Henüz ürün eklemediniz.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipes Section -->
+        <section id="recipes-section" class="app-section d-none">
+            <h2 class="h4 mb-4 fw-bold">Artan Yemek Değerlendirme</h2>
+            <div class="card bg-secondary bg-opacity-10 border-secondary border-opacity-25 mb-4 rounded-4">
+                <div class="card-body">
+                    <h6 class="card-title text-success mb-3 small fw-bold text-uppercase">Malzeme Seçiniz</h6>
+                    <div id="ingredient-selector" class="d-flex flex-wrap gap-2">
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Patates')">Patates</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Ekmek')">Ekmek</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Yumurta')">Yumurta</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Süt')">Süt</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Peynir')">Peynir</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Fasulye')">Fasulye</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Zeytinyağı')">Zeytinyağı</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Elma')">Elma</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Fındık')">Fındık</div>
+                        <div class="ingredient-chip" onclick="toggleIngredient(this, 'Ceviz')">Ceviz</div>
+                    </div>
+                </div>
+            </div>
+            <div id="recipe-list" class="row g-3">
+                <!-- Recipes will be loaded here -->
+            </div>
+        </section>
+
+        <!-- eTwinning Section -->
+        <section id="etwinning-section" class="app-section d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 mb-0 fw-bold">Dünya Mutfağı</h2>
+                <button class="btn btn-success btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addRecipeModal">
+                    <i class="fas fa-plus me-1"></i> Paylaş
+                </button>
+            </div>
+            <div id="etwinning-list" class="row g-3">
+                <!-- eTwinning recipes will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Scan & Add Modal -->
+    <div class="modal fade" id="scanModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ürün Ekle</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="scanner-container" class="mb-3">
+                        <div id="reader"></div>
+                    </div>
+                    <form id="product-form">
+                        <div class="mb-3">
+                            <label class="form-label small">Ürün Adı</label>
+                            <input type="text" id="product-name" class="form-control" placeholder="Örn: Süt" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Barkod (Opsiyonel)</label>
+                            <input type="text" id="product-barcode" class="form-control" placeholder="Barkod Okutun veya Yazın">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Son Kullanma Tarihi</label>
+                            <input type="date" id="product-expiry" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-success px-4" onclick="saveProduct()">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Recipe Modal -->
+    <div class="modal fade" id="addRecipeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tarif Paylaş</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="recipe-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small">Yemek Adı</label>
+                                <input type="text" id="recipe-title" class="form-control" placeholder="Örn: Zeytinyağlı Fasulye" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small">Ülke</label>
+                                <select id="recipe-country" class="form-select">
+                                    <option value="Türkiye">Türkiye 🇹🇷</option>
+                                    <option value="İtalya">İtalya 🇮🇹</option>
+                                    <option value="Fransa">Fransa 🇫🇷</option>
+                                    <option value="İspanya">İspanya 🇪🇸</option>
+                                    <option value="Almanya">Almanya 🇩🇪</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Malzemeler</label>
+                            <textarea id="recipe-ingredients" class="form-control" rows="2" placeholder="Virgülle ayırın: Patates, Soğan..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Hazırlanışı</label>
+                            <textarea id="recipe-steps" class="form-control" rows="4" placeholder="Nasıl yapılır?" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-success px-4" onclick="saveRecipe()">Paylaş</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="navbar navbar-dark bg-dark border-top border-secondary fixed-bottom px-2">
+        <div class="container-fluid justify-content-around">
+            <button class="btn btn-link text-success nav-link active" onclick="showSection('home')">
+                <i class="fas fa-home d-block fa-lg mb-1"></i>
+                <span class="x-small">Ana Sayfa</span>
+            </button>
+            <button class="btn btn-link text-secondary nav-link" onclick="showSection('recipes')">
+                <i class="fas fa-utensils d-block fa-lg mb-1"></i>
+                <span class="x-small">Tarifler</span>
+            </button>
+            <button class="btn btn-link text-secondary nav-link" onclick="showSection('etwinning')">
+                <i class="fas fa-globe d-block fa-lg mb-1"></i>
+                <span class="x-small">eTwinning</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- Firebase SDK (v9 compat for easier transition or v9 modular via ESM) -->
+    <!-- Using Compat for simplicity in a single script file project -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
+
+    <script src="app.js"></script>
+</body>
+</html>
