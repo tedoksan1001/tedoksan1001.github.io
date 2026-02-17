@@ -1,0 +1,1284 @@
+<!-- Welcome to Gıda Dedektifi -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gıda Dedektifi - Scanner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#58ee2b",
+              "primary-dark": "#3db81e", 
+              "background-light": "#f6f8f6",
+              "background-dark": "#142210",
+              "surface-dark": "#1e2b1a",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scanner animation */
+        @keyframes scan-line {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan {
+            animation: scan-line 2.5s linear infinite;
+        }
+        
+        /* Blur backdrop for better legibility */
+        .glass-panel {
+            background: rgba(20, 34, 16, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark text-white font-display overflow-hidden antialiased selection:bg-primary selection:text-black h-screen w-full relative flex flex-col">
+<!-- Simulated Camera Feed Background -->
+<div class="absolute inset-0 z-0 w-full h-full bg-cover bg-center" data-alt="Blurred supermarket aisle with fresh produce shelves" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGPhi07AQpmEkRMXpXJtIaz0wwvTZ47n0IHppXBEB5O3xANl4_KsDAr0iHK_UQN-YM3IVWDfvvxv5Fdo1_F1Rzc0qW0su-5FA3OmtfVfdZmtQBjtwekofEQvjZt7aaQtdB1_CzRuto7BSgtWnhPz6ofEX4Bng8GS0xs__GROu5SBuEGhsrVcftrQcwJtEi8H7xRZikMNXmnriftwhVPaKw7i5JJX4QORKHtj7vUdoFFvXAcJxd3KfBTuF258MzHagmRun0aQEt00o');">
+<!-- Dark overlay for UI contrast -->
+<div class="absolute inset-0 bg-black/40"></div>
+</div>
+<!-- Header / Controls -->
+<header class="relative z-10 w-full px-5 pt-12 pb-4 flex justify-between items-center">
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-md border border-white/10 active:scale-95 transition-transform text-white">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
+<span class="material-symbols-outlined text-primary text-[18px]">security</span>
+<span class="text-xs font-semibold tracking-wide text-white/90 uppercase">Gıda Dedektifi</span>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-md border border-white/10 active:bg-primary/20 transition-colors text-white">
+<span class="material-symbols-outlined text-[24px]">flash_on</span>
+</button>
+</header>
+<!-- Main Scanning Area -->
+<main class="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-6">
+<!-- Instruction Text -->
+<div class="mb-8 text-center animate-fade-in-up">
+<p class="text-white/90 font-medium text-lg drop-shadow-md">Scan product barcode</p>
+<p class="text-white/60 text-sm mt-1">Align frame to track expiration</p>
+</div>
+<!-- Scanner Reticle -->
+<div class="relative w-72 h-48 border-2 border-white/20 rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+<!-- Active Corners -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-[4px] border-l-[4px] border-primary rounded-tl-xl"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-[4px] border-r-[4px] border-primary rounded-tr-xl"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-[4px] border-l-[4px] border-primary rounded-bl-xl"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-[4px] border-r-[4px] border-primary rounded-br-xl"></div>
+<!-- Animated Laser Line -->
+<div class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_#58ee2b] animate-scan"></div>
+<!-- Simulate focus area slightly lighter -->
+<div class="absolute inset-0 bg-white/5 mix-blend-overlay"></div>
+</div>
+<!-- Manual Entry Option -->
+<div class="mt-10">
+<button class="group flex items-center gap-2 px-5 py-3 rounded-xl bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-white/80 group-hover:text-primary transition-colors">keyboard</span>
+<span class="text-sm font-semibold text-white/90">Enter barcode manually</span>
+</button>
+</div>
+</main>
+<!-- Scanned Item Card (Bottom Sheet) -->
+<!-- Simulating the "Success" state where an item was just scanned -->
+<div class="relative z-20 w-full glass-panel rounded-t-[2rem] border-t border-white/10 shadow-[0_-8px_30px_rgba(0,0,0,0.5)] transform translate-y-0 transition-transform duration-300 ease-out">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center pt-3 pb-1">
+<div class="w-12 h-1.5 rounded-full bg-white/20"></div>
+</div>
+<div class="p-6 pt-2 pb-8">
+<div class="flex gap-4 items-start">
+<!-- Product Thumbnail -->
+<div class="relative w-20 h-24 shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 shadow-lg">
+<img alt="Container of fresh yogurt with fruit" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSUR4Hq2gKTLB1JcaJz7nnVYTRbyMDYgcwG-U0foYVYAtdn3D88SPgoT_qsF02jaCNaq4SSpoKTRprE0iyKsQLwZJ4hjuYataMvQZCYgPMQx2MjJjihCtmWP_hq9-aSiYC0O5-5nppBfZBHp9i2jlbdqtsN5pGZpTuxuT488H8EhHTmmBgCU1swP0kEaHN11TCxbJcVes7dJIJSByt96SIRur6N5g_e7q8xi1nBUN2fecOSGNnOhQQO2H0PGu3y_HM--RPE8m1flg"/>
+<!-- Success badge -->
+<div class="absolute bottom-0 right-0 p-1 bg-background-dark rounded-tl-lg">
+<div class="bg-primary text-black rounded-full p-0.5">
+<span class="material-symbols-outlined text-[14px] font-bold block">check</span>
+</div>
+</div>
+</div>
+<!-- Product Details -->
+<div class="flex-1 min-w-0">
+<h3 class="text-xl font-bold text-white truncate leading-tight">Sütaş Traditional Yogurt</h3>
+<p class="text-white/50 text-xs mt-1">750g • Dairy Product</p>
+<div class="mt-3 flex items-center gap-3">
+<div class="flex flex-col">
+<label class="text-[10px] uppercase tracking-wider text-primary font-bold mb-0.5">Exp. Date</label>
+<div class="flex items-center gap-1 text-white bg-white/10 px-2 py-1 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-white/70">calendar_month</span>
+<span class="text-sm font-medium">14 Oct 2023</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="text-[10px] uppercase tracking-wider text-white/40 font-bold mb-0.5">Safe until</label>
+<span class="text-xs text-white/70 mt-1">~3 days left</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-3 mt-6">
+<button class="flex-1 py-3.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm transition-colors border border-white/5">
+                    Rescan
+                </button>
+<button class="flex-[2] py-3.5 px-4 rounded-xl bg-primary hover:bg-primary-dark text-background-dark font-bold text-sm transition-colors shadow-[0_0_15px_rgba(88,238,43,0.3)] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    Confirm &amp; Add
+                </button>
+</div>
+</div>
+<!-- Bottom Nav (Reused Component Style) -->
+<div class="flex gap-2 border-t border-[#2c3928] bg-[#1e271c] px-4 pb-6 pt-2">
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a3b99d] opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary" href="#">
+<span class="material-symbols-outlined text-[24px] fill-current">barcode_scanner</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Scan</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a3b99d] opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Recipes</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a3b99d] opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[24px]">recycling</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Waste</p>
+</a>
+</div>
+</div>
+</body></html>
+
+<!-- Product Scanner -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Eco Impact - Gıda Dedektifi</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#58ee2b",
+                        "primary-content": "#003800",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1e271c",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom scrollbar for horizontal scrolling */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col items-center justify-start overflow-x-hidden">
+<div class="relative flex h-full w-full max-w-md flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-20">
+<!-- Header -->
+<div class="sticky top-0 z-50 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2">
+<div class="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">My Eco Impact</h2>
+<div class="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer transition-colors text-primary">
+<span class="material-symbols-outlined">share</span>
+</div>
+</div>
+<!-- User Profile Section -->
+<div class="flex flex-col items-center gap-4 px-4 pt-4 pb-6">
+<div class="relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-28 w-28 border-4 border-primary shadow-[0_0_20px_rgba(88,238,43,0.3)]" data-alt="Young woman smiling portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAc1MZ00TkU4lgvjAkXQr0sYxpi7DEyhLV7XXMWHfjz5GwDy_s8cbFmVhiBZMRDojivM1XVQtpOpc7va2V6y-Dqkxl_31eb5PONHBmd6ffP9p0O0kwwkDtFu2nC1EojTJe6mRtwZQWvwxx11ZO39FN588R1UKDSLn8mlWw-ppzh7d_xWl2vsCeU_Wx0xuOXSI6CttA6eY5-2MzhYIvZD4cX-jn9zgicNEuU6SqnbpSoc4i7r1L7Z6BiAtt2g32XNSMYrjCkeF4nDhc");'>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-surface-dark border border-primary/30 rounded-full p-1.5 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-primary text-[20px]">eco</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-center">
+<h1 class="text-2xl font-bold leading-tight">Elara Vance</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1">Level 5 • Sustainability Novice</p>
+<div class="w-full bg-slate-200 dark:bg-white/10 rounded-full h-2 mt-3 w-32 overflow-hidden">
+<div class="bg-primary h-2 rounded-full w-[65%]"></div>
+</div>
+<p class="text-xs text-primary mt-1 font-medium">1,250 XP to Level 6</p>
+</div>
+</div>
+<!-- Impact Stats Grid -->
+<div class="grid grid-cols-2 gap-3 px-4 mb-6">
+<!-- Main Hero Stat -->
+<div class="col-span-2 bg-surface-light dark:bg-surface-dark rounded-2xl p-5 border border-slate-200 dark:border-white/5 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">savings</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Money Saved</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-3xl font-bold tracking-tight">₺1,250</span>
+<span class="text-primary text-sm font-bold bg-primary/10 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<p class="text-xs text-slate-400 dark:text-slate-500 mt-2">Equivalent to ~2 weeks of groceries</p>
+</div>
+<!-- Smaller Stats -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between">
+<div class="size-8 rounded-full bg-blue-500/10 flex items-center justify-center mb-2 text-blue-400">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<div>
+<span class="text-2xl font-bold block">45</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Items Rescued</span>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center mb-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">co2</span>
+</div>
+<div>
+<span class="text-2xl font-bold block">12.5<span class="text-base font-medium text-slate-500 dark:text-slate-400 ml-0.5">kg</span></span>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Emissions Prevented</span>
+</div>
+</div>
+</div>
+<!-- Weekly Activity Graph -->
+<div class="px-4 mb-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Expiration Alerts Handled</h3>
+<select class="bg-transparent text-xs font-medium text-slate-500 dark:text-slate-400 border-none outline-none focus:ring-0 cursor-pointer">
+<option>This Week</option>
+<option>Last Month</option>
+</select>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-5 border border-slate-200 dark:border-white/5">
+<div class="flex items-end justify-between gap-2 h-32 w-full">
+<!-- Bar 1 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/30 h-[40%] rounded-t-md group-hover:bg-primary/50 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">M</span>
+</div>
+<!-- Bar 2 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/40 h-[65%] rounded-t-md group-hover:bg-primary/60 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">T</span>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary h-[85%] rounded-t-md shadow-[0_0_15px_rgba(88,238,43,0.3)]"></div>
+</div>
+<span class="text-[10px] text-white font-bold uppercase">W</span>
+</div>
+<!-- Bar 4 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/30 h-[30%] rounded-t-md group-hover:bg-primary/50 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">T</span>
+</div>
+<!-- Bar 5 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/50 h-[55%] rounded-t-md group-hover:bg-primary/70 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">F</span>
+</div>
+<!-- Bar 6 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/20 h-[20%] rounded-t-md group-hover:bg-primary/40 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">S</span>
+</div>
+<!-- Bar 7 -->
+<div class="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
+<div class="w-full bg-slate-200 dark:bg-white/5 rounded-t-md relative h-full flex items-end overflow-hidden">
+<div class="w-full bg-primary/60 h-[75%] rounded-t-md group-hover:bg-primary/80 transition-all"></div>
+</div>
+<span class="text-[10px] text-slate-400 font-medium uppercase">S</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Badges Section -->
+<div class="mb-8">
+<div class="flex items-center justify-between px-4 mb-4">
+<h3 class="text-lg font-bold">Badges</h3>
+<button class="text-primary text-sm font-bold">View All</button>
+</div>
+<div class="flex gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide snap-x">
+<!-- Badge 1 -->
+<div class="snap-start shrink-0 flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/50 flex items-center justify-center relative shadow-[0_0_15px_rgba(88,238,43,0.15)]">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+<div class="absolute top-0 right-0 size-6 bg-primary rounded-full border-2 border-background-dark flex items-center justify-center">
+<span class="text-[10px] text-background-dark font-bold">3</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-center">Eco Warrior</span>
+</div>
+<!-- Badge 2 -->
+<div class="snap-start shrink-0 flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-20 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/50 flex items-center justify-center relative shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+<span class="material-symbols-outlined text-amber-500 text-4xl" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+</div>
+<span class="text-xs font-semibold text-center">Leftover Legend</span>
+</div>
+<!-- Badge 3 (Locked) -->
+<div class="snap-start shrink-0 flex flex-col items-center gap-2 min-w-[100px] opacity-50 grayscale">
+<div class="size-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-white text-4xl">recycling</span>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white text-xl">lock</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-center text-slate-500">Plastic Free</span>
+</div>
+<!-- Badge 4 (Locked) -->
+<div class="snap-start shrink-0 flex flex-col items-center gap-2 min-w-[100px] opacity-50 grayscale">
+<div class="size-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-white text-4xl">local_florist</span>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white text-xl">lock</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-center text-slate-500">Garden Guru</span>
+</div>
+</div>
+</div>
+<!-- My Shared Recipes Section -->
+<div class="px-4 mb-24">
+<h3 class="text-lg font-bold mb-4">My Shared Recipes</h3>
+<div class="flex flex-col gap-4">
+<!-- Recipe Card 1 -->
+<div class="flex gap-4 p-3 bg-surface-light dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-white/5 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-20 rounded-lg bg-cover bg-center shrink-0" data-alt="A bowl of yellow curry with chickpeas" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqltWBCqrvjz1HTghSTeJ2u82roF9Vf20IBa6VWwGiljLIBf7rK3Qs9RwKvhKnc8qMIvdQnXkumV4qp8GmsKCbrIPxxq36xr-D-HEB_R3nTufIHGbmpTzpca4avBWvI6DF5Q57IqPAOvGLfdS0CkqDnenoWFfB0pZwnt7AQaXyN_a2s5MB4s86dUEU15Pqt_2tp2EFakCMOR1d3ETg7t9A4mOevwlsk5Rs6L0qjxu6x4O65q6EJeOj3Pih-Lj3lK9BK0orgfdslMc");'>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<h4 class="font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">Banana Peel Curry</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">A delicious way to use leftover peels. Zero waste and spicy!</p>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-1 text-xs font-medium text-slate-400">
+<span class="material-symbols-outlined text-[16px] text-red-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span>120</span>
+</div>
+<div class="flex items-center gap-1 text-xs font-medium text-slate-400">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>854</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recipe Card 2 -->
+<div class="flex gap-4 p-3 bg-surface-light dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-white/5 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-20 rounded-lg bg-cover bg-center shrink-0" data-alt="Green salad with croutons" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCfA0dqz-dUcuwHAAnufHgjfga_Ju8Pw19I_5eoURsmb5ogMK-ancsLOY1mhQsdYQ0L43h2YPn1kA43pwEYISgL2AVzW1bPLF8F3fQRJZBAEL-SqHAe9rmOxDTqOokhr6bNBswXFvA67qCtV3yWqofNBubuL8bnLQkdBw6C9xSn95VcCMHLOocNySFzIw4Ic0KB9RTR7k4RDXtHvTulFbfQUkmvs0ym4QfHshRS8_AgX-Ixun7C6OHeuisr-mh5x92ygKXJdVzWl-k");'>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<h4 class="font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">Stale Bread Croutons</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Don't throw away hard bread! Make these crunchy croutons.</p>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-1 text-xs font-medium text-slate-400">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+<span>45</span>
+</div>
+<div class="flex items-center gap-1 text-xs font-medium text-slate-400">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>210</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-4 size-14 bg-primary text-primary-content rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform active:scale-95 z-40">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 w-full max-w-md bg-surface-dark/95 backdrop-blur-md border-t border-white/5 px-6 pb-6 pt-3 flex justify-between items-end z-50">
+<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">kitchen</span>
+<span class="text-[10px] font-medium">Pantry</span>
+</a>
+<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">menu_book</span>
+<span class="text-[10px] font-medium">Recipes</span>
+</a>
+<a class="flex flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="text-[10px] font-medium">Impact</span>
+</a>
+</div>
+</div>
+</body></html>
+
+<!-- My Eco Impact -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suggested Recipes - Gıda Dedektifi</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#58ee2b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1c2b18",
+                        "surface-highlight": "#253820",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased overflow-x-hidden min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-black/5 dark:border-white/5">
+<div class="flex items-center justify-between px-4 py-3">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Suggested Recipes</h1>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-primary">
+<span class="material-symbols-outlined text-2xl">tune</span>
+</button>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto px-4 pb-4 no-scrollbar items-center">
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-background-dark font-semibold text-sm shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">bolt</span>
+                Quick &amp; Easy
+            </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-surface-highlight transition-colors">
+                Expiring Soon
+            </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-surface-highlight transition-colors">
+                Low Calorie
+            </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-surface-highlight transition-colors">
+                Vegetarian
+            </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-surface-highlight transition-colors">
+                Breakfast
+            </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col gap-6 p-4 pb-24">
+<!-- Context Header -->
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-xl font-bold">Your Pantry Match</h2>
+<p class="text-sm text-slate-500 dark:text-gray-400">Based on 5 expiring ingredients</p>
+</div>
+<a class="text-sm font-medium text-primary hover:underline" href="#">View Pantry</a>
+</div>
+<!-- Recipe Card 1 (Hero) -->
+<article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-xl dark:shadow-none border border-slate-100 dark:border-white/5 transition-transform active:scale-[0.98]">
+<!-- Image Area -->
+<div class="relative aspect-[4/3] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Close up of golden zucchini fritters with feta cheese and herbs on a rustic plate" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDrPrNZ5vh1sNC95dNX3X1rZXtBjp_AyDUiqi_VeOA3ND077M1ZNWgrPQ9VJZUN0YBfrga7zclmtDO7h1I6F16HEEskS-daPA_njw3Wr4WcG5vJ9tuv3qL8TPZF-uFTdiv1CAtcSy0bt8I-vdbJ0mv6oTc6mEy8cLy4dAK7jIUWyNLyF4YcSDPqb_4pb9T3v_hhKHU0pT1awZe6WqEWOCOR6BmUs4WB00xMQH5kqYDzHSgrX-lS8z_-5vg5fWN8Fen4oCZM_xrMaXc');">
+</div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<!-- Floating Badge -->
+<div class="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-primary/90 backdrop-blur-sm px-3 py-1 text-xs font-bold text-background-dark shadow-sm">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+                    90% Pantry Match
+                </div>
+<!-- Like Button -->
+<button class="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<!-- Bottom Meta on Image -->
+<div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+<div class="flex gap-2">
+<div class="flex items-center gap-1 rounded-lg bg-black/60 backdrop-blur-md px-2 py-1 text-xs font-medium text-white">
+<span class="material-symbols-outlined text-sm text-primary">schedule</span>
+                            25 min
+                        </div>
+<div class="flex items-center gap-1 rounded-lg bg-black/60 backdrop-blur-md px-2 py-1 text-xs font-medium text-white">
+<span class="material-symbols-outlined text-sm text-primary">local_fire_department</span>
+                            Easy
+                        </div>
+</div>
+</div>
+</div>
+<!-- Content Area -->
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="text-xl font-bold leading-tight text-slate-900 dark:text-white">Zucchini &amp; Feta Fritters</h3>
+<div class="flex items-center gap-1 text-xs font-medium text-amber-500">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+                        4.8
+                    </div>
+</div>
+<!-- Ingredients Status -->
+<div class="space-y-2">
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-gray-500">Key Ingredients</p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">check</span>
+                            Zucchini
+                        </span>
+<span class="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">check</span>
+                            Eggs
+                        </span>
+<span class="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">check</span>
+                            Feta
+                        </span>
+<span class="inline-flex items-center gap-1.5 rounded-md bg-slate-100 dark:bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-500 dark:text-gray-400 border border-slate-200 dark:border-white/10">
+<span class="material-symbols-outlined text-sm">close</span>
+                            Dill
+                        </span>
+</div>
+</div>
+<div class="mt-2 pt-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-lg text-orange-400">warning</span>
+<span>Uses expiring zucchini!</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-5 rounded-xl text-sm transition-colors shadow-lg shadow-primary/20">
+                        Cook This
+                     </button>
+</div>
+</div>
+</article>
+<!-- Recipe Card 2 -->
+<article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-xl dark:shadow-none border border-slate-100 dark:border-white/5 transition-transform active:scale-[0.98]">
+<div class="relative aspect-[4/3] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Healthy colorful salad bowl with avocado, greens, radishes and seeds" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWf2sIMbJPhmdR-QxU7dC2xcqZTs8aoLeGwZ7tOTKpEvkupyRnsB6k_DoPs2DHI5v-vfLAfeILHMJ7Epy2Vto6AxbkWj1SPungQ5-sz8MnsNuCOj09yRoUGG8DUlq59luI6SG2g30WpD5ER4AWmNHZLxo3FEtFtrnGx8-DVfRpgW-1aPEki0u8yRdCIbgmedDLYULltyqqrRfL1yv-LXPkTUCRvKRicYzVhmWcl1Ml5Dni_2arUm0CkQxA65GzK7KpOzK79eOaVRA');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-slate-800/90 backdrop-blur-sm px-3 py-1 text-xs font-bold text-white shadow-sm border border-white/10">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+                    75% Pantry Match
+                </div>
+<button class="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+<div class="flex gap-2">
+<div class="flex items-center gap-1 rounded-lg bg-black/60 backdrop-blur-md px-2 py-1 text-xs font-medium text-white">
+<span class="material-symbols-outlined text-sm text-primary">schedule</span>
+                            15 min
+                        </div>
+<div class="flex items-center gap-1 rounded-lg bg-black/60 backdrop-blur-md px-2 py-1 text-xs font-medium text-white">
+<span class="material-symbols-outlined text-sm text-primary">local_fire_department</span>
+                            V. Easy
+                        </div>
+</div>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="text-xl font-bold leading-tight text-slate-900 dark:text-white">Avocado &amp; Radish Salad</h3>
+<div class="flex items-center gap-1 text-xs font-medium text-amber-500">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+                        4.5
+                    </div>
+</div>
+<div class="space-y-2">
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-gray-500">Key Ingredients</p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">check</span>
+                            Avocado
+                        </span>
+<span class="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-700 dark:text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">check</span>
+                            Radish
+                        </span>
+<span class="inline-flex items-center gap-1.5 rounded-md bg-slate-100 dark:bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-500 dark:text-gray-400 border border-slate-200 dark:border-white/10">
+<span class="material-symbols-outlined text-sm">close</span>
+                            Lime
+                        </span>
+</div>
+</div>
+<div class="mt-2 pt-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-gray-400">
+<!-- Empty for spacing balance -->
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-5 rounded-xl text-sm transition-colors shadow-lg shadow-primary/20">
+                        Cook This
+                     </button>
+</div>
+</div>
+</article>
+<!-- Recipe Card 3 (Compact / List View Style) -->
+<article class="flex items-center gap-4 p-3 rounded-2xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-white/5 active:scale-[0.99] transition-transform">
+<div class="h-24 w-24 shrink-0 rounded-xl bg-cover bg-center" data-alt="Spicy tomato pasta with basil garnish" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABrXjy8WmK7uzuuiNFQ2-r3ktmWM4Rul7BjZJ-hscn_ek4RHObDjTIR1KNmTam8_PahAcHzVDgXbthYImgWKSapCEdQ3FuvEQ0yX1kjdoX4-9gvosCxuadD7D7R_IubXgqjuukX2hH8kBepWgGpeGyFYbqICNHoEAiv9k9wREkbKXvV-7eMg36EBKTwyFkOjiKJ8_tMA_BeZcZI93txIaoi-leOhPvKK10PfHAZgqsQ7-BmG5ne0-q7uNtWOa_CdZDk2KwAZseHik');">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-slate-900 dark:text-white truncate">Spicy Tomato Pasta</h3>
+<span class="text-xs font-medium text-primary">100% Match</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-slate-500 dark:text-gray-400 mb-2">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 20m</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">local_fire_department</span> Med</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+<span class="text-xs text-slate-400 ml-1">+2 more</span>
+</div>
+</div>
+<button class="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 text-slate-400 dark:text-gray-400">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</article>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 border-t border-slate-200 dark:border-[#2c3928] bg-white dark:bg-[#1e271c] px-4 pb-safe pt-2">
+<div class="flex justify-between items-end pb-4"> <!-- Added pb-4 for safe area on generic devices -->
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#a3b99d] group" href="#">
+<div class="group-hover:text-primary transition-colors flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">home</span>
+</div>
+<span class="text-[10px] font-medium leading-normal">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#a3b99d] group" href="#">
+<div class="group-hover:text-primary transition-colors flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">kitchen</span>
+</div>
+<span class="text-[10px] font-medium leading-normal">Pantry</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary relative" href="#">
+<div class="absolute -top-10 bg-primary text-background-dark h-14 w-14 rounded-full flex items-center justify-center shadow-lg shadow-primary/30 border-4 border-white dark:border-[#1e271c]">
+<span class="material-symbols-outlined text-[28px] font-bold">menu_book</span>
+</div>
+<span class="text-[10px] font-bold leading-normal translate-y-1">Recipes</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#a3b99d] group" href="#">
+<div class="group-hover:text-primary transition-colors flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+</div>
+<span class="text-[10px] font-medium leading-normal">List</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#a3b99d] group" href="#">
+<div class="group-hover:text-primary transition-colors flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</div>
+<span class="text-[10px] font-medium leading-normal">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>
+
+<!-- Dashboard Overview -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Pantry &amp; Expirations - Gıda Dedektifi</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#58ee2b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1e2a1b",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for horizontal lists */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col antialiased selection:bg-primary selection:text-black">
+<!-- Top Status Bar Simulation (Optional for web preview) -->
+<div class="w-full h-12 bg-background-light dark:bg-background-dark sticky top-0 z-50 flex items-center justify-between px-6 pt-2">
+<span class="text-sm font-semibold">9:41</span>
+<div class="flex gap-2 text-sm">
+<span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">wifi</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Header Section -->
+<header class="px-6 pb-2 pt-2 bg-background-light dark:bg-background-dark sticky top-12 z-40">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight">My Pantry</h1>
+<p class="text-sm text-slate-500 dark:text-gray-400 font-medium">Manage your food waste</p>
+</div>
+<div class="relative group cursor-pointer">
+<button class="flex items-center justify-center w-12 h-12 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">notifications</span>
+</button>
+<span class="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-primary text-black font-bold text-sm shadow-lg shadow-primary/20">
+                All Items
+            </button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-gray-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Expiring Soon
+            </button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-gray-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Dairy
+            </button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-gray-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Vegetables
+            </button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-gray-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Meat
+            </button>
+</div>
+</header>
+<!-- Main Content: Inventory List -->
+<main class="flex-1 px-6 pb-24 space-y-8 overflow-y-auto">
+<!-- Urgent Section -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-red-500">warning</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Urgent Attention</h2>
+</div>
+<div class="space-y-4">
+<!-- Expired Item (Red) -->
+<div class="relative flex bg-surface-light dark:bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 border-red-500 overflow-hidden">
+<div class="w-20 h-20 rounded-lg bg-gray-200 dark:bg-slate-800 shrink-0 overflow-hidden relative">
+<img alt="Carton of milk" class="w-full h-full object-cover" data-alt="Carton of milk on a table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDUCLwC7216Ri2kz7uFz8IS5HUuyAyA-8jBNWFDVp9ek2hqdZLHGpq-WqTf1ljNjRqVtja79posDiIruVBu7ZyemqoIOqsqXF8dOVpTk4ehjx2MzDNuK1VgR3V42PILXG_MQNNIRlJg0Eg2uJhyP8QcFobM5_yHqUkuBepFSwo51ZY2FL7agdZYVGuRAhqJTPV2bzXOUHtoc32M3roK28dHrucztDdf13FdtLQtOSjsPGXEzUfcqKq-Kqf06S4eqYuC3syv_LnlU"/>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white leading-tight">Whole Milk</h3>
+<p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">event_busy</span>
+                                    Expired Yesterday
+                                </p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-slate-500 dark:text-slate-400">1.5L Carton</span>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg px-2 py-1 gap-3 border border-slate-200 dark:border-slate-800">
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">−</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Expiring Soon Item (Yellow) -->
+<div class="relative flex bg-surface-light dark:bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 border-yellow-400 overflow-hidden">
+<div class="w-20 h-20 rounded-lg bg-gray-200 dark:bg-slate-800 shrink-0 overflow-hidden relative">
+<img alt="Raw chicken breast meat" class="w-full h-full object-cover" data-alt="Raw chicken breast on a cutting board" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfY_sX_RWTWxyJNzQmiUSS1GUbZP_VNXNfzt0G1vzIxOB380hd6EpBLUfJnnxOMTFaCgdCeVhsn6eKFxOYyRDA-gOHddVmqd4Hjrh_wLIHT0zwKBXx8p5tXYxCMlpfOmaxZ3tvRlgAgnM-lNXTA9ogZxm42EqcBQDyNdkkrSxaY9KFTmoQnjSAwVFKgtA4vg2m9bFvDmn_1MDJa_ybYTe6oejE_qP7412slfuKB_c8gjO0X3JgIkUORnkECzGFWljlleB6NYP3kPI"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white leading-tight">Chicken Breast</h3>
+<p class="text-xs font-bold text-yellow-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">hourglass_bottom</span>
+                                    Expires in 2 days
+                                </p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-slate-500 dark:text-slate-400">500g Pack</span>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg px-2 py-1 gap-3 border border-slate-200 dark:border-slate-800">
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">−</button>
+<span class="text-sm font-bold w-4 text-center">2</span>
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Safe Section -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Fresh &amp; Safe</h2>
+</div>
+<div class="space-y-4">
+<!-- Safe Item (Green) -->
+<div class="relative flex bg-surface-light dark:bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 border-primary overflow-hidden group">
+<div class="w-20 h-20 rounded-lg bg-gray-200 dark:bg-slate-800 shrink-0 overflow-hidden relative">
+<img alt="Block of cheddar cheese" class="w-full h-full object-cover" data-alt="Block of yellow cheddar cheese" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf3lx2zwKfiHZ3m0Xbqel2bDdiiH8VC6NpaJ2hCaDZW3a-JfkZuCQxr7ZSK2wf7Cg9bWdozC4GM5RL3-XVyM3baDpu1tN9uiZJgm_BhGl_ttk2RmPC7m8_SsS2H2KwZXPUlJ6RZdcxDVDGE09ULfKTlES0jipWnfJumrOYdDcKksGJg3U4L1FVD0BFB8meZkeJnvvNP1MCgmIJS0j5_gqy2bhmUz4ZOk6lBx-a1-lPWhYCFOuSAF505gDlpf0Xf5groVbWjK4Chz0"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white leading-tight">Cheddar Cheese</h3>
+<p class="text-xs font-bold text-primary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                    Expires in 15 days
+                                </p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-slate-500 dark:text-slate-400">200g Block</span>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg px-2 py-1 gap-3 border border-slate-200 dark:border-slate-800">
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">−</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Safe Item (Green) -->
+<div class="relative flex bg-surface-light dark:bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 border-primary overflow-hidden">
+<div class="w-20 h-20 rounded-lg bg-gray-200 dark:bg-slate-800 shrink-0 overflow-hidden relative">
+<img alt="Red apples" class="w-full h-full object-cover" data-alt="Fresh red apples" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBae_HDtPgYZvj_WEF3CVppsK47_N-J5L6su4-ez5UEAeGeHUDSkmvAP4gif5xHEQSLroCXwKDpmHgz4pxmfWifipyEYdOdE2uS57-8-ekzBZYVpJHtj3i4d5HT7xAudS5f51BBAXf5Z6vKX5ZKKtJZ4k2Y5zKA15QG37UktvRgQAHBnd2trMRPU0_Ut4NjQlPpOffHR_TyR2eEng53ILI-fwlKQAVZdzq3GAAi1HPXU1Hp1LsbvaYSfs3Bb8Qrh9UAU7iKT57Pl0w"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white leading-tight">Red Apples</h3>
+<p class="text-xs font-bold text-primary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                    Expires in 20 days
+                                </p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-slate-500 dark:text-slate-400">Loose</span>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg px-2 py-1 gap-3 border border-slate-200 dark:border-slate-800">
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">−</button>
+<span class="text-sm font-bold w-4 text-center">6</span>
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Safe Item (Green) -->
+<div class="relative flex bg-surface-light dark:bg-surface-dark rounded-xl p-3 shadow-sm border-l-4 border-primary overflow-hidden">
+<div class="w-20 h-20 rounded-lg bg-gray-200 dark:bg-slate-800 shrink-0 overflow-hidden relative">
+<img alt="Jar of pasta sauce" class="w-full h-full object-cover" data-alt="Glass jar of tomato pasta sauce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR8GxiE5dRuxy0csKPw7M0dfHJV0PIdRlSyXVPazkFeuAa0qyAAfYORDAnUOvPD-BExtEB36Licl2thSDVXlry7paPXz4hUtQ6Lmk44XEyEgap8KqhSoZbN7pCyLGzZ6inqh4Mzd875zmIq-uTVl2fI4Tz84XVpU2xMvm-ksHw-zQFh0kihgRJZlQTuALzcVhFGyQYxn04XFB2yNHTkdLpB-aXLv_T-Tw9ue-hDC6ihlF85oGngHnon-yNdQdbfegTf9EzjZOmbok"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col justify-between py-0.5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white leading-tight">Pasta Sauce</h3>
+<p class="text-xs font-bold text-primary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                    Expires in 45 days
+                                </p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs text-slate-500 dark:text-slate-400">500g Jar</span>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg px-2 py-1 gap-3 border border-slate-200 dark:border-slate-800">
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">−</button>
+<span class="text-sm font-bold w-4 text-center">3</span>
+<button class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-primary transition-colors text-lg leading-none pb-1">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Add Item CTA - Visible when list is long -->
+<div class="flex justify-center pt-4 pb-8">
+<button class="bg-surface-light dark:bg-surface-dark text-slate-500 dark:text-slate-400 text-sm font-medium py-3 px-6 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 w-full hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                Add another item manually
+            </button>
+</div>
+</main>
+<!-- Floating Action Button for Scan -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary rounded-full shadow-lg shadow-primary/30 flex items-center justify-center text-black z-40 hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[28px]">barcode_scanner</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 pb-safe pt-2">
+<div class="flex items-center justify-around pb-4 px-2">
+<a class="flex flex-col items-center gap-1 w-16 group" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center transition-colors bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[24px] filled">inventory_2</span>
+</div>
+<span class="text-[10px] font-bold text-slate-900 dark:text-white">Pantry</span>
+</a>
+<a class="flex flex-col items-center gap-1 w-16 group" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center transition-colors text-slate-400 dark:text-slate-500 group-hover:text-primary">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+<span class="text-[10px] font-medium text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors">Recipes</span>
+</a>
+<a class="flex flex-col items-center gap-1 w-16 group" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center transition-colors text-slate-400 dark:text-slate-500 group-hover:text-primary">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</div>
+<span class="text-[10px] font-medium text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Blur overlay for bottom nav visual consistency (optional) -->
+<div class="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent pointer-events-none z-30"></div>
+</body></html>
+
+<!-- Recipe Instructions -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leftover Recipe Finder - Gıda Dedektifi</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#58ee2b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1e2b19", // Slightly lighter than background-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white antialiased selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl">
+<!-- Header Section -->
+<div class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md pt-6 pb-2 border-b border-gray-200 dark:border-[#2c3928]">
+<!-- Top Nav -->
+<div class="flex items-center justify-between px-4 mb-4">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-[#2c3928] hover:bg-gray-200 dark:hover:bg-[#3a4b35] transition-colors">
+<span class="material-symbols-outlined text-gray-600 dark:text-[#a3b99d]">arrow_back</span>
+</button>
+<h1 class="text-base font-bold tracking-tight uppercase text-gray-500 dark:text-[#a3b99d]">Gıda Dedektifi</h1>
+<button class="text-sm font-bold text-primary hover:text-primary/80 transition-colors">
+                    Clear
+                </button>
+</div>
+<!-- Title Area -->
+<div class="px-4 mb-4">
+<h2 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white mb-2">Cook with what<br/>you have</h2>
+<p class="text-gray-500 dark:text-[#a3b99d] text-sm">Select ingredients to find instant recipes.</p>
+</div>
+<!-- Search Bar -->
+<div class="px-4 pb-2">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-gray-400 dark:text-[#a3b99d]">search</span>
+<input class="w-full h-12 rounded-xl bg-gray-100 dark:bg-[#2c3928] border-none pl-12 pr-4 text-base placeholder-gray-400 dark:placeholder-[#a3b99d] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Search pantry..." type="text"/>
+</div>
+</div>
+<!-- Filter Categories -->
+<div class="flex gap-2 overflow-x-auto px-4 pb-2 no-scrollbar mt-2">
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-black font-semibold text-sm whitespace-nowrap shadow-[0_0_15px_rgba(88,238,43,0.3)]">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                    All
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-[#2c3928] text-gray-600 dark:text-[#a3b99d] font-medium text-sm whitespace-nowrap border border-transparent hover:border-gray-300 dark:hover:border-[#3a4b35] transition-all">
+                    🥦 Veggies
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-[#2c3928] text-gray-600 dark:text-[#a3b99d] font-medium text-sm whitespace-nowrap border border-transparent hover:border-gray-300 dark:hover:border-[#3a4b35] transition-all">
+                    🥩 Proteins
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-[#2c3928] text-gray-600 dark:text-[#a3b99d] font-medium text-sm whitespace-nowrap border border-transparent hover:border-gray-300 dark:hover:border-[#3a4b35] transition-all">
+                    🧀 Dairy
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-[#2c3928] text-gray-600 dark:text-[#a3b99d] font-medium text-sm whitespace-nowrap border border-transparent hover:border-gray-300 dark:hover:border-[#3a4b35] transition-all">
+                    🥖 Grains
+                </button>
+</div>
+</div>
+<!-- Main Content - Ingredient Grid -->
+<div class="flex-1 overflow-y-auto px-4 py-4 pb-32">
+<!-- Section: Expiring Soon -->
+<div class="mb-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-red-400 text-sm">warning</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-red-400">Expiring Soon</h3>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<!-- Item 1: Selected State -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-surface-dark border-2 border-primary shadow-[0_0_15px_rgba(88,238,43,0.15)] transition-all">
+<div class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 animate-pulse"></div>
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🍅</div>
+<span class="text-xs font-semibold text-white text-center">Tomatoes</span>
+<div class="absolute -top-2 -right-2 bg-primary text-black rounded-full p-0.5">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</button>
+<!-- Item 2 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="absolute top-2 right-2 h-2 w-2 rounded-full bg-orange-400"></div>
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🥬</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Spinach</span>
+<span class="text-[10px] text-orange-400 font-medium">2 days left</span>
+</button>
+<!-- Item 3 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="absolute top-2 right-2 h-2 w-2 rounded-full bg-orange-400"></div>
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🥛</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Milk</span>
+<span class="text-[10px] text-orange-400 font-medium">3 days left</span>
+</button>
+</div>
+</div>
+<!-- Section: Pantry Staples -->
+<div>
+<h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 dark:text-[#5a6b55] mb-3">Pantry Staples</h3>
+<div class="grid grid-cols-3 gap-3">
+<!-- Item 4: Selected State -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-surface-dark border-2 border-primary shadow-[0_0_15px_rgba(88,238,43,0.15)] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🥚</div>
+<span class="text-xs font-semibold text-white text-center">Eggs</span>
+<div class="absolute -top-2 -right-2 bg-primary text-black rounded-full p-0.5">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</button>
+<!-- Item 5 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🍗</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Chicken</span>
+</button>
+<!-- Item 6: Selected State -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-surface-dark border-2 border-primary shadow-[0_0_15px_rgba(88,238,43,0.15)] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🧅</div>
+<span class="text-xs font-semibold text-white text-center">Onions</span>
+<div class="absolute -top-2 -right-2 bg-primary text-black rounded-full p-0.5">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</button>
+<!-- Item 7 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🧄</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Garlic</span>
+</button>
+<!-- Item 8 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🥕</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Carrots</span>
+</button>
+<!-- Item 9 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🧀</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Cheese</span>
+</button>
+<!-- Item 10 -->
+<button class="group relative flex flex-col items-center justify-between p-3 rounded-2xl bg-gray-100 dark:bg-[#1e271c] border border-transparent hover:border-primary/50 dark:hover:bg-[#2c3928] transition-all h-28">
+<div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🍝</div>
+<span class="text-xs font-medium text-gray-600 dark:text-[#a3b99d] text-center">Pasta</span>
+</button>
+<!-- Add Item Placeholder -->
+<button class="flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-dashed border-gray-300 dark:border-[#2c3928] hover:border-primary/50 text-gray-400 dark:text-[#5a6b55] hover:text-primary transition-all h-28">
+<span class="material-symbols-outlined mb-1">add_circle</span>
+<span class="text-xs font-medium text-center">Add Item</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floating Action Button Container -->
+<div class="absolute bottom-[80px] left-0 w-full px-4 pb-4 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent pt-12 pointer-events-none">
+<button class="pointer-events-auto w-full bg-primary hover:bg-[#4bd625] text-black text-lg font-bold py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transform active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">restaurant_menu</span>
+                Find Recipes (3)
+            </button>
+</div>
+<!-- Bottom Nav Bar -->
+<div class="z-30 border-t border-gray-200 dark:border-[#2c3928] bg-background-light dark:bg-[#1e271c] px-4 pb-5 pt-2">
+<div class="flex items-end justify-between">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 dark:text-[#a3b99d] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 dark:text-[#a3b99d] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Pantry</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="bg-primary/20 rounded-full px-4 py-1 flex flex-col items-center">
+<span class="material-symbols-outlined text-[24px] fill-current">menu_book</span>
+</div>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-white">Recipes</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 dark:text-[#a3b99d] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>
